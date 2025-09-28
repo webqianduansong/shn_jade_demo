@@ -1,0 +1,95 @@
+{
+  "site": {
+    "title": "シルクロード・ジェード",
+    "subtitle": "古代シルクロードとモダンラグジュアリーの出会い。文化的遺産と現代デザインを兼ね備えた和田玉作品を厳選。",
+    "cta": "カートに追加",
+    "checkout": "チェックアウト",
+    "cart": "カート",
+    "empty": "カートが空です",
+    "total": "合計"
+  },
+  "nav": {
+    "rings": "リング",
+    "earrings": "イヤリング",
+    "necklaces": "ネックレス",
+    "bracelets": "ブレスレット/バングル",
+    "collections": "コレクション",
+    "cart": "カート"
+  },
+  "features": {
+    "typeA": "A級ジェード",
+    "typeADesc": "100%天然、未処理。",
+    "shipping": "無料配送",
+    "shippingDesc": "30日間無料返品。",
+    "warranty": "2年保証",
+    "warrantyDesc": "品質保証。"
+  },
+  "sections": {
+    "categories": "カテゴリー別",
+    "popular": "人気商品",
+    "newArrivals": "新着商品"
+  },
+  "actions": {
+    "viewAll": "すべて表示"
+  },
+  "hero": {
+    "slide1": {
+      "title": "天然ビルマジェード - A級",
+      "subtitle": "100%天然、化学処理なし",
+      "cta": "コレクションを探索"
+    },
+    "slide2": {
+      "title": "手作りの卓越性",
+      "subtitle": "各作品は専門家による手切り",
+      "cta": "今すぐ購入"
+    },
+    "slide3": {
+      "title": "文化遺産",
+      "subtitle": "古代シルクロードとモダンラグジュアリーの出会い",
+      "cta": "もっと見る"
+    }
+  },
+  "product": {
+    "currency": "USD",
+    "details": "商品詳細",
+    "features": {
+      "natural": "100%天然A級ジェード",
+      "handcrafted": "専門職人による手作り",
+      "shipping": "世界中無料配送",
+      "return": "30日間返品保証",
+      "warranty": "2年保証付き"
+    },
+    "shippingInfo": "$100以上のご注文で無料配送",
+    "deliveryTime": "配送予定：3-5営業日",
+    "related": "こちらもおすすめ"
+  },
+  "products": {
+    "found": "件の商品",
+    "sortBy": "並び順",
+    "priceLow": "価格：安い順",
+    "priceHigh": "価格：高い順",
+    "newest": "新着順",
+    "popular": "人気順",
+    "noProducts": "商品が見つかりません",
+    "noProductsDesc": "このカテゴリに商品が見つかりませんでした。他のカテゴリを閲覧するか、後でもう一度ご確認ください。",
+    "backToHome": "ホームに戻る"
+  },
+  "footer": {
+    "service": "サービス",
+    "support": "サポート",
+    "store": "店舗",
+    "newsletter": "ニュースレター",
+    "privacyPolicy": "プライバシーポリシー",
+    "shippingPolicy": "配送ポリシー",
+    "refundPolicy": "返品・交換ポリシー",
+    "termsOfService": "利用規約",
+    "email": "support@silkroadjade.com",
+    "phone": "+852-0000 0000",
+    "location": "香港",
+    "hours": "月-土 10:30-17:30",
+    "newsletterDesc": "オファーや更新情報を購読する。",
+    "emailPlaceholder": "メールアドレスを入力",
+    "subscribe": "購読",
+    "copyright": "全著作権所有。"
+  }
+}

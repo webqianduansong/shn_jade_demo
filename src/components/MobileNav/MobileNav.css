@@ -1,0 +1,38 @@
+/* MobileNav 组件样式 */
+.mobile-nav-button {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .mobile-nav-button {
+    display: none;
+  }
+}
+
+.mobile-nav-drawer .space-y-4 > * + * {
+  margin-top: 1rem;
+}
+
+.mobile-nav-drawer .px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.mobile-nav-drawer .text-sm {
+  font-size: 0.875rem;
+}
+
+.mobile-nav-drawer .text-gray-600 {
+  color: #4b5563;
+}
+
+.mobile-nav-drawer .mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .mobile-nav-drawer {
+    width: 280px;
+  }
+}

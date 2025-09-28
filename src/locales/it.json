@@ -1,0 +1,84 @@
+{
+  "site": {
+    "title": "Jade della Via della Seta",
+    "subtitle": "Dove l'antica Via della Seta incontra il lusso moderno. Pezzi di giada Hetian selezionati con patrimonio culturale e design contemporaneo.",
+    "cta": "Aggiungi al carrello",
+    "checkout": "Acquista",
+    "cart": "Carrello",
+    "empty": "Il tuo carrello è vuoto",
+    "total": "Totale"
+  },
+  "nav": {
+    "rings": "Anelli",
+    "earrings": "Orecchini",
+    "necklaces": "Collane",
+    "bracelets": "Bracciali/Braccialetti",
+    "collections": "Collezioni",
+    "cart": "Carrello"
+  },
+  "features": {
+    "typeA": "Giada Tipo A",
+    "typeADesc": "100% naturale, non trattata.",
+    "shipping": "Spedizione gratuita",
+    "shippingDesc": "Reso gratuito entro 30 giorni.",
+    "warranty": "Garanzia 2 anni",
+    "warrantyDesc": "Qualità garantita."
+  },
+  "sections": {
+    "categories": "Per categoria",
+    "popular": "Più popolari",
+    "newArrivals": "Novità"
+  },
+  "actions": {
+    "viewAll": "Vedi tutto"
+  },
+  "hero": {
+    "slide1": {
+      "title": "Giada naturale birmana - Tipo A",
+      "subtitle": "100% naturale, senza trattamento chimico",
+      "cta": "Esplora collezione"
+    },
+    "slide2": {
+      "title": "Eccellenza artigianale",
+      "subtitle": "Ogni pezzo è tagliato a mano dai nostri esperti",
+      "cta": "Acquista ora"
+    },
+    "slide3": {
+      "title": "Patrimonio culturale",
+      "subtitle": "Dove l'antica Via della Seta incontra il lusso moderno",
+      "cta": "Scopri di più"
+    }
+  },
+  "product": {
+    "currency": "USD",
+    "details": "Dettagli prodotto",
+    "features": {
+      "natural": "100% Giada naturale tipo A",
+      "handcrafted": "Lavorato a mano da esperti",
+      "shipping": "Spedizione gratuita mondiale",
+      "return": "Politica di reso 30 giorni",
+      "warranty": "Garanzia 2 anni inclusa"
+    },
+    "shippingInfo": "Spedizione gratuita per ordini superiori a $100",
+    "deliveryTime": "Tempo di consegna stimato: 3-5 giorni lavorativi",
+    "related": "Potrebbe piacerti anche"
+  },
+  "footer": {
+    "service": "Servizio",
+    "support": "Supporto",
+    "store": "Negozio",
+    "newsletter": "Newsletter",
+    "privacyPolicy": "Politica sulla privacy",
+    "shippingPolicy": "Politica di spedizione",
+    "refundPolicy": "Politica di reso e rimborso",
+    "termsOfService": "Termini di servizio",
+    "email": "support@silkroadjade.com",
+    "phone": "+852-0000 0000",
+    "location": "Hong Kong",
+    "hours": "Lun-Sab 10:30-17:30",
+    "newsletterDesc": "Iscriviti per offerte e aggiornamenti.",
+    "emailPlaceholder": "Inserisci la tua email",
+    "subscribe": "Iscriviti",
+    "copyright": "Tutti i diritti riservati."
+  }
+}

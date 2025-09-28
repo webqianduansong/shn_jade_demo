@@ -1,0 +1,84 @@
+{
+  "site": {
+    "title": "Seidenstraße Jade",
+    "subtitle": "Wo die alte Seidenstraße auf modernen Luxus trifft. Handverlesene Hetian-Jade-Stücke mit kulturellem Erbe und zeitgemäßem Design.",
+    "cta": "In den Warenkorb",
+    "checkout": "Zur Kasse",
+    "cart": "Warenkorb",
+    "empty": "Ihr Warenkorb ist leer",
+    "total": "Gesamt"
+  },
+  "nav": {
+    "rings": "Ringe",
+    "earrings": "Ohrringe",
+    "necklaces": "Halsketten",
+    "bracelets": "Armbänder/Armreifen",
+    "collections": "Kollektionen",
+    "cart": "Warenkorb"
+  },
+  "features": {
+    "typeA": "Jade Typ A",
+    "typeADesc": "100% natürlich, unbehandelt.",
+    "shipping": "Kostenloser Versand",
+    "shippingDesc": "30 Tage kostenlose Rückgabe.",
+    "warranty": "2-Jahres-Garantie",
+    "warrantyDesc": "Qualität garantiert."
+  },
+  "sections": {
+    "categories": "Nach Kategorie",
+    "popular": "Beliebteste",
+    "newArrivals": "Neuheiten"
+  },
+  "actions": {
+    "viewAll": "Alle anzeigen"
+  },
+  "hero": {
+    "slide1": {
+      "title": "Natürlicher burmesischer Jade - Typ A",
+      "subtitle": "100% natürlich, ohne chemische Behandlung",
+      "cta": "Kollektion erkunden"
+    },
+    "slide2": {
+      "title": "Handwerkliche Exzellenz",
+      "subtitle": "Jedes Stück wird von unseren Experten handgeschnitten",
+      "cta": "Jetzt einkaufen"
+    },
+    "slide3": {
+      "title": "Kulturelles Erbe",
+      "subtitle": "Wo die alte Seidenstraße auf modernen Luxus trifft",
+      "cta": "Mehr entdecken"
+    }
+  },
+  "product": {
+    "currency": "USD",
+    "details": "Produktdetails",
+    "features": {
+      "natural": "100% natürlicher Typ A Jade",
+      "handcrafted": "Handgefertigt von Experten",
+      "shipping": "Kostenloser weltweiter Versand",
+      "return": "30-Tage-Rückgaberichtlinie",
+      "warranty": "2-Jahres-Garantie inklusive"
+    },
+    "shippingInfo": "Kostenloser Versand bei Bestellungen über 100$",
+    "deliveryTime": "Geschätzte Lieferzeit: 3-5 Werktage",
+    "related": "Das könnte Ihnen auch gefallen"
+  },
+  "footer": {
+    "service": "Service",
+    "support": "Support",
+    "store": "Geschäft",
+    "newsletter": "Newsletter",
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "shippingPolicy": "Versandrichtlinie",
+    "refundPolicy": "Rückgabe- und Erstattungsrichtlinie",
+    "termsOfService": "Nutzungsbedingungen",
+    "email": "support@silkroadjade.com",
+    "phone": "+852-0000 0000",
+    "location": "Hong Kong",
+    "hours": "Mo-Sa 10:30-17:30",
+    "newsletterDesc": "Abonnieren Sie Angebote und Updates.",
+    "emailPlaceholder": "E-Mail eingeben",
+    "subscribe": "Abonnieren",
+    "copyright": "Alle Rechte vorbehalten."
+  }
+}

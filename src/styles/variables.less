@@ -1,0 +1,187 @@
+// Less 变量文件
+
+// 主题色彩
+@primary-color: #2563eb;
+@primary-light: lighten(@primary-color, 20%);
+@primary-dark: darken(@primary-color, 20%);
+
+@success-color: #10b981;
+@success-light: lighten(@success-color, 20%);
+@success-dark: darken(@success-color, 20%);
+
+@warning-color: #f59e0b;
+@warning-light: lighten(@warning-color, 20%);
+@warning-dark: darken(@warning-color, 20%);
+
+@error-color: #ef4444;
+@error-light: lighten(@error-color, 20%);
+@error-dark: darken(@error-color, 20%);
+
+@info-color: #3b82f6;
+@info-light: lighten(@info-color, 20%);
+@info-dark: darken(@info-color, 20%);
+
+// 中性色彩
+@white: #ffffff;
+@black: #000000;
+
+@gray-50: #f9fafb;
+@gray-100: #f3f4f6;
+@gray-200: #e5e7eb;
+@gray-300: #d1d5db;
+@gray-400: #9ca3af;
+@gray-500: #6b7280;
+@gray-600: #4b5563;
+@gray-700: #374151;
+@gray-800: #1f2937;
+@gray-900: #111827;
+
+// 浅色主题
+@light-background: @white;
+@light-foreground: @gray-900;
+@light-muted: @gray-500;
+@light-border: @gray-200;
+@light-card-bg: @white;
+@light-card-foreground: @gray-900;
+
+// 深色主题
+@dark-background: #0a0a0a;
+@dark-foreground: @gray-50;
+@dark-muted: @gray-400;
+@dark-border: @gray-700;
+@dark-card-bg: @gray-800;
+@dark-card-foreground: @gray-50;
+
+// 字体
+@font-sans: var(--font-geist-sans);
+@font-mono: var(--font-geist-mono);
+
+@font-size-xs: 0.75rem;    // 12px
+@font-size-sm: 0.875rem;   // 14px
+@font-size-base: 1rem;     // 16px
+@font-size-lg: 1.125rem;   // 18px
+@font-size-xl: 1.25rem;    // 20px
+@font-size-2xl: 1.5rem;    // 24px
+@font-size-3xl: 1.875rem;  // 30px
+@font-size-4xl: 2.25rem;   // 36px
+@font-size-5xl: 3rem;      // 48px
+
+@font-weight-light: 300;
+@font-weight-normal: 400;
+@font-weight-medium: 500;
+@font-weight-semibold: 600;
+@font-weight-bold: 700;
+@font-weight-extrabold: 800;
+
+@line-height-none: 1;
+@line-height-tight: 1.25;
+@line-height-snug: 1.375;
+@line-height-normal: 1.5;
+@line-height-relaxed: 1.625;
+@line-height-loose: 2;
+
+// 间距
+@spacing-0: 0;
+@spacing-1: 0.25rem;   // 4px
+@spacing-2: 0.5rem;    // 8px
+@spacing-3: 0.75rem;   // 12px
+@spacing-4: 1rem;      // 16px
+@spacing-5: 1.25rem;   // 20px
+@spacing-6: 1.5rem;    // 24px
+@spacing-8: 2rem;      // 32px
+@spacing-10: 2.5rem;   // 40px
+@spacing-12: 3rem;     // 48px
+@spacing-16: 4rem;     // 64px
+@spacing-20: 5rem;     // 80px
+@spacing-24: 6rem;     // 96px
+@spacing-32: 8rem;     // 128px
+
+// 圆角
+@border-radius-none: 0;
+@border-radius-sm: 0.25rem;   // 4px
+@border-radius: 0.5rem;       // 8px
+@border-radius-md: 0.5rem;    // 8px
+@border-radius-lg: 0.75rem;   // 12px
+@border-radius-xl: 1rem;      // 16px
+@border-radius-2xl: 1.5rem;   // 24px
+@border-radius-full: 9999px;
+
+// 边框宽度
+@border-width-0: 0;
+@border-width: 1px;
+@border-width-2: 2px;
+@border-width-4: 4px;
+@border-width-8: 8px;
+
+// 阴影
+@box-shadow-none: none;
+@box-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+@box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+@box-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+@box-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+@box-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+@box-shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+
+// 过渡动画
+@transition-none: none;
+@transition-all: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+@transition-colors: color 150ms cubic-bezier(0.4, 0, 0.2, 1), background-color 150ms cubic-bezier(0.4, 0, 0.2, 1), border-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+@transition-opacity: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+@transition-shadow: box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1);
+@transition-transform: transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+
+// 动画时长
+@duration-75: 75ms;
+@duration-100: 100ms;
+@duration-150: 150ms;
+@duration-200: 200ms;
+@duration-300: 300ms;
+@duration-500: 500ms;
+@duration-700: 700ms;
+@duration-1000: 1000ms;
+
+// 缓动函数
+@ease-linear: linear;
+@ease-in: cubic-bezier(0.4, 0, 1, 1);
+@ease-out: cubic-bezier(0, 0, 0.2, 1);
+@ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+// 断点
+@screen-sm: 640px;
+@screen-md: 768px;
+@screen-lg: 1024px;
+@screen-xl: 1280px;
+@screen-2xl: 1536px;
+
+// 容器最大宽度
+@container-sm: 640px;
+@container-md: 768px;
+@container-lg: 1024px;
+@container-xl: 1280px;
+@container-2xl: 1536px;
+
+// Z-index 层级
+@z-index-dropdown: 1000;
+@z-index-sticky: 1020;
+@z-index-fixed: 1030;
+@z-index-modal-backdrop: 1040;
+@z-index-modal: 1050;
+@z-index-popover: 1060;
+@z-index-tooltip: 1070;
+
+// 透明度
+@opacity-0: 0;
+@opacity-5: 0.05;
+@opacity-10: 0.1;
+@opacity-20: 0.2;
+@opacity-25: 0.25;
+@opacity-30: 0.3;
+@opacity-40: 0.4;
+@opacity-50: 0.5;
+@opacity-60: 0.6;
+@opacity-70: 0.7;
+@opacity-75: 0.75;
+@opacity-80: 0.8;
+@opacity-90: 0.9;
+@opacity-95: 0.95;
+@opacity-100: 1;

@@ -1,0 +1,84 @@
+{
+  "site": {
+    "title": "Jade de la Ruta de la Seda",
+    "subtitle": "Donde la antigua Ruta de la Seda se encuentra con el lujo moderno. Piezas de jade Hetian seleccionadas con patrimonio cultural y diseño contemporáneo.",
+    "cta": "Añadir al carrito",
+    "checkout": "Finalizar compra",
+    "cart": "Carrito",
+    "empty": "Tu carrito está vacío",
+    "total": "Total"
+  },
+  "nav": {
+    "rings": "Anillos",
+    "earrings": "Aretes",
+    "necklaces": "Collares",
+    "bracelets": "Pulseras/Brazaletes",
+    "collections": "Colecciones",
+    "cart": "Carrito"
+  },
+  "features": {
+    "typeA": "Jade Tipo A",
+    "typeADesc": "100% natural, sin tratar.",
+    "shipping": "Envío gratuito",
+    "shippingDesc": "Devoluciones gratuitas en 30 días.",
+    "warranty": "Garantía de 2 años",
+    "warrantyDesc": "Calidad garantizada."
+  },
+  "sections": {
+    "categories": "Por categoría",
+    "popular": "Más populares",
+    "newArrivals": "Novedades"
+  },
+  "actions": {
+    "viewAll": "Ver todo"
+  },
+  "hero": {
+    "slide1": {
+      "title": "Jade natural birmano - Tipo A",
+      "subtitle": "100% natural, sin tratamiento químico",
+      "cta": "Explorar colección"
+    },
+    "slide2": {
+      "title": "Excelencia artesanal",
+      "subtitle": "Cada pieza es cortada a mano por nuestros expertos",
+      "cta": "Comprar ahora"
+    },
+    "slide3": {
+      "title": "Patrimonio cultural",
+      "subtitle": "Donde la antigua Ruta de la Seda se encuentra con el lujo moderno",
+      "cta": "Descubrir más"
+    }
+  },
+  "product": {
+    "currency": "USD",
+    "details": "Detalles del producto",
+    "features": {
+      "natural": "100% Jade natural tipo A",
+      "handcrafted": "Hecho a mano por expertos",
+      "shipping": "Envío gratuito mundial",
+      "return": "Política de devolución 30 días",
+      "warranty": "Garantía de 2 años incluida"
+    },
+    "shippingInfo": "Envío gratuito en pedidos superiores a $100",
+    "deliveryTime": "Tiempo de entrega estimado: 3-5 días hábiles",
+    "related": "También te podría gustar"
+  },
+  "footer": {
+    "service": "Servicio",
+    "support": "Soporte",
+    "store": "Tienda",
+    "newsletter": "Boletín",
+    "privacyPolicy": "Política de privacidad",
+    "shippingPolicy": "Política de envío",
+    "refundPolicy": "Política de devolución y reembolso",
+    "termsOfService": "Términos de servicio",
+    "email": "support@silkroadjade.com",
+    "phone": "+852-0000 0000",
+    "location": "Hong Kong",
+    "hours": "Lun-Sáb 10:30-17:30",
+    "newsletterDesc": "Suscríbete para ofertas y actualizaciones.",
+    "emailPlaceholder": "Ingresa tu email",
+    "subscribe": "Suscribirse",
+    "copyright": "Todos los derechos reservados."
+  }
+}

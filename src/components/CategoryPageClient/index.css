@@ -1,0 +1,155 @@
+/* 商品卡片样式 - 与首页保持一致 */
+.jade-product-card {
+  transition: all 0.3s ease;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+}
+
+.jade-product-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.jade-product-card .ant-card-cover {
+  overflow: hidden;
+}
+
+.jade-product-card .ant-card-cover img {
+  transition: transform 0.3s ease;
+}
+
+.jade-product-card:hover .ant-card-cover img {
+  transform: scale(1.05);
+}
+
+.jade-product-card .ant-card-actions {
+  background: #fafafa;
+  border-top: 1px solid #f0f0f0;
+}
+
+.jade-product-card .ant-card-actions > li {
+  margin: 8px 0;
+}
+
+.jade-product-card .ant-card-actions .ant-btn {
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+/* 商品图片容器 */
+.shop_Card_Image {
+  position: relative;
+  overflow: hidden;
+  background-color: #f8f4f1;
+}
+
+/* 商品价格样式 */
+.shop_Card_Price {
+  font-weight: bold;
+  font-size: 1rem; /* text-base */
+  color: #059669; /* text-green-600 */
+  background-color: #f0fdf4; /* bg-green-50 */
+  padding: 0.125rem 0.5rem; /* px-2 py-0.5 */
+  border-radius: 0.375rem; /* rounded-md */
+  display: inline-block;
+}
+
+/* 列表视图特殊样式 */
+.jade-product-card .ant-card-body {
+  padding: 8px;
+}
+
+.jade-product-card .ant-card-actions {
+  padding: 8px 12px;
+  background: #fafafa;
+  border-top: 1px solid #f0f0f0;
+}
+
+.jade-product-card .ant-card-actions > li {
+  margin: 0 2px;
+}
+
+.jade-product-card .ant-card-actions .ant-btn {
+  height: 28px;
+  border-radius: 4px;
+  font-weight: 500;
+  min-width: 80px;
+}
+
+/* 价格高亮样式 */
+.price-highlight {
+  background: linear-gradient(135deg, #52c41a 0%, #73d13d 100%);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(82, 196, 26, 0.3);
+}
+.shop_Card_Price{
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #0b0c0b81;
+}
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .jade-product-card {
+    margin-bottom: 16px;
+  }
+  
+  .jade-product-card .ant-card-body {
+    padding: 16px;
+  }
+  
+  .jade-product-card .ant-card-actions .ant-btn {
+    min-width: 80px;
+    height: 32px;
+    font-size: 12px;
+  }
+}
+/* 列表视图容器样式 */
+.list_View {
+
+}
+
+/* 列表项卡片样式 */
+.list-item-card {
+  margin-bottom: 8px !important;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.list-item-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.list-item-card:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* 列表项卡片内容样式 */
+.list-item-card .ant-card-body {
+  padding: 12px !important;
+}
+
+/* 商品标题高亮样式 */
+.list-item-card .text-lg {
+  font-size: 1.125rem !important;
+  font-weight: 700 !important;
+  color: #111827 !important; /* text-gray-900 */
+}
+
+/* 按钮区域样式 */
+.list-item-card .flex.flex-col.gap-3 {
+  gap: 12px;
+}
+
+.list-item-card .flex.flex-col.gap-3 .ant-btn {
+  height: 28px !important;
+  border-radius: 4px !important;
+  font-weight: 500 !important;
+  font-size: 11px !important;
+  width: 100% !important;
+}

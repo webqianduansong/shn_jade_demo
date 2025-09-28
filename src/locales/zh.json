@@ -1,0 +1,125 @@
+{
+  "site": {
+    "title": "丝路玉",
+    "subtitle": "古丝绸之路与现代奢华的交汇，甄选兼具文化底蕴与现代设计的和田玉作品。",
+    "cta": "加入购物车",
+    "checkout": "去结算",
+    "cart": "购物车",
+    "empty": "购物车为空",
+    "total": "合计"
+  },
+  "nav": {
+    "home": "首页",
+    "rings": "戒指",
+    "earrings": "耳环",
+    "necklaces": "项链",
+    "bracelets": "手链/镯",
+    "collections": "系列",
+    "cart": "购物车"
+  },
+  "features": {
+    "typeA": "A级玉石",
+    "typeADesc": "100%天然，未经处理。",
+    "shipping": "免费配送",
+    "shippingDesc": "30天免费退换。",
+    "warranty": "2年质保",
+    "warrantyDesc": "品质保证。"
+  },
+  "sections": {
+    "categories": "按分类浏览",
+    "popular": "热门商品",
+    "newArrivals": "新品上市"
+  },
+  "actions": {
+    "viewAll": "查看全部"
+  },
+  "hero": {
+    "slide1": {
+      "title": "天然缅甸翡翠 - A级",
+      "subtitle": "100%天然，无任何化学处理",
+      "cta": "探索系列"
+    },
+    "slide2": {
+      "title": "手工卓越",
+      "subtitle": "每件作品都由我们的专家手工切割",
+      "cta": "立即购买"
+    },
+    "slide3": {
+      "title": "文化遗产",
+      "subtitle": "古丝绸之路与现代奢华的交汇",
+      "cta": "了解更多"
+    }
+  },
+  "product": {
+    "currency": "USD",
+    "details": "产品详情",
+    "features": {
+      "natural": "100%天然A级翡翠",
+      "handcrafted": "由专业工匠手工制作",
+      "shipping": "全球免费配送",
+      "return": "30天退换政策",
+      "warranty": "包含2年质保"
+    },
+    "shippingInfo": "订单满$100免费配送",
+    "deliveryTime": "预计送达：3-5个工作日",
+    "related": "您可能还喜欢"
+  },
+  "products": {
+    "found": "个产品",
+    "sortBy": "排序方式",
+    "priceLow": "价格：从低到高",
+    "priceHigh": "价格：从高到低",
+    "newest": "最新优先",
+    "popular": "最受欢迎",
+    "noProducts": "未找到产品",
+    "noProductsDesc": "在此分类中未找到任何产品。请尝试浏览其他分类或稍后再查看。",
+    "backToHome": "返回首页"
+  },
+  "footer": {
+    "service": "服务",
+    "support": "支持",
+    "store": "门店",
+    "newsletter": "邮件订阅",
+    "privacyPolicy": "隐私政策",
+    "shippingPolicy": "配送政策",
+    "refundPolicy": "退换货政策",
+    "termsOfService": "服务条款",
+    "email": "support@silkroadjade.com",
+    "phone": "+852-0000 0000",
+    "location": "香港",
+    "hours": "周一至周六 10:30-17:30",
+    "newsletterDesc": "订阅获取优惠和更新信息。",
+    "emailPlaceholder": "请输入您的邮箱",
+    "subscribe": "订阅",
+    "emailRequired": "请输入您的邮箱地址",
+    "emailInvalid": "请输入有效的邮箱地址",
+    "subscribeSuccess": "成功订阅邮件列表！",
+    "subscribeError": "订阅失败，请重试。",
+    "copyright": "版权所有。"
+  },
+  "cart": {
+    "title": "购物车",
+    "empty": "您的购物车是空的",
+    "emptyDesc": "开始添加一些美丽的玉石到您的收藏中吧",
+    "startShopping": "开始购物",
+    "itemCount": "件商品",
+    "itemCountPlural": "件商品",
+    "inYourCart": "在您的购物车中",
+    "quantity": "数量",
+    "remove": "移除",
+    "orderSummary": "订单摘要",
+    "subtotal": "小计",
+    "shipping": "运费",
+    "freeShipping": "免费",
+    "tax": "税费",
+    "taxNote": "结账时计算",
+    "total": "总计",
+    "proceedToCheckout": "去结账",
+    "clearCart": "清空购物车",
+    "freeExpressShipping": "免费快递配送",
+    "free30DayReturns": "免费30天退货",
+    "twoYearWarranty": "2年保修"
+  }
+}
+
+

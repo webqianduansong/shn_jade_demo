@@ -1,0 +1,125 @@
+{
+  "site": {
+    "title": "Silk Road Jade",
+    "subtitle": "Where the ancient Silk Road meets modern luxury. Handpicked Hetian jade pieces with cultural heritage and contemporary design.",
+    "cta": "Add to Cart",
+    "checkout": "Checkout",
+    "cart": "Cart",
+    "empty": "Your cart is empty",
+    "total": "Total"
+  },
+  "nav": {
+    "home": "Home",
+    "rings": "Rings",
+    "earrings": "Earrings",
+    "necklaces": "Necklaces",
+    "bracelets": "Bracelets/Bangles",
+    "collections": "Collections",
+    "cart": "Cart"
+  },
+  "features": {
+    "typeA": "Type A Jade",
+    "typeADesc": "100% natural, untreated.",
+    "shipping": "Free Shipping",
+    "shippingDesc": "30-day free returns.",
+    "warranty": "2-Year Warranty",
+    "warrantyDesc": "Quality guaranteed."
+  },
+  "sections": {
+    "categories": "Shop by Category",
+    "popular": "Most Popular",
+    "newArrivals": "New Arrivals"
+  },
+  "actions": {
+    "viewAll": "View all"
+  },
+  "hero": {
+    "slide1": {
+      "title": "Natural Burmese Jadeite – Type A",
+      "subtitle": "100% natural and free from any form of chemical treatment",
+      "cta": "Explore Collection"
+    },
+    "slide2": {
+      "title": "Handcrafted Excellence",
+      "subtitle": "Each piece is hand cut by our experts",
+      "cta": "Shop Now"
+    },
+    "slide3": {
+      "title": "Cultural Heritage",
+      "subtitle": "Where ancient Silk Road meets modern luxury",
+      "cta": "Discover More"
+    }
+  },
+  "product": {
+    "currency": "USD",
+    "details": "Product Details",
+    "features": {
+      "natural": "100% Natural Type A Jadeite",
+      "handcrafted": "Handcrafted by expert artisans",
+      "shipping": "Free worldwide shipping",
+      "return": "30-day return policy",
+      "warranty": "2-year warranty included"
+    },
+    "shippingInfo": "Free shipping on orders over $100",
+    "deliveryTime": "Estimated delivery: 3-5 business days",
+    "related": "You might also like"
+  },
+  "products": {
+    "found": "products found",
+    "sortBy": "Sort by",
+    "priceLow": "Price: Low to High",
+    "priceHigh": "Price: High to Low",
+    "newest": "Newest First",
+    "popular": "Most Popular",
+    "noProducts": "No products found",
+    "noProductsDesc": "We couldn't find any products in this category. Try browsing other categories or check back later.",
+    "backToHome": "Back to Home"
+  },
+  "footer": {
+    "service": "Service",
+    "support": "Support",
+    "store": "Store",
+    "newsletter": "Newsletter",
+    "privacyPolicy": "Privacy Policy",
+    "shippingPolicy": "Shipping Policy",
+    "refundPolicy": "Refund & Return Policy",
+    "termsOfService": "Terms of Service",
+    "email": "support@silkroadjade.com",
+    "phone": "+852-0000 0000",
+    "location": "Hong Kong",
+    "hours": "Mon-Sat 10:30-17:30",
+    "newsletterDesc": "Subscribe for offers and updates.",
+    "emailPlaceholder": "Enter your email",
+    "subscribe": "Subscribe",
+    "emailRequired": "Please enter your email address",
+    "emailInvalid": "Please enter a valid email address",
+    "subscribeSuccess": "Successfully subscribed to newsletter!",
+    "subscribeError": "Failed to subscribe. Please try again.",
+    "copyright": "All rights reserved."
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "empty": "Your cart is empty",
+    "emptyDesc": "Start adding some beautiful jade pieces to your collection",
+    "startShopping": "START SHOPPING",
+    "itemCount": "item",
+    "itemCountPlural": "items",
+    "inYourCart": "in your cart",
+    "quantity": "Quantity",
+    "remove": "Remove",
+    "orderSummary": "Order Summary",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "freeShipping": "Free",
+    "tax": "Tax",
+    "taxNote": "Calculated at checkout",
+    "total": "Total",
+    "proceedToCheckout": "PROCEED TO CHECKOUT",
+    "clearCart": "Clear Cart",
+    "freeExpressShipping": "Free Express Shipping",
+    "free30DayReturns": "Free 30-Day Returns",
+    "twoYearWarranty": "2-Year Warranty"
+  }
+}
+
+

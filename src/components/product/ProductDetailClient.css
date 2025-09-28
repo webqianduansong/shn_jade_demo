@@ -1,0 +1,232 @@
+/* ProductDetailClient 组件样式 */
+.product-detail-container {
+  margin-bottom: 0.75rem;
+}
+
+.product-detail-title {
+  margin-bottom: 0.25rem;
+  color: #1a1a1a !important;
+  font-size: 1.25rem;
+}
+
+@media (min-width: 1024px) {
+  .product-detail-title {
+    font-size: 1.5rem;
+  }
+}
+
+.product-detail-text {
+  font-size: 0.875rem;
+  color: #666 !important;
+}
+
+.product-detail-discount {
+  background-color: #10b981;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  display: inline-block;
+}
+
+.product-detail-price {
+  color: #1a1a1a !important;
+  margin-bottom: 0.25rem;
+  font-size: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .product-detail-price {
+    font-size: 1.875rem;
+  }
+}
+
+.product-detail-quantity {
+  margin-bottom: 1rem;
+}
+
+.product-detail-quantity-label {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  display: block;
+  font-size: 0.875rem;
+}
+
+.product-detail-quantity-controls {
+  display: flex;
+  align-items: center;
+  border: 1px solid #d1d5db;
+  border-radius: 0.25rem;
+  width: fit-content;
+}
+
+.product-detail-quantity-button {
+  padding: 0.25rem 0.5rem;
+  border-right: 1px solid #d1d5db;
+  border-radius: 0;
+  font-size: 0.875rem;
+}
+
+.product-detail-quantity-display {
+  padding: 0.25rem 0.75rem;
+  text-align: center;
+  font-weight: 600;
+  min-width: 2rem;
+  font-size: 0.875rem;
+}
+
+.product-detail-quantity-button-right {
+  padding: 0.25rem 0.5rem;
+  border-left: 1px solid #d1d5db;
+  border-radius: 0;
+  font-size: 0.875rem;
+}
+
+.product-detail-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.product-detail-cart-button {
+  width: 100%;
+  height: 3rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 2px solid #1a1a1a !important;
+  background: white !important;
+  color: #1a1a1a !important;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.product-detail-cart-button:hover {
+  background: #f9fafb !important;
+  color: #1a1a1a !important;
+}
+
+.product-detail-buy-button {
+  width: 100%;
+  height: 3rem;
+  font-size: 1rem;
+  font-weight: 500;
+  background: #10b981 !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.product-detail-buy-button:hover {
+  background: #059669 !important;
+  color: white !important;
+}
+
+.product-detail-more-payment {
+  text-align: center;
+}
+
+.product-detail-more-payment-button {
+  color: #4b5563;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.product-detail-more-payment-button:hover {
+  color: #1f2937;
+}
+
+.product-detail-pickup {
+  background: #f9fafb;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.product-detail-pickup-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.product-detail-pickup-icon {
+  color: #10b981;
+  margin-top: 0.125rem;
+  font-size: 0.875rem;
+}
+
+.product-detail-pickup-text {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #1a1a1a !important;
+  display: block;
+}
+
+.product-detail-pickup-subtext {
+  color: #666 !important;
+  font-size: 0.75rem;
+  display: block;
+}
+
+.product-detail-pickup-link {
+  color: #10b981 !important;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.product-detail-pickup-link:hover {
+  color: #059669 !important;
+}
+
+.product-detail-social {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.product-detail-social-button {
+  color: #10b981 !important;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.product-detail-social-button:hover {
+  color: #059669 !important;
+}
+
+/* 产品描述样式 */
+.product-detail-description-title {
+  margin-bottom: 0.5rem;
+  color: #1a1a1a !important;
+  font-size: 1rem;
+}
+
+.product-detail-description-text {
+  display: block;
+  line-height: 1.625;
+  font-size: 0.875rem;
+  color: #666 !important;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .product-detail-container {
+    padding: 1rem;
+  }
+  
+  .product-detail-title {
+    font-size: 1.125rem;
+  }
+  
+  .product-detail-price {
+    font-size: 1.25rem;
+  }
+}

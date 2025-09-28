@@ -1,0 +1,308 @@
+@import "tailwindcss";
+
+// 主题变量定义
+@primary-color: #2563eb;
+@success-color: #10b981;
+@warning-color: #f59e0b;
+@error-color: #ef4444;
+
+// 颜色变量
+@light-background: #ffffff;
+@light-foreground: #171717;
+@light-muted: #6b7280;
+@light-border: #e5e7eb;
+@light-card-bg: #ffffff;
+@light-card-foreground: #111827;
+
+@dark-background: #0a0a0a;
+@dark-foreground: #f9fafb;
+@dark-muted: #9ca3af;
+@dark-border: #374151;
+@dark-card-bg: #111827;
+@dark-card-foreground: #f9fafb;
+
+// 字体变量
+@font-sans: var(--font-geist-sans);
+@font-mono: var(--font-geist-mono);
+
+// 间距和圆角
+@border-radius-sm: 4px;
+@border-radius: 8px;
+@border-radius-lg: 12px;
+
+// 阴影
+@box-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+@box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+@box-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+@box-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+// CSS 变量设置
+:root {
+  --background: @light-background;
+  --foreground: @light-foreground;
+  --muted: @light-muted;
+  --border: @light-border;
+  --card-bg: @light-card-bg;
+  --card-foreground: @light-card-foreground;
+  --primary: @primary-color;
+  --success: @success-color;
+  --warning: @warning-color;
+  --error: @error-color;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-card-bg: var(--card-bg);
+  --color-card-foreground: var(--card-foreground);
+  --font-sans: @font-sans;
+  --font-mono: @font-mono;
+}
+
+// 深色主题
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: @dark-background;
+    --foreground: @dark-foreground;
+    --muted: @dark-muted;
+    --border: @dark-border;
+    --card-bg: @dark-card-bg;
+    --card-foreground: @dark-card-foreground;
+  }
+}
+
+// 浅色主题
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: @light-background;
+    --foreground: @light-card-foreground;
+    --muted: @light-muted;
+    --border: @light-border;
+    --card-bg: @light-card-bg;
+    --card-foreground: @light-card-foreground;
+  }
+}
+
+// 基础样式
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: @font-sans, system-ui, -apple-system, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+// 文本样式类
+.text {
+  &-primary {
+    color: var(--foreground);
+  }
+  
+  &-secondary {
+    color: var(--muted);
+  }
+  
+  &-inverse {
+    color: var(--background);
+  }
+  
+  &-success {
+    color: @success-color;
+  }
+  
+  &-warning {
+    color: @warning-color;
+  }
+  
+  &-error {
+    color: @error-color;
+  }
+}
+
+// 卡片样式
+.card {
+  background: var(--card-bg);
+  color: var(--card-foreground);
+  border: 1px solid var(--border);
+  border-radius: @border-radius-lg;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    box-shadow: @box-shadow-md;
+  }
+}
+
+// 文本截断
+.line-clamp {
+  &-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+  
+  &-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  
+  &-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+}
+
+// 交互式元素样式
+.interactive {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+  
+  &-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      cursor: pointer;
+      transform: translateY(-2px);
+      box-shadow: @box-shadow-lg;
+    }
+  }
+}
+
+// 按钮和链接样式
+button,
+.btn,
+[role="button"] {
+  cursor: pointer;
+  border-radius: @border-radius;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    cursor: pointer;
+  }
+  
+  &:focus {
+    outline: 2px solid @primary-color;
+    outline-offset: 2px;
+  }
+}
+
+a,
+.link {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+// 工具类
+.clickable {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+}
+
+// 响应式工具类
+.responsive-grid {
+  display: grid;
+  gap: 1.5rem;
+  
+  &-1 {
+    grid-template-columns: 1fr;
+  }
+  
+  &-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  &-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  &-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  @media (max-width: 768px) {
+    &-2,
+    &-3,
+    &-4 {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (min-width: 769px) and (max-width: 1024px) {
+    &-3,
+    &-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1025px) {
+    &-4 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    &-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}
+
+// 容器样式
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  
+  &-sm {
+    max-width: 640px;
+  }
+  
+  &-md {
+    max-width: 768px;
+  }
+  
+  &-lg {
+    max-width: 1024px;
+  }
+  
+  &-xl {
+    max-width: 1280px;
+  }
+}
+
+// 间距工具类
+.spacing {
+  &-xs { margin: 0.5rem; }
+  &-sm { margin: 1rem; }
+  &-md { margin: 1.5rem; }
+  &-lg { margin: 2rem; }
+  &-xl { margin: 3rem; }
+}
+
+.padding {
+  &-xs { padding: 0.5rem; }
+  &-sm { padding: 1rem; }
+  &-md { padding: 1.5rem; }
+  &-lg { padding: 2rem; }
+  &-xl { padding: 3rem; }
+}

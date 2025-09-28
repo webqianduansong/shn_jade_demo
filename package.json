@@ -3,25 +3,40 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "dev": "next dev",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "next": "15.5.3"
+    "@ant-design/icons": "^6.0.2",
+    "@ant-design/nextjs-registry": "^1.1.0",
+    "@formatjs/intl-localematcher": "^0.6.1",
+    "@next/bundle-analyzer": "^14.2.15",
+    "@stripe/stripe-js": "^7.9.0",
+    "antd": "^5.27.4",
+    "axios": "^1.12.2",
+    "less": "^4.4.1",
+    "negotiator": "^1.0.0",
+    "next": "^14.2.15",
+    "next-intl": "^4.3.9",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "stripe": "^18.5.0",
+    "zod": "^4.1.11",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@types/negotiator": "^0.6.4",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
+    "@types/react": "^18.3.24",
+    "@types/react-dom": "^18.3.7",
+    "css-loader": "^7.1.2",
     "eslint": "^9",
     "eslint-config-next": "15.5.3",
-    "@eslint/eslintrc": "^3"
+    "less-loader": "^12.3.0",
+    "style-loader": "^4.0.0",
+    "typescript": "^5"
   }
 }

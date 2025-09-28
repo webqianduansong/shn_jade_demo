@@ -1,0 +1,577 @@
+/* 产品详情页面专用样式 - 简洁优雅风格 */
+
+/* 全局样式重置 - 性能优化版本 */
+* {
+  box-sizing: border-box;
+}
+
+/* 全局性能优化 */
+html {
+  /* 启用硬件加速 */
+  transform: translateZ(0);
+  /* 优化字体渲染 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* 优化滚动 */
+  scroll-behavior: smooth;
+}
+
+body {
+  /* 优化渲染 */
+  text-rendering: optimizeLegibility;
+  /* 启用硬件加速 */
+  transform: translateZ(0);
+}
+
+/* 高性能布局样式 - 使用CSS Containment和硬件加速 */
+.product-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  /* CSS Containment - 提升渲染性能 */
+  contain: layout style;
+  /* 启用硬件加速 */
+  will-change: transform;
+  /* 优化重排重绘 */
+  transform: translateZ(0);
+}
+
+.product-layout .product-image-section {
+  flex: 1;
+  margin-bottom: 1rem;
+  /* 图片区域优化 */
+  contain: layout;
+  /* 防止布局抖动 */
+  min-height: 0;
+  /* 限制最大宽度 */
+  max-width: 100%;
+}
+
+.product-layout .product-info-section {
+  flex: 1;
+  /* 内容区域优化 */
+  contain: layout style;
+  /* 防止内容溢出 */
+  min-width: 0;
+  /* 添加内边距 */
+  padding-left: 1rem;
+}
+
+/* 中等屏幕布局 */
+@media (min-width: 768px) {
+  .product-layout {
+    gap: 3rem;
+  }
+  
+  .product-layout .product-info-section {
+    padding-left: 2rem;
+  }
+}
+
+/* 大屏幕布局 - 使用更高效的媒体查询 */
+@media (min-width: 1024px) {
+  .product-layout {
+    flex-direction: row;
+    gap: 3rem;
+    /* 大屏幕时启用更强的containment */
+    contain: layout style paint;
+  }
+  
+  .product-layout .product-image-section {
+    margin-bottom: 0;
+    /* 固定宽度避免重排 */
+    flex: 0 0 45%;
+    max-width: 45%;
+  }
+  
+  .product-layout .product-info-section {
+    /* 固定宽度避免重排 */
+    flex: 0 0 55%;
+    max-width: 55%;
+    padding-left: 2rem;
+  }
+}
+
+/* 超宽屏幕优化 */
+@media (min-width: 1280px) {
+  .product-layout {
+    gap: 4rem;
+  }
+  
+  .product-layout .product-image-section {
+    flex: 0 0 40%;
+    max-width: 40%;
+  }
+  
+  .product-layout .product-info-section {
+    flex: 0 0 60%;
+    max-width: 60%;
+  }
+}
+
+/* 简洁图片展示样式 */
+.product-image-gallery {
+  position: relative;
+}
+
+.product-thumbnail {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.product-thumbnail:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 简洁风格卡片 - 性能优化版本 */
+.product-detail-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f3f4f6;
+  overflow: hidden;
+  background: white;
+  /* 性能优化 */
+  contain: layout style paint;
+  will-change: transform;
+  transform: translateZ(0);
+  /* 优化渲染 */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.product-image-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f3f4f6;
+  overflow: hidden;
+  background: white;
+  /* 图片卡片性能优化 */
+  contain: layout style paint;
+  will-change: transform;
+  transform: translateZ(0);
+  /* 图片加载优化 */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* 价格区域样式 */
+.price-section {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.price-current {
+  font-size: 36px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1;
+}
+
+.price-original {
+  font-size: 20px;
+  color: #9ca3af;
+  text-decoration: line-through;
+  margin-left: 12px;
+}
+
+.price-discount {
+  background: #dc2626;
+  color: white;
+  font-size: 14px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-left: 12px;
+  font-weight: 600;
+}
+
+/* 按钮样式 - 高性能版本 */
+.btn-primary-elegant {
+  background: #111827;
+  border: none;
+  color: white;
+  font-weight: 600;
+  border-radius: 12px;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px rgba(17, 24, 39, 0.2);
+  /* 性能优化 */
+  will-change: transform, background-color, box-shadow;
+  transform: translateZ(0);
+  /* 避免重排 */
+  contain: layout style;
+}
+
+.btn-primary-elegant:hover {
+  background: #1f2937;
+  transform: translateY(-2px) translateZ(0);
+  box-shadow: 0 8px 20px rgba(17, 24, 39, 0.3);
+}
+
+.btn-secondary-elegant {
+  background: white;
+  border: 2px solid #e5e7eb;
+  color: #374151;
+  font-weight: 600;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary-elegant:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  color: #111827;
+}
+
+/* 规格表格样式 */
+.spec-table {
+  width: 100%;
+}
+
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.spec-row:last-child {
+  border-bottom: none;
+}
+
+.spec-label {
+  color: #6b7280;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.spec-value {
+  color: #111827;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* 数量选择器 */
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.quantity-btn {
+  padding: 12px 16px;
+  background: white;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.quantity-btn:hover {
+  background: #f9fafb;
+  color: #374151;
+}
+
+.quantity-input {
+  width: 80px;
+  text-align: center;
+  border: none;
+  outline: none;
+  padding: 12px 8px;
+  font-weight: 700;
+  font-size: 18px;
+  color: #111827;
+}
+
+/* 标签页样式 */
+.tab-container {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tab-list {
+  display: flex;
+  gap: 32px;
+  padding: 0 32px;
+}
+
+.tab-item {
+  padding: 16px 8px;
+  border-bottom: 2px solid transparent;
+  color: #6b7280;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
+}
+
+.tab-item:hover {
+  color: #374151;
+}
+
+.tab-item.active {
+  color: #111827;
+  border-bottom-color: #111827;
+  font-weight: 600;
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+  .price-current {
+    font-size: 32px;
+  }
+  
+  .btn-primary-elegant {
+    padding: 16px 32px;
+    font-size: 18px;
+  }
+  
+  .spec-row {
+    padding: 12px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .price-section {
+    padding: 20px;
+  }
+  
+  .price-current {
+    font-size: 28px;
+  }
+  
+  .price-original {
+    font-size: 18px;
+  }
+  
+  .tab-list {
+    gap: 24px;
+    padding: 0 24px;
+  }
+  
+  .tab-item {
+    padding: 12px 4px;
+    font-size: 15px;
+  }
+  
+  .spec-row {
+    padding: 10px 0;
+  }
+  
+  .spec-label,
+  .spec-value {
+    font-size: 15px;
+  }
+  
+  .quantity-btn {
+    padding: 10px 14px;
+    font-size: 16px;
+  }
+  
+  .quantity-input {
+    width: 70px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .price-current {
+    font-size: 24px;
+  }
+  
+  .price-original {
+    font-size: 16px;
+  }
+  
+  .btn-primary-elegant {
+    padding: 14px 28px;
+    font-size: 16px;
+  }
+  
+  .tab-list {
+    gap: 16px;
+    padding: 0 16px;
+  }
+  
+  .tab-item {
+    padding: 10px 2px;
+    font-size: 14px;
+  }
+  
+  .spec-row {
+    padding: 8px 0;
+  }
+  
+  .spec-label,
+  .spec-value {
+    font-size: 14px;
+  }
+}
+
+/* 动画效果 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.product-detail-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* 悬停效果 */
+.product-detail-card:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s ease;
+}
+
+/* 背景样式 */
+.bg-gray-50 {
+  background-color: #f9fafb;
+}
+
+.bg-gray-100 {
+  background-color: #f3f4f6;
+}
+
+/* 文本样式 */
+.text-gray-700 {
+  color: #374151;
+  line-height: 1.6;
+}
+
+.text-gray-900 {
+  color: #111827;
+}
+
+.text-gray-500 {
+  color: #6b7280;
+}
+
+.text-gray-600 {
+  color: #4b5563;
+}
+
+.text-gray-400 {
+  color: #9ca3af;
+}
+
+/* 阴影效果 */
+.shadow-sm {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+/* 边框样式 */
+.border-gray-200 {
+  border-color: #e5e7eb;
+}
+
+.border-gray-100 {
+  border-color: #f3f4f6;
+}
+
+/* 圆角样式 */
+.rounded-lg {
+  border-radius: 8px;
+}
+
+.rounded-xl {
+  border-radius: 12px;
+}
+
+.rounded-2xl {
+  border-radius: 16px;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+/* 间距样式 */
+.space-y-2 > * + * {
+  margin-top: 8px;
+}
+
+.space-y-3 > * + * {
+  margin-top: 12px;
+}
+
+.space-y-4 > * + * {
+  margin-top: 16px;
+}
+
+.space-y-6 > * + * {
+  margin-top: 24px;
+}
+
+.space-y-8 > * + * {
+  margin-top: 32px;
+}
+
+.space-x-2 > * + * {
+  margin-left: 8px;
+}
+
+.space-x-3 > * + * {
+  margin-left: 12px;
+}
+
+.space-x-4 > * + * {
+  margin-left: 16px;
+}
+
+.space-x-6 > * + * {
+  margin-left: 24px;
+}
+
+.space-x-8 > * + * {
+  margin-left: 32px;
+}
+
+/* 字体样式 */
+.font-medium {
+  font-weight: 500;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+/* 过渡效果 */
+.transition-colors {
+  transition-property: color, background-color, border-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.duration-200 {
+  transition-duration: 200ms;
+}
+
+.duration-300 {
+  transition-duration: 300ms;
+}

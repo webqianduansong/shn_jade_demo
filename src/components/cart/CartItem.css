@@ -1,0 +1,77 @@
+/* CartItem 组件样式 */
+.cart-item-card {
+  transition: box-shadow 0.3s ease;
+}
+
+.cart-item-card:hover {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.aspect-square {
+  aspect-ratio: 1;
+}
+
+.bg-gray-100 {
+  background-color: #f3f4f6;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.object-cover {
+  object-fit: cover;
+}
+
+.w-full {
+  width: 100%;
+}
+
+/* 文本样式 */
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.text-gray-600 {
+  color: #666 !important;
+}
+
+.text-emerald-600 {
+  color: #10b981 !important;
+}
+
+/* 间距工具类 */
+.space-y-2 > * + * {
+  margin-top: 0.5rem;
+}
+
+.w-16 {
+  width: 4rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .cart-item-card {
+    margin-bottom: 1rem;
+  }
+  
+  .aspect-square {
+    height: 200px;
+  }
+}

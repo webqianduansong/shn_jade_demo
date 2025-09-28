@@ -1,0 +1,148 @@
+/* Footer 组件样式 */
+.jade-footer {
+  background: #ffffff;
+  border-top: 1px solid #f0f0f0;
+  margin-top: 80px;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 24px 40px;
+}
+
+.footer-section {
+  margin-bottom: 32px;
+}
+
+.footer-section .section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 20px;
+  font-family: var(--font-playfair), serif;
+}
+
+.section-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.section-links li {
+  margin-bottom: 12px;
+}
+
+.section-links a {
+  color: #666;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.section-links a:hover {
+  color: #10b981;
+}
+
+.section-text {
+  color: #666 !important;
+  font-size: 14px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-text .anticon {
+  color: #666 !important;
+  font-size: 14px;
+}
+
+.newsletter-form {
+  margin-top: 16px;
+}
+
+.newsletter-form .ant-input {
+  border-radius: 8px 0 0 8px;
+  border-right: none;
+  color: #1a1a1a !important;
+}
+
+.newsletter-form .ant-input::placeholder {
+  color: #999 !important;
+}
+
+.newsletter-form .ant-btn {
+  border-radius: 0 8px 8px 0;
+  height: 40px;
+  background: #10b981 !important;
+  border-color: #10b981 !important;
+  color: white !important;
+}
+
+.newsletter-form .ant-btn:hover {
+  background: #059669 !important;
+  border-color: #059669 !important;
+  color: white !important;
+}
+
+.newsletter-submit-btn {
+  background: #10b981 !important;
+  border-color: #10b981 !important;
+  color: white !important;
+}
+
+.newsletter-submit-btn:hover {
+  background: #059669 !important;
+  border-color: #059669 !important;
+  color: white !important;
+}
+
+.newsletter-error {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.footer-bottom {
+  background: #f8f9fa;
+  padding: 20px 0;
+  text-align: center;
+  border-top: 1px solid #e5e7eb;
+}
+
+.footer-bottom p {
+  color: #666 !important;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* 间距工具类 */
+.space-y-2 > * + * {
+  margin-top: 0.5rem;
+}
+
+.mb-3 {
+  margin-bottom: 0.75rem;
+}
+
+/* 响应式Footer */
+@media (max-width: 768px) {
+  .footer-content {
+    padding: 40px 16px 30px;
+  }
+  
+  .footer-section {
+    margin-bottom: 24px;
+  }
+  
+  .footer-section .section-title {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .footer-section .section-text {
+    font-size: 13px;
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "site": {
+    "title": "실크로드 제이드",
+    "subtitle": "고대 실크로드와 현대 럭셔리의 만남. 문화적 유산과 현대적 디자인을 겸비한 화전옥 작품을 엄선.",
+    "cta": "장바구니에 추가",
+    "checkout": "결제하기",
+    "cart": "장바구니",
+    "empty": "장바구니가 비어있습니다",
+    "total": "총액"
+  },
+  "nav": {
+    "rings": "반지",
+    "earrings": "귀걸이",
+    "necklaces": "목걸이",
+    "bracelets": "팔찌/방울",
+    "collections": "컬렉션",
+    "cart": "장바구니"
+  },
+  "features": {
+    "typeA": "A급 제이드",
+    "typeADesc": "100% 천연, 미처리.",
+    "shipping": "무료 배송",
+    "shippingDesc": "30일 무료 반품.",
+    "warranty": "2년 보증",
+    "warrantyDesc": "품질 보장."
+  },
+  "sections": {
+    "categories": "카테고리별",
+    "popular": "인기 상품",
+    "newArrivals": "신상품"
+  },
+  "actions": {
+    "viewAll": "전체 보기"
+  },
+  "hero": {
+    "slide1": {
+      "title": "천연 미얀마 제이드 - A급",
+      "subtitle": "100% 천연, 화학 처리 없음",
+      "cta": "컬렉션 탐색"
+    },
+    "slide2": {
+      "title": "수제 우수성",
+      "subtitle": "각 작품은 전문가의 수제 절단",
+      "cta": "지금 쇼핑"
+    },
+    "slide3": {
+      "title": "문화 유산",
+      "subtitle": "고대 실크로드와 현대 럭셔리의 만남",
+      "cta": "더 알아보기"
+    }
+  },
+  "product": {
+    "currency": "USD",
+    "details": "제품 상세",
+    "features": {
+      "natural": "100% 천연 A급 제이드",
+      "handcrafted": "전문 장인 수제",
+      "shipping": "전 세계 무료 배송",
+      "return": "30일 반품 보장",
+      "warranty": "2년 보증 포함"
+    },
+    "shippingInfo": "$100 이상 주문 시 무료 배송",
+    "deliveryTime": "예상 배송: 3-5 영업일",
+    "related": "추천 상품"
+  },
+  "footer": {
+    "service": "서비스",
+    "support": "지원",
+    "store": "매장",
+    "newsletter": "뉴스레터",
+    "privacyPolicy": "개인정보 보호정책",
+    "shippingPolicy": "배송 정책",
+    "refundPolicy": "환불 및 반품 정책",
+    "termsOfService": "서비스 약관",
+    "email": "support@silkroadjade.com",
+    "phone": "+852-0000 0000",
+    "location": "홍콩",
+    "hours": "월-토 10:30-17:30",
+    "newsletterDesc": "오퍼와 업데이트를 구독하세요.",
+    "emailPlaceholder": "이메일을 입력하세요",
+    "subscribe": "구독",
+    "copyright": "모든 권리 보유."
+  }
+}

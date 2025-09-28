@@ -1,0 +1,71 @@
+/* OrderSummary 组件样式 */
+.order-summary {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+}
+
+.order-summary .w-full {
+  width: 100%;
+}
+
+.order-summary .flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.order-summary .justify-between {
+  justify-content: space-between;
+}
+
+.order-summary .text-center {
+  text-align: center;
+}
+
+.order-summary .block {
+  display: block;
+}
+
+/* 按钮样式 */
+.bg-emerald-600 {
+  background-color: #10b981 !important;
+  color: white !important;
+  border: none !important;
+}
+
+.hover\:bg-emerald-700:hover {
+  background-color: #059669 !important;
+  color: white !important;
+}
+
+/* 文本样式 */
+.text-lg {
+  font-size: 1.125rem;
+}
+
+/* 间距 */
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .order-summary {
+    padding: 1rem;
+  }
+  
+  .order-summary .flex {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

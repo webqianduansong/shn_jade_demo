@@ -1,0 +1,84 @@
+{
+  "site": {
+    "title": "Jade de la Route de la Soie",
+    "subtitle": "Où l'ancienne Route de la Soie rencontre le luxe moderne. Pièces de jade Hetian sélectionnées avec patrimoine culturel et design contemporain.",
+    "cta": "Ajouter au panier",
+    "checkout": "Commander",
+    "cart": "Panier",
+    "empty": "Votre panier est vide",
+    "total": "Total"
+  },
+  "nav": {
+    "rings": "Bagues",
+    "earrings": "Boucles d'oreilles",
+    "necklaces": "Colliers",
+    "bracelets": "Bracelets/Bangles",
+    "collections": "Collections",
+    "cart": "Panier"
+  },
+  "features": {
+    "typeA": "Jade Type A",
+    "typeADesc": "100% naturel, non traité.",
+    "shipping": "Livraison gratuite",
+    "shippingDesc": "Retours gratuits sous 30 jours.",
+    "warranty": "Garantie 2 ans",
+    "warrantyDesc": "Qualité garantie."
+  },
+  "sections": {
+    "categories": "Par catégorie",
+    "popular": "Plus populaires",
+    "newArrivals": "Nouveautés"
+  },
+  "actions": {
+    "viewAll": "Voir tout"
+  },
+  "hero": {
+    "slide1": {
+      "title": "Jade naturel birman - Type A",
+      "subtitle": "100% naturel, sans traitement chimique",
+      "cta": "Explorer la collection"
+    },
+    "slide2": {
+      "title": "Excellence artisanale",
+      "subtitle": "Chaque pièce est taillée à la main par nos experts",
+      "cta": "Acheter maintenant"
+    },
+    "slide3": {
+      "title": "Patrimoine culturel",
+      "subtitle": "Où l'ancienne Route de la Soie rencontre le luxe moderne",
+      "cta": "Découvrir plus"
+    }
+  },
+  "product": {
+    "currency": "USD",
+    "details": "Détails du produit",
+    "features": {
+      "natural": "100% Jade naturel de type A",
+      "handcrafted": "Artisanat par des experts",
+      "shipping": "Livraison gratuite mondiale",
+      "return": "Politique de retour 30 jours",
+      "warranty": "Garantie 2 ans incluse"
+    },
+    "shippingInfo": "Livraison gratuite pour les commandes de plus de 100$",
+    "deliveryTime": "Livraison estimée: 3-5 jours ouvrables",
+    "related": "Vous pourriez aussi aimer"
+  },
+  "footer": {
+    "service": "Service",
+    "support": "Support",
+    "store": "Magasin",
+    "newsletter": "Newsletter",
+    "privacyPolicy": "Politique de confidentialité",
+    "shippingPolicy": "Politique d'expédition",
+    "refundPolicy": "Politique de retour et remboursement",
+    "termsOfService": "Conditions de service",
+    "email": "support@silkroadjade.com",
+    "phone": "+852-0000 0000",
+    "location": "Hong Kong",
+    "hours": "Lun-Sam 10:30-17:30",
+    "newsletterDesc": "Abonnez-vous pour les offres et mises à jour.",
+    "emailPlaceholder": "Entrez votre email",
+    "subscribe": "S'abonner",
+    "copyright": "Tous droits réservés."
+  }
+}

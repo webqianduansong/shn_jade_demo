@@ -1,0 +1,41 @@
+/* EmptyCart 组件样式 */
+.empty-cart-container {
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.empty-cart-container .w-full {
+  width: 100%;
+}
+
+.empty-cart-container .max-w-md {
+  max-width: 28rem;
+}
+
+.empty-cart-container .mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.empty-cart-container .block {
+  display: block;
+}
+
+/* 按钮样式 */
+.bg-emerald-600 {
+  background-color: #10b981 !important;
+  color: white !important;
+  border: none !important;
+}
+
+.hover\:bg-emerald-700:hover {
+  background-color: #059669 !important;
+  color: white !important;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .empty-cart-container {
+    padding: 2rem 1rem;
+  }
+}

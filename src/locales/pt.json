@@ -1,0 +1,84 @@
+{
+  "site": {
+    "title": "Jade da Rota da Seda",
+    "subtitle": "Onde a antiga Rota da Seda encontra o luxo moderno. Peças de jade Hetian selecionadas com patrimônio cultural e design contemporâneo.",
+    "cta": "Adicionar ao carrinho",
+    "checkout": "Finalizar compra",
+    "cart": "Carrinho",
+    "empty": "Seu carrinho está vazio",
+    "total": "Total"
+  },
+  "nav": {
+    "rings": "Anéis",
+    "earrings": "Brincos",
+    "necklaces": "Colares",
+    "bracelets": "Pulseiras/Braceletes",
+    "collections": "Coleções",
+    "cart": "Carrinho"
+  },
+  "features": {
+    "typeA": "Jade Tipo A",
+    "typeADesc": "100% natural, não tratado.",
+    "shipping": "Frete grátis",
+    "shippingDesc": "Devolução gratuita em 30 dias.",
+    "warranty": "Garantia de 2 anos",
+    "warrantyDesc": "Qualidade garantida."
+  },
+  "sections": {
+    "categories": "Por categoria",
+    "popular": "Mais populares",
+    "newArrivals": "Novidades"
+  },
+  "actions": {
+    "viewAll": "Ver tudo"
+  },
+  "hero": {
+    "slide1": {
+      "title": "Jade natural birmanês - Tipo A",
+      "subtitle": "100% natural, sem tratamento químico",
+      "cta": "Explorar coleção"
+    },
+    "slide2": {
+      "title": "Excelência artesanal",
+      "subtitle": "Cada peça é cortada à mão por nossos especialistas",
+      "cta": "Comprar agora"
+    },
+    "slide3": {
+      "title": "Patrimônio cultural",
+      "subtitle": "Onde a antiga Rota da Seda encontra o luxo moderno",
+      "cta": "Descobrir mais"
+    }
+  },
+  "product": {
+    "currency": "USD",
+    "details": "Detalhes do produto",
+    "features": {
+      "natural": "100% Jade natural tipo A",
+      "handcrafted": "Feito à mão por especialistas",
+      "shipping": "Frete grátis mundial",
+      "return": "Política de devolução 30 dias",
+      "warranty": "Garantia de 2 anos incluída"
+    },
+    "shippingInfo": "Frete grátis para pedidos acima de $100",
+    "deliveryTime": "Tempo de entrega estimado: 3-5 dias úteis",
+    "related": "Você também pode gostar"
+  },
+  "footer": {
+    "service": "Serviço",
+    "support": "Suporte",
+    "store": "Loja",
+    "newsletter": "Newsletter",
+    "privacyPolicy": "Política de privacidade",
+    "shippingPolicy": "Política de envio",
+    "refundPolicy": "Política de devolução e reembolso",
+    "termsOfService": "Termos de serviço",
+    "email": "support@silkroadjade.com",
+    "phone": "+852-0000 0000",
+    "location": "Hong Kong",
+    "hours": "Seg-Sáb 10:30-17:30",
+    "newsletterDesc": "Inscreva-se para ofertas e atualizações.",
+    "emailPlaceholder": "Digite seu email",
+    "subscribe": "Inscrever-se",
+    "copyright": "Todos os direitos reservados."
+  }
+}

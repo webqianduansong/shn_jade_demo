@@ -1,0 +1,184 @@
+/* ChatWidget 组件样式 */
+.chat-widget-button {
+  width: 3.5rem;
+  height: 3.5rem;
+  background: #111827;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 50;
+}
+
+.chat-widget-button:hover {
+  background: #1f2937;
+}
+
+.chat-widget-button .text-lg {
+  font-size: 1.125rem;
+}
+
+.chat-widget-modal {
+  position: fixed;
+  bottom: 6rem;
+  right: 1.5rem;
+  width: 20rem;
+  height: 24rem;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+  border: 1px solid #e5e7eb;
+  z-index: 50;
+}
+
+.chat-widget-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-widget-header {
+  background: #111827;
+  color: white;
+  padding: 1rem;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.chat-widget-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chat-widget-header-title {
+  font-weight: 600;
+  margin: 0;
+  color: white !important;
+}
+
+.chat-widget-header-subtitle {
+  font-size: 0.875rem;
+  color: #d1d5db !important;
+  margin: 0;
+}
+
+.chat-widget-close {
+  color: #d1d5db !important;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.chat-widget-close:hover {
+  color: white !important;
+}
+
+.chat-widget-close svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.chat-widget-body {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.chat-widget-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.chat-widget-message {
+  background: #f3f4f6;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+}
+
+.chat-widget-message-text {
+  font-size: 0.875rem;
+  color: #374151 !important;
+  margin: 0;
+}
+
+.chat-widget-message-user {
+  text-align: right;
+}
+
+.chat-widget-message-user-content {
+  background: #10b981 !important;
+  color: white !important;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  display: inline-block;
+}
+
+.chat-widget-message-user-text {
+  font-size: 0.875rem;
+  margin: 0;
+  color: white !important;
+}
+
+.chat-widget-input {
+  padding: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.chat-widget-input-container {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.chat-widget-input-field {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.chat-widget-input-field:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgb(37 99 235 / 0.1);
+}
+
+.chat-widget-send-button {
+  background: #10b981 !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.chat-widget-send-button:hover {
+  background: #059669 !important;
+  color: white !important;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .chat-widget-modal {
+    width: calc(100vw - 2rem);
+    height: calc(100vh - 8rem);
+    right: 1rem;
+    bottom: 1rem;
+  }
+  
+  .chat-widget-button {
+    bottom: 1rem;
+    right: 1rem;
+  }
+}

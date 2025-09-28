@@ -1,0 +1,151 @@
+/* EnhancedProductCard 组件样式 */
+.jade-product-card {
+  display: block;
+  text-decoration: none;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  height: 100%;
+  cursor: pointer;
+}
+
+.jade-product-card:hover {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  transform: translateY(-4px);
+}
+
+.jade-product-card .relative {
+  position: relative;
+}
+
+.jade-product-card .aspect-square {
+  aspect-ratio: 1;
+}
+
+.jade-product-card .overflow-hidden {
+  overflow: hidden;
+}
+
+.jade-product-card .object-cover {
+  object-fit: cover;
+}
+
+.jade-product-card .transition-transform {
+  transition: transform 0.3s ease;
+}
+
+.jade-product-card .duration-300 {
+  transition-duration: 300ms;
+}
+
+.jade-product-card .group-hover\:scale-105:hover {
+  transform: scale(1.05);
+}
+
+.jade-product-card .absolute {
+  position: absolute;
+}
+
+.jade-product-card .top-2 {
+  top: 0.5rem;
+}
+
+.jade-product-card .left-2 {
+  left: 0.5rem;
+}
+
+.jade-product-card .flex {
+  display: flex;
+}
+
+.jade-product-card .flex-col {
+  flex-direction: column;
+}
+
+.jade-product-card .gap-1 > * + * {
+  margin-top: 0.25rem;
+}
+
+/* 文本样式 */
+.text-lg {
+  font-size: 1.125rem;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.text-secondary {
+  color: var(--muted);
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.leading-relaxed {
+  line-height: 1.625;
+}
+
+.space-y-2 > * + * {
+  margin-top: 0.5rem;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-2 > * + * {
+  margin-left: 0.5rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.text-red-500 {
+  color: #ef4444;
+}
+
+.text-gray-400 {
+  color: #9ca3af;
+}
+
+.line-through {
+  text-decoration: line-through;
+}
+
+.text-primary {
+  color: #2563eb;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .jade-product-card {
+    margin-bottom: 1rem;
+  }
+}
