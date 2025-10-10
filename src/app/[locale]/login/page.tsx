@@ -31,6 +31,8 @@ export default function LoginPage() {
     }
   };
 
+  const [errorMsg, setErrorMsg] = useState<string>('');
+
   const onFinish = async (values: { email: string; password: string }) => {
     setLoading(true);
     try {
@@ -41,6 +43,9 @@ export default function LoginPage() {
       });
       if (res.ok) {
         router.replace(redirect || `/${locale}`);
+      } else {
+        const data = await res.json();
+        setErrorMsg(data.message || (locale === 'zh' ? '登录失败，请检查邮箱与密码' : 'Login failed'));
       }
     } finally {
       setLoading(false);
@@ -90,6 +95,11 @@ export default function LoginPage() {
             </Button>
           </Space>
 
+          {errorMsg && (
+            <Typography.Paragraph type="danger" style={{ margin: 0 }}>
+              {errorMsg}
+            </Typography.Paragraph>
+          )}
           <Form layout="vertical" onFinish={onFinish} validateTrigger={["onBlur", "onSubmit"]}>
             <Form.Item
               name="email"
@@ -132,6 +142,9 @@ export default function LoginPage() {
           </Divider>
 
           <div className="text-center" style={{ fontSize: 14 }}>
+            <div style={{ marginBottom: 8, color: '#888' }}>
+              演示账号：demo@jade.test / demo1234
+            </div>
             {locale === 'zh' ? '还没有账户？' : "Don't have an account?"}{' '}
             <Link href="#" className="nav-link" style={{ display: 'inline', padding: 0 }}>
               {locale === 'zh' ? '创建账户' : 'Create one'}

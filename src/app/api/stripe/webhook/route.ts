@@ -1,5 +1,6 @@
 import {NextRequest, NextResponse} from 'next/server';
 import Stripe from 'stripe';
+import { prisma } from '@/lib/db';
 
 export const runtime = 'nodejs';
 
@@ -19,7 +20,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({error: 'Invalid signature'}, {status: 400});
   }
   if (event.type === 'checkout.session.completed') {
-    // TODO: fulfill order logic here
+    const session = event.data.object as Stripe.Checkout.Session;
+    const paymentRef = session.id;
+    await prisma.order.updateMany({
+      where: { paymentRef },
+      data: { status: 'PAID' },
+    });
   }
   return NextResponse.json({received: true});
 }
