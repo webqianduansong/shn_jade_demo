@@ -65,6 +65,13 @@ src/components/
 └── ...              # 其他组件
 ```
 
+### 4. 会话与认证抽象
+
+- 新增 `src/lib/auth.ts` 统一封装登录状态读取与强制校验。
+- 新增 `api/auth/login`、`api/auth/logout`、`api/auth/me` 三个接口，提供最小可用认证能力。
+- 在 `Header` 集成登录/登出状态，页面友好展示。
+- 关键业务 API（`/api/cart/add`、`/api/checkout`）加入服务端登录校验，确保未登录请求被拒绝。
+
 ## 优化效果
 
 ### 1. 可维护性提升

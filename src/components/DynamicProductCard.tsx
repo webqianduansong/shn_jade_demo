@@ -58,6 +58,12 @@ export default function DynamicProductCard({
     
     setIsAdding(true);
     try {
+      // 先检查是否已登录
+      const me = await fetch('/api/auth/me');
+      if (!me.ok) {
+        window.location.href = `/${locale}/login?redirect=/${locale}/productDetail?id=${id}`;
+        return;
+      }
       const response = await fetch('/api/cart/add', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},

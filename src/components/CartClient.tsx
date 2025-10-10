@@ -35,6 +35,12 @@ export default function CartClient({ items, totalAmount, locale, onCheckout: ext
     
     setIsCheckingOut(true);
     try {
+      // 登录检查
+      const me = await fetch('/api/auth/me');
+      if (!me.ok) {
+        window.location.href = `/${locale}/login?redirect=/${locale}/cart`;
+        return;
+      }
       if (externalCheckout) {
         // 使用从页面传入的结账函数（server action）
         await externalCheckout();

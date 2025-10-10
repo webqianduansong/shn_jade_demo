@@ -94,6 +94,12 @@ export default function CategoryPageClient({ products, locale }: CategoryPageCli
     
     setAddingToCart(productId);
     try {
+      // 登录检查
+      const me = await fetch('/api/auth/me');
+      if (!me.ok) {
+        window.location.href = `/${locale}/login?redirect=/${locale}/productDetail?id=${productId}`;
+        return;
+      }
       const response = await fetch('/api/cart/add', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},

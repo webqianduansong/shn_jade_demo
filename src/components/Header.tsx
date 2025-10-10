@@ -1,11 +1,12 @@
 "use client";
 import Link from 'next/link';
-import { Badge } from 'antd';
+import { Badge, Button } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import { useTranslations } from 'next-intl';
 import LanguageSwitcher from './LanguageSwitcher';
 import MobileNav from './MobileNav';
 import './Header/Header.css';
+import { useEffect, useState } from 'react';
 
 /**
  * 网站头部组件
@@ -18,6 +19,21 @@ interface HeaderProps {
 export default function Header({ locale }: HeaderProps) {
   const navT = useTranslations('nav'); // 导航相关翻译
   const siteT = useTranslations('site'); // 网站相关翻译
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    fetch('/api/auth/me')
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((data) => {
+        if (!mounted) return;
+        if (data?.user?.email) setUserEmail(data.user.email);
+      })
+      .catch(() => setUserEmail(null));
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   // 导航菜单项配置
   const menuItems = [
@@ -68,9 +84,24 @@ export default function Header({ locale }: HeaderProps) {
           ))}
         </div>
         
-        {/* 右侧：语言切换器和购物车 */}
+        {/* 右侧：语言切换器、登录/登出、购物车 */}
         <div className="header-actions">
           <LanguageSwitcher currentLocale={locale} />
+          {userEmail ? (
+            <Button
+              size="small"
+              onClick={async () => {
+                await fetch('/api/auth/logout', { method: 'POST' });
+                setUserEmail(null);
+              }}
+            >
+              {locale === 'zh' ? '登出' : 'Logout'}
+            </Button>
+          ) : (
+            <Link href={`/${locale}/login`} className="nav-link">
+              {locale === 'zh' ? '登录' : 'Login'}
+            </Link>
+          )}
           <Link 
             href={`/${locale}/cart`} 
             className="cart-link"

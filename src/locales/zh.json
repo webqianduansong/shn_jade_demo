@@ -119,6 +119,16 @@
     "freeExpressShipping": "免费快递配送",
     "free30DayReturns": "免费30天退货",
     "twoYearWarranty": "2年保修"
+  },
+  "auth": {
+    "login": "登录",
+    "logout": "登出",
+    "email": "邮箱",
+    "password": "密码",
+    "signin": "登录",
+    "signinTitle": "登录账户",
+    "requireLogin": "请先登录",
+    "loginToContinue": "请登录后继续操作"
   }
 }
 

@@ -54,6 +54,12 @@ export default function EnhancedProductCard({
     
     setIsAdding(true);
     try {
+      // 登录检查
+      const me = await fetch('/api/auth/me');
+      if (!me.ok) {
+        window.location.href = `/${locale}/login?redirect=/${locale}/productDetail?id=${id}`;
+        return;
+      }
       const response = await fetch('/api/cart/add', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},

@@ -119,6 +119,16 @@
     "freeExpressShipping": "Free Express Shipping",
     "free30DayReturns": "Free 30-Day Returns",
     "twoYearWarranty": "2-Year Warranty"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password",
+    "signin": "Sign in",
+    "signinTitle": "Sign in",
+    "requireLogin": "Please sign in first",
+    "loginToContinue": "Please login to continue"
   }
 }
 

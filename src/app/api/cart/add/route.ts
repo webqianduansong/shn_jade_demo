@@ -1,11 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { addToCart } from '@/store/cartActions';
+import { getAuthUser } from '@/lib/auth';
 
 /**
  * 添加商品到购物车API端点
  */
 export async function POST(request: NextRequest) {
   try {
+    const user = await getAuthUser();
+    if (!user) {
+      return NextResponse.json({ success: false, error: '未登录' }, { status: 401 });
+    }
     const { productId, quantity } = await request.json();
     
     // 使用更新后的addToCart函数，它现在返回结果对象

@@ -1,8 +1,13 @@
 import {NextRequest, NextResponse} from 'next/server';
 import Stripe from 'stripe';
 import products from '@/data/products';
+import { getAuthUser } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
+  const user = await getAuthUser();
+  if (!user) {
+    return NextResponse.json({ error: '未登录' }, { status: 401 });
+  }
   const {lineItems} = await request.json();
   const stripeKey = process.env.STRIPE_SECRET_KEY;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
