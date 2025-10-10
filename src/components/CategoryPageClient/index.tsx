@@ -1,7 +1,6 @@
 "use client";
 import { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Product } from '@/data/products';
 import { useTranslations } from 'next-intl';
 import { resolveSrc } from '@/lib/imageUtils';
 import { useNotification } from '../Notification';
@@ -32,8 +31,18 @@ import './index.css';
 const { Title, Text, Paragraph } = Typography;
 const { Option } = Select;
 
+type UiProduct = {
+  id: string;
+  name: string;
+  nameEn: string;
+  description: string;
+  descriptionEn: string;
+  image: unknown;
+  price: number;
+};
+
 interface CategoryPageClientProps {
-  products: Product[];
+  products: UiProduct[];
   locale: string;
 }
 

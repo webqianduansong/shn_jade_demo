@@ -1,6 +1,6 @@
 import {getTranslations} from 'next-intl/server';
 import {notFound} from 'next/navigation';
-import products from '@/data/products';
+import { prisma } from '@/lib/db';
 import ProductBreadcrumb from '@/components/product/ProductBreadcrumb';
 import ProductImageGallery from '@/components/product/ProductImageGallery';
 import ProductInfo from '@/components/product/ProductInfo';
@@ -18,11 +18,20 @@ export default async function ProductDetailPage({
   const {locale, id} = await params;
   const t = await getTranslations();
   
-  // 根据ID查找产品
-  const product = products.find((p) => p.id === id);
-  if (!product) {
+  const db = await prisma.product.findUnique({ where: { id }, include: { images: true } });
+  if (!db) {
     notFound();
   }
+  const product = {
+    id: db.id,
+    name: db.name,
+    nameEn: db.name,
+    description: '',
+    descriptionEn: '',
+    // UI 显示期望美元，数据库为分
+    price: Math.round((db.price || 0) / 100),
+    image: (db.images && db.images[0] && db.images[0].url) ? db.images[0].url : '/images/placeholder.png',
+  } as any;
 
 
   return (
@@ -39,9 +48,10 @@ export default async function ProductDetailPage({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           {/* 产品图片画廊 - 左侧 */}
           <div className="order-1 lg:order-1">
-            <ProductImageGallery 
-              product={product}
-            />
+          <ProductImageGallery 
+            product={product}
+            locale={locale}
+          />
           </div>
           
           {/* 产品信息 - 右侧 */}

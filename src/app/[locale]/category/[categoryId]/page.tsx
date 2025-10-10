@@ -1,10 +1,7 @@
 import {getTranslations} from 'next-intl/server';
 import {notFound} from 'next/navigation';
 import CategoryPageClient from '@/components/CategoryPageClient/index';
-import {categories} from '@/data/categories';
-import products from '@/data/products';
-import { Breadcrumb, Space, Divider } from 'antd';
-import { HomeOutlined, ShopOutlined } from '@ant-design/icons';
+import { prisma } from '@/lib/db';
 
 export default async function CategoryPage({
   params,
@@ -14,40 +11,29 @@ export default async function CategoryPage({
   const {locale, categoryId} = await params;
   const t = await getTranslations();
   
-  // 查找分类信息
-  const category = categories.find(cat => cat.id === categoryId);
+  // 从数据库读取分类
+  const category = await prisma.category.findUnique({ where: { id: categoryId } });
   if (!category) {
     notFound();
   }
 
-  // 根据分类筛选产品（这里简化处理，实际项目中可能需要更复杂的筛选逻辑）
-  const categoryProducts = products.filter(product => {
-    // 简单的关键词匹配，实际项目中应该使用更精确的分类系统
-    const productName = locale === 'zh' ? product.name : product.nameEn;
-    const categoryName = locale === 'zh' ? category.nameZh : category.name;
-    
-    // 根据分类ID进行匹配
-    switch (categoryId) {
-      case 'rings':
-        return productName.toLowerCase().includes('ring') || 
-               productName.toLowerCase().includes('戒指');
-      case 'earrings':
-        return productName.toLowerCase().includes('earring') || 
-               productName.toLowerCase().includes('耳环');
-      case 'necklaces':
-        return productName.toLowerCase().includes('necklace') || 
-               productName.toLowerCase().includes('pendant') ||
-               productName.toLowerCase().includes('项链') ||
-               productName.toLowerCase().includes('挂件');
-      case 'bracelets':
-        return productName.toLowerCase().includes('bracelet') || 
-               productName.toLowerCase().includes('bangle') ||
-               productName.toLowerCase().includes('手链') ||
-               productName.toLowerCase().includes('手镯');
-      default:
-        return true;
-    }
+  // 从数据库读取该分类下的产品
+  const dbProducts = await prisma.product.findMany({
+    where: { categoryId: categoryId },
+    include: { images: true },
+    orderBy: { createdAt: 'desc' },
   });
+
+  // 映射为前端 UI 需求的数据结构
+  const categoryProducts = dbProducts.map((p: any) => ({
+    id: p.id,
+    name: p.name,
+    nameEn: p.name,
+    description: '',
+    descriptionEn: '',
+    price: Math.round((p.price || 0) / 100),
+    image: (p.images && p.images[0] && p.images[0].url) ? p.images[0].url : '/images/placeholder.png',
+  }));
 
   return (
     <div className="bg-white min-h-screen p-6">
@@ -56,10 +42,10 @@ export default async function CategoryPage({
         <div className="py-16">
           <div className="text-center">
             <h1 className="text-5xl font-bold text-gray-900 mb-6 tracking-tight">
-              {locale === 'zh' ? category.nameZh : category.name}
+              {category.name}
             </h1>
             <p className="text-xl text-gray-700 mb-8 max-w-3xl mx-auto leading-relaxed">
-              {locale === 'zh' ? category.descriptionZh : category.description}
+              {/* 数据库暂未维护分类描述，这里留空或日后接入多语言字段 */}
             </p>
             <div className="text-sm text-gray-500">
               {categoryProducts.length} {locale === 'zh' ? '件精美商品等您挑选' : 'exquisite items available'}
