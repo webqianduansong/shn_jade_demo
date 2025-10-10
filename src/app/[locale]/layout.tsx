@@ -7,6 +7,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ChatWidget from '@/components/ChatWidget';
 import {locales} from '@/i18n/request';
+import { cookies } from 'next/headers';
 
 export const metadata: Metadata = {
   title: 'Silk Road Jade',
@@ -34,11 +35,14 @@ export default async function LocaleLayout({
     <NextIntlClientProvider locale={locale} messages={messages}>
       <AntdProvider>
         <div className="min-h-screen bg-white">
-          <Header locale={locale} />
+          {/** 若存在 admin_ui 标记，则隐藏站点 Header/Footer */}
+          {!cookies().get('admin_ui') && (
+            <Header locale={locale} />
+          )}
           <main>
             {children}
           </main>
-          <Footer />
+          {!cookies().get('admin_ui') && <Footer />}
         </div>
       </AntdProvider>
     </NextIntlClientProvider>

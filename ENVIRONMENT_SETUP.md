@@ -17,6 +17,12 @@ NODE_ENV=development
 
 # 数据库（Prisma）
 DATABASE_URL="file:./prisma/dev.db"
+
+# 后台管理（Admin）
+# 允许登录后台的邮箱列表，逗号分隔
+ADMIN_EMAILS=demo@jade.test
+# 可选：后台访问口令（防止弱口令被爆破）
+ADMIN_ACCESS_KEY=dev-admin-key
 ```
 
 ## 配置说明
@@ -32,6 +38,9 @@ DATABASE_URL="file:./prisma/dev.db"
 3. **STRIPE_PUBLISHABLE_KEY**: Stripe的公开密钥
 4. **DATABASE_URL**: 本地 SQLite 数据库文件路径（开发环境）
    - 默认使用 `prisma/dev.db`，可直接运行迁移自动创建
+
+5. **ADMIN_EMAILS**: 允许登录后台的邮箱白名单，多个用逗号分隔
+6. **ADMIN_ACCESS_KEY**: 可选的后台访问口令，若设置，登录时需额外填写
 
    - 测试环境: 以 `pk_test_` 开头
    - 生产环境: 以 `pk_live_` 开头

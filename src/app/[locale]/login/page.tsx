@@ -143,7 +143,7 @@ export default function LoginPage() {
 
           <div className="text-center" style={{ fontSize: 14 }}>
             <div style={{ marginBottom: 8, color: '#888' }}>
-              演示账号：demo@jade.test / demo1234
+              演示账号：song@demo.com / song1234
             </div>
             {locale === 'zh' ? '还没有账户？' : "Don't have an account?"}{' '}
             <Link href="#" className="nav-link" style={{ display: 'inline', padding: 0 }}>

@@ -5,13 +5,14 @@ const prisma = new PrismaClient();
 
 async function main() {
   // 演示账号
-  const demoEmail = 'demo@jade.test';
-  const demoPasswordHash = await bcrypt.hash('demo1234', 10);
+  const demoEmail = 'song@demo.com';
+  const demoPasswordHash = await bcrypt.hash('song1234', 10);
   await prisma.user.upsert({
     where: { email: demoEmail },
     create: { email: demoEmail, password: demoPasswordHash, name: '演示用户' },
-    update: { name: '演示用户', password: demoPasswordHash },
+    update: { name: '演示用户', password: demoPasswordHash, email: demoEmail },
   });
+
   const categories = [
     { id: 'rings', name: '戒指', slug: 'rings' },
     { id: 'earrings', name: '耳环', slug: 'earrings' },
