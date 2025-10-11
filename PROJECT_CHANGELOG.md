@@ -31,6 +31,17 @@
   - 支持切换时间范围（7/30 天）并绘制简易收入折线图（原生 SVG）。
 - 更新 `src/app/[locale]/admin/page.tsx`：聚合指标、查询最近订单并传递 `locale` 给客户端组件。
 
+### 后台商品管理
+- 新增 `src/app/api/admin/products/route.ts`：
+  - POST 创建商品（含批量图片）
+  - PUT 更新商品（覆盖图片）
+  - DELETE 删除商品
+- 更新 `src/app/[locale]/admin/products/page.tsx`：加载分类与完整产品信息并传递给客户端。
+- 增强 `src/app/[locale]/admin/products/ProductsClient.tsx`：
+  - 表格展示名称/分类/金额及操作。
+  - 新增/编辑弹窗（Antd 表单：名称、分类、价格、描述、图片URL）。
+  - 支持删除确认与提交后刷新。
+
 ### 影响评估
 - 前台无影响；后台体验提升，进入 `/admin` 时不再出现站点 Header。
 - 接口只读查询，安全风险低；后续可增加基于角色的细粒度授权。
