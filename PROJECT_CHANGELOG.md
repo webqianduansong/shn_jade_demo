@@ -17,3 +17,21 @@
 - 更新 `ENVIRONMENT_SETUP.md`：新增 `ADMIN_EMAILS`、`ADMIN_ACCESS_KEY` 环境变量说明。
 
 
+## 2025-10-11
+
+### 后台仪表盘与 UI 外壳
+- 新增 `src/components/SiteChrome.tsx`：根据路径自动隐藏站点 Header/Footer，后台页面更专注。
+- 更新 `src/app/[locale]/layout.tsx`：使用 `SiteChrome` 包裹内容，移除基于 cookie 的判断。
+
+### 仪表盘基础能力
+- 新增 `src/app/api/admin/dashboard/route.ts`：统一统计接口，返回核心指标、最近订单、收入时间序列（按天）。
+- 新增/增强 `src/app/[locale]/admin/DashboardClient.tsx`：
+  - 展示统计卡片（商品数、分类数、今日订单、待处理订单、今日收入）。
+  - 展示最近订单表格（订单号、用户、金额、商品数、状态、时间）。
+  - 支持切换时间范围（7/30 天）并绘制简易收入折线图（原生 SVG）。
+- 更新 `src/app/[locale]/admin/page.tsx`：聚合指标、查询最近订单并传递 `locale` 给客户端组件。
+
+### 影响评估
+- 前台无影响；后台体验提升，进入 `/admin` 时不再出现站点 Header。
+- 接口只读查询，安全风险低；后续可增加基于角色的细粒度授权。
+
