@@ -22,7 +22,7 @@ export default function ProductsSection({ locale }: ProductsSectionProps) {
         <div className="container">
           <div className="section-header">
             <h2 className="section-title-left">{t('popular')}</h2>
-            <a href="#" className="view-all-btn">
+            <a href={`/${locale}/products`} className="view-all-btn">
               {actionsT('viewAll')}
             </a>
           </div>
@@ -39,7 +39,7 @@ export default function ProductsSection({ locale }: ProductsSectionProps) {
         <div className="container">
           <div className="section-header">
             <h2 className="section-title-left">{t('newArrivals')}</h2>
-            <a href="#" className="view-all-btn">
+            <a href={`/${locale}/products`} className="view-all-btn">
               {actionsT('viewAll')}
             </a>
           </div>

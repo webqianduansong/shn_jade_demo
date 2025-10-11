@@ -46,3 +46,29 @@
 - 前台无影响；后台体验提升，进入 `/admin` 时不再出现站点 Header。
 - 接口只读查询，安全风险低；后续可增加基于角色的细粒度授权。
 
+### 前台商品详情路由统一与修复 404
+- 原问题：从分类页（例如 `/${locale}/category/earrings`）点击商品进入详情时，指向 `/${locale}/productDetail?id=...`，而实际详情路由为 `/${locale}/products/[id]`，导致 404。
+- 变更内容：
+  - 更新 `src/components/CategoryPageClient/index.tsx` 中详情跳转与未登录重定向为 `/${locale}/products/${id}`。
+  - 更新 `src/components/DynamicProductCard.tsx` 中 `Link` 与未登录重定向。
+  - 更新 `src/components/EnhancedProductCard.tsx` 中 `Link` 与未登录重定向。
+  - 更新 `src/components/ProductCard.tsx` 中 `Link`。
+- 影响范围：前台商品卡片与分类列表的跳转路径；不影响 API 与数据库结构。
+- 验证：访问 `/${locale}/category/earrings`，点击任一商品应跳转至 `/${locale}/products/{id}` 且正常渲染详情页。
+
+### 首页“查看全部”功能完善
+- 原问题：首页两个“查看全部”按钮仅刷新当前页，无实际跳转。
+- 变更内容：
+  - 新增 `src/app/[locale]/products/page.tsx` 列表页，使用 `CategoryPageClient` 统一展示全部商品。
+  - 更新 `src/components/ProductsSection.tsx` 中两个“查看全部”链接为 `/${locale}/products`。
+- 影响范围：用户可从首页跳转到完整的商品列表页，便于浏览全部商品。
+- 验证：在首页点击任一“查看全部”会进入 `/${locale}/products` 并展示商品列表。
+
+### 后台商品管理：新增字段与接口完善
+- 新增字段（Prisma `Product`）：`sku`、`model`、`rating`、`reviewsCount`。
+- 更新接口：`/api/admin/products` 的 POST/PUT 支持上述字段读写；GET 返回包含这些字段的数据。
+- 更新前端：`src/app/[locale]/admin/products/ProductsClient.tsx`
+  - 表格列新增：SKU、型号、评分、评论数。
+  - 新增/编辑表单新增对应输入项，并传递给接口；默认评分 0、评论数 0。
+- 影响：后台可完整录入与维护产品标题、型号、评分、金额、描述、SKU、评论数，前台详情页可进一步使用这些字段。
+

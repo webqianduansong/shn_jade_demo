@@ -38,6 +38,10 @@ model Product {
   name        String
   slug        String         @unique
   description String?
+  sku         String?        @unique
+  model       String?
+  rating      Float          @default(0)
+  reviewsCount Int           @default(0)
   price       Int            // 金额（分）
   images      ProductImage[]
   categoryId  String

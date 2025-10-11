@@ -15,6 +15,7 @@ export default async function ProductDetailPage({
   if (!db) {
     notFound();
   }
+  const images = (db.images || []).map((img) => img.url);
   const product = {
     id: db.id,
     name: db.name,
@@ -22,7 +23,17 @@ export default async function ProductDetailPage({
     description: db.description || '',
     descriptionEn: db.description || '',
     price: Math.round((db.price || 0) / 100),
-    images: (db.images || []).map((img) => img.url),
+    image: images[0] || '/images/placeholder.png',
+    images,
+    sku: db.sku || '',
+    rating: typeof db.rating === 'number' ? db.rating : 0,
+    reviewsCount: typeof db.reviewsCount === 'number' ? db.reviewsCount : 0,
+    models: (db.model || '')
+      ? String(db.model)
+          .split(/[\,\|/;]+/)
+          .map((s) => s.trim())
+          .filter(Boolean)
+      : [],
   } as any;
 
   return (

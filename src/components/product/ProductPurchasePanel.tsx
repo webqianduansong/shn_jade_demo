@@ -6,7 +6,7 @@ import { useNotification } from '@/components/Notification';
 
 const { Title, Text } = Typography;
 
-// 产品尺寸选项
+// 默认尺寸选项（当后端未提供型号时）
 const SIZE_OPTIONS = [
   { value: "1/2_single", label: "1/2\" Single" },
   { value: "1_per_lb", label: "1\" Per lb" },
@@ -22,13 +22,22 @@ interface ProductPurchasePanelProps {
     description: string;
     descriptionEn: string;
     price: number;
+    image?: unknown;
+    images?: string[];
+    sku?: string | null;
+    rating?: number | null;
+    reviewsCount?: number | null;
+    models?: string[];
   };
   locale: string;
 }
 
 export default function ProductPurchasePanel({ product, locale }: ProductPurchasePanelProps) {
   const { showNotification, NotificationContainer } = useNotification();
-  const [selectedSize, setSelectedSize] = useState(SIZE_OPTIONS[0].value);
+  const sizeOptions = (product.models && product.models.length)
+    ? product.models.map((m, idx) => ({ value: `m_${idx}`, label: m }))
+    : SIZE_OPTIONS;
+  const [selectedSize, setSelectedSize] = useState(sizeOptions[0].value);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   
   const isZh = locale === 'zh';
@@ -81,13 +90,13 @@ export default function ProductPurchasePanel({ product, locale }: ProductPurchas
         color: '#000',
         lineHeight: 1.2
       }}>
-        Nuggets, Jade 1-2" and 1"
+        {product.name}
       </Title>
       
       {/* 评分和评论 */}
       <Space align="center" style={{ marginBottom: '8px' }}>
-        <Rate disabled defaultValue={4.5} style={{ fontSize: '16px', color: '#52c41a' }} />
-        <Text style={{ fontSize: '14px', color: '#666' }}>5 reviews</Text>
+        <Rate disabled value={Number(product.rating || 0)} style={{ fontSize: '16px', color: '#52c41a' }} />
+        <Text style={{ fontSize: '14px', color: '#666' }}>{Number(product.reviewsCount || 0)} reviews</Text>
       </Space>
       
       {/* SKU */}
@@ -97,7 +106,7 @@ export default function ProductPurchasePanel({ product, locale }: ProductPurchas
         color: '#999',
         marginBottom: '32px'
       }}>
-        SKU: 021 - 01
+        {product.sku ? `SKU: ${product.sku}` : ''}
       </Text>
       
       {/* 尺寸选择 */}
@@ -111,7 +120,7 @@ export default function ProductPurchasePanel({ product, locale }: ProductPurchas
           Nugget sizes
         </Title>
         <Space wrap size={[8, 8]}>
-          {SIZE_OPTIONS.map(option => (
+          {sizeOptions.map(option => (
             <Button
               key={option.value}
               onClick={() => setSelectedSize(option.value)}
@@ -147,7 +156,7 @@ export default function ProductPurchasePanel({ product, locale }: ProductPurchas
           margin: 0,
           color: '#000'
         }}>
-          $4<sup style={{ fontSize: '16px' }}>00</sup>
+          ${product.price.toFixed(2)}
         </Title>
       </div>
       

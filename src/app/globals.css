@@ -254,7 +254,6 @@ body {
 
 /* 特色区域样式 */
 .features-section {
-  padding: 80px 0;
   background: #ffffff;
 }
 
@@ -309,8 +308,8 @@ body {
 
 /* 分类区域样式 */
 .categories-section {
-  padding: 80px 0;
-  background: #fafafa;
+  /* padding: 80px 0;
+  background: #fafafa; */
 }
 
 .section-title {
@@ -528,8 +527,8 @@ body {
 
 /* 新到货区域样式 */
 .new-arrivals-section {
-  padding: 80px 0;
-  background: #f8f9fa;
+  /* padding: 80px 0;
+  background: #f8f9fa; */
 }
 
 /* 响应式设计 */

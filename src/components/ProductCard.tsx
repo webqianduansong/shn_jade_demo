@@ -90,7 +90,7 @@ export default function ProductCard({
 
   return (
     <>
-      <Link href={`/${locale}/productDetail?id=${id}`} className="product-card">
+      <Link href={`/${locale}/products/${id}`} className="product-card">
         <img src={src} alt={name} className="product-image" />
         <div className="product-info">
           <h3 className="product-title">

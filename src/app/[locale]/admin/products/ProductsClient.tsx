@@ -9,9 +9,17 @@ type Product = {
   name: string;
   price: number; // cents
   description?: string | null;
+  sku?: string | null;
+  model?: string | null;
+  rating?: number;
+  reviewsCount?: number;
   category?: { id: string; name: string };
   categoryId?: string;
   images?: { id: string; url: string; sortOrder?: number }[];
+};
+
+type AdminFormValues = Product & {
+  models?: string[]; // 用于多型号输入（仅表单层）
 };
 
 type Category = { id: string; name: string };
@@ -20,7 +28,7 @@ export default function ProductsClient({ products, categories, locale }: { produ
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [editing, setEditing] = useState<Product | null>(null);
-  const [form] = Form.useForm<Product>();
+  const [form] = Form.useForm<AdminFormValues>();
   const [keyword, setKeyword] = useState('');
   const [categoryId, setCategoryId] = useState<string | undefined>(undefined);
   const [minPrice, setMinPrice] = useState<number | undefined>(undefined);
@@ -33,6 +41,10 @@ export default function ProductsClient({ products, categories, locale }: { produ
 
   const columns = useMemo(() => ([
     { title: '名称', dataIndex: 'name' },
+    { title: 'SKU', dataIndex: 'sku' },
+    { title: '型号', dataIndex: 'model' },
+    { title: '评分', dataIndex: 'rating', render: (v: number) => (v ?? 0).toFixed(1) },
+    { title: '评论数', dataIndex: 'reviewsCount' },
     { title: '分类', dataIndex: ['category', 'name'] },
     { title: '金额(CNY)', dataIndex: 'price', render: (v: number) => (v / 100).toFixed(2) },
     { title: '操作', key: 'actions', render: (_: any, r: Product) => (
@@ -77,9 +89,17 @@ export default function ProductsClient({ products, categories, locale }: { produ
     try {
       const values = await form.validateFields();
       setConfirmLoading(true);
-      const payload = {
-        ...values,
-        price: Math.round(Number(values.price) * 100),
+      const payload: any = {
+        name: values.name,
+        categoryId: values.categoryId,
+        price: Math.round(Number(values.price as any) * 100),
+        description: values.description,
+        sku: values.sku,
+        model: Array.isArray(values.models)
+          ? values.models.filter(Boolean).join(',')
+          : values.model || undefined,
+        rating: values.rating,
+        reviewsCount: values.reviewsCount,
         images: imageUrls,
         id: editing?.id,
       };
@@ -241,16 +261,74 @@ export default function ProductsClient({ products, categories, locale }: { produ
         onCancel={() => setOpen(false)}
         destroyOnClose
       >
-        <Form layout="vertical" form={form} preserve={false} initialValues={editing ? { name: editing.name, categoryId: editing.category?.id || editing.categoryId, price: (editing.price || 0) / 100, description: editing.description || undefined } : undefined}>
-          <Form.Item name="name" label="名称" rules={[{ required: true }]}>
-            <Input placeholder="请输入商品名称" />
-          </Form.Item>
-          <Form.Item name="categoryId" label="分类" rules={[{ required: true }]}>
-            <Select options={categories.map((c) => ({ value: c.id, label: c.name }))} placeholder="请选择分类" />
-          </Form.Item>
-          <Form.Item name="price" label="价格（元）" rules={[{ required: true }]}>
-            <InputNumber min={0} precision={2} style={{ width: '100%' }} />
-          </Form.Item>
+        <Form
+          layout="vertical"
+          form={form}
+          preserve={false}
+          initialValues={
+            editing
+              ? {
+                  name: editing.name,
+                  categoryId: editing.category?.id || editing.categoryId,
+                  price: (editing.price || 0) / 100,
+                  description: editing.description || undefined,
+                  sku: editing.sku || undefined,
+                  models: (editing.model || '')
+                    ? String(editing.model)
+                        .split(/[\,\|/;]+/)
+                        .map((s) => s.trim())
+                        .filter(Boolean)
+                    : undefined,
+                  rating: editing.rating ?? 0,
+                  reviewsCount: editing.reviewsCount ?? 0,
+                }
+              : { rating: 0, reviewsCount: 0 }
+          }
+        >
+          <Row gutter={12}>
+            <Col xs={24} md={12}>
+              <Form.Item name="name" label="名称" rules={[{ required: true }]}>
+                <Input placeholder="请输入商品名称" />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={12}>
+              <Form.Item name="sku" label="SKU">
+                <Input placeholder="例如 021-01" />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} md={12}>
+              <Form.Item name="categoryId" label="分类" rules={[{ required: true }]}>
+                <Select options={categories.map((c) => ({ value: c.id, label: c.name }))} placeholder="请选择分类" />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={12}>
+              <Form.Item name="price" label="价格（元）" rules={[{ required: true }]}>
+                <InputNumber min={0} precision={2} style={{ width: '100%' }} />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} md={12}>
+              <Form.Item name="models" label="型号（可多值，输入后回车）">
+                <Select
+                  mode="tags"
+                  tokenSeparators={[',', ';', '/', '|']}
+                  placeholder={'输入型号后回车，可输入多个，如 1/2" Single'}
+                />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={6}>
+              <Form.Item name="rating" label="评分" tooltip="0-5">
+                <InputNumber min={0} max={5} step={0.1} style={{ width: '100%' }} />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={6}>
+              <Form.Item name="reviewsCount" label="评论数">
+                <InputNumber min={0} step={1} style={{ width: '100%' }} />
+              </Form.Item>
+            </Col>
+          </Row>
+
           <Form.Item name="description" label="描述">
             <Input.TextArea rows={3} placeholder="商品描述" />
           </Form.Item>

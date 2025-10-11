@@ -57,7 +57,7 @@ export default function EnhancedProductCard({
       // 登录检查
       const me = await fetch('/api/auth/me');
       if (!me.ok) {
-        window.location.href = `/${locale}/login?redirect=/${locale}/productDetail?id=${id}`;
+        window.location.href = `/${locale}/login?redirect=/${locale}/products/${id}`;
         return;
       }
       const response = await fetch('/api/cart/add', {
@@ -126,7 +126,7 @@ export default function EnhancedProductCard({
   ];
 
   return (
-    <Link href={`/${locale}/productDetail?id=${id}`} className="block">
+    <Link href={`/${locale}/products/${id}`} className="block">
       <Card
         className="jade-product-card h-full"
         hoverable

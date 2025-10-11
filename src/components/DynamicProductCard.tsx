@@ -61,7 +61,7 @@ export default function DynamicProductCard({
       // 先检查是否已登录
       const me = await fetch('/api/auth/me');
       if (!me.ok) {
-        window.location.href = `/${locale}/login?redirect=/${locale}/productDetail?id=${id}`;
+        window.location.href = `/${locale}/login?redirect=/${locale}/products/${id}`;
         return;
       }
       const response = await fetch('/api/cart/add', {
@@ -99,7 +99,7 @@ export default function DynamicProductCard({
   };
 
   return (
-    <Link href={`/${locale}/productDetail?id=${id}`} className="group block">
+    <Link href={`/${locale}/products/${id}`} className="group block">
       <li className="card rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
         <div className="aspect-square overflow-hidden bg-gray-50 dark:bg-gray-800">
           <img src={src} alt={name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />

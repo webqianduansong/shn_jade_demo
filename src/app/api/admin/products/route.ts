@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, price, description, categoryId, images } = body || {};
+    const { name, price, description, categoryId, images, sku, model, rating, reviewsCount } = body || {};
     if (!name || price === undefined || !categoryId) {
       return NextResponse.json({ success: false, message: '缺少必要字段' }, { status: 400 });
     }
@@ -66,7 +66,11 @@ export async function POST(request: NextRequest) {
           slug: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
           price: Number(price),
           description: description || null,
-          categoryId,
+          category: { connect: { id: categoryId } },
+          sku: sku || null,
+          model: model || null,
+          rating: rating !== undefined ? Number(rating) : 0,
+          reviewsCount: reviewsCount !== undefined ? Number(reviewsCount) : 0,
           images: images?.length ? { createMany: { data: images.map((url: string, idx: number) => ({ url, sortOrder: idx })) } } : undefined,
         },
         include: { images: true, category: true },
@@ -80,7 +84,11 @@ export async function POST(request: NextRequest) {
             slug: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
             price: Number(price),
             description: description || null,
-            categoryId,
+            category: { connect: { id: categoryId } },
+            sku: sku || null,
+            model: model || null,
+            rating: rating !== undefined ? Number(rating) : 0,
+            reviewsCount: reviewsCount !== undefined ? Number(reviewsCount) : 0,
             images: images?.length ? { createMany: { data: images.map((url: string) => ({ url })) } } : undefined,
           },
           include: { images: true, category: true },
@@ -98,11 +106,20 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
-    const { id, name, price, description, categoryId, images } = body || {};
+    const { id, name, price, description, categoryId, images, sku, model, rating, reviewsCount } = body || {};
     if (!id) return NextResponse.json({ success: false, message: '缺少产品ID' }, { status: 400 });
     await prisma.product.update({
       where: { id },
-      data: { name, price: Number(price), description: description || null, categoryId },
+      data: {
+        name,
+        price: Number(price),
+        description: description || null,
+        ...(categoryId ? { category: { connect: { id: categoryId } } } : {}),
+        sku: sku || null,
+        model: model || null,
+        rating: rating !== undefined ? Number(rating) : undefined,
+        reviewsCount: reviewsCount !== undefined ? Number(reviewsCount) : undefined,
+      },
     });
     if (Array.isArray(images)) {
       await prisma.productImage.deleteMany({ where: { productId: id } });

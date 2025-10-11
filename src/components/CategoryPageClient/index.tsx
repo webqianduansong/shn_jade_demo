@@ -92,7 +92,7 @@ export default function CategoryPageClient({ products, locale }: CategoryPageCli
 
   // 跳转到产品详情页
   const handleProductClick = (productId: string) => {
-    router.push(`/${locale}/productDetail?id=${productId}`);
+    router.push(`/${locale}/products/${productId}`);
   };
 
   // 处理添加到购物车
@@ -106,7 +106,7 @@ export default function CategoryPageClient({ products, locale }: CategoryPageCli
       // 登录检查
       const me = await fetch('/api/auth/me');
       if (!me.ok) {
-        window.location.href = `/${locale}/login?redirect=/${locale}/productDetail?id=${productId}`;
+        window.location.href = `/${locale}/login?redirect=/${locale}/products/${productId}`;
         return;
       }
       const response = await fetch('/api/cart/add', {
