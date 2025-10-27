@@ -46,6 +46,9 @@ model Product {
   images      ProductImage[]
   categoryId  String?
   category    Category?      @relation(fields: [categoryId], references: [id])
+  isHot       Boolean        @default(false)  // 是否热门商品
+  isNew       Boolean        @default(false)  // 是否新品
+  isFeatured  Boolean        @default(false)  // 是否精选推荐
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
   cartItems   CartItem[]

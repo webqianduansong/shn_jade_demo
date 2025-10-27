@@ -16,9 +16,9 @@ import './ProductCard/ProductCard.css';
 interface ProductCardProps {
   id: string; // 产品ID
   name: string; // 产品中文名称
-  nameEn: string; // 产品英文名称
-  description: string; // 产品中文描述
-  descriptionEn: string; // 产品英文描述
+  nameEn?: string; // 产品英文名称（可选）
+  description?: string; // 产品中文描述（可选）
+  descriptionEn?: string; // 产品英文描述（可选）
   image: string | StaticImageData; // 产品图片
   price: number; // 产品价格
   locale: string; // 当前语言环境
@@ -95,18 +95,20 @@ export default function ProductCard({
         <div className="product-info">
           <h3 className="product-title">
             <DynamicText
-              fallback={currentLocale === 'zh' ? name : nameEn}
+              fallback={currentLocale === 'zh' ? name : (nameEn || name)}
             >
-              {currentLocale === 'zh' ? name : nameEn}
+              {currentLocale === 'zh' ? name : (nameEn || name)}
             </DynamicText>
           </h3>
-          <p className="product-description">
-            <DynamicText
-              fallback={currentLocale === 'zh' ? description : descriptionEn}
-            >
-              {currentLocale === 'zh' ? description : descriptionEn}
-            </DynamicText>
-          </p>
+          {(description || descriptionEn) && (
+            <p className="product-description">
+              <DynamicText
+                fallback={currentLocale === 'zh' ? (description || '') : (descriptionEn || '')}
+              >
+                {currentLocale === 'zh' ? (description || '') : (descriptionEn || '')}
+              </DynamicText>
+            </p>
+          )}
           <div className="product-footer">
             <span className="product-price">${price}</span>
             <button

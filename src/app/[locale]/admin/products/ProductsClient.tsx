@@ -1,5 +1,5 @@
 "use client";
-import { Table, Button, Modal, Form, Input, InputNumber, Select, Space, Popconfirm, message, Row, Col, Card, Upload, Tag } from 'antd';
+import { Table, Button, Modal, Form, Input, InputNumber, Select, Space, Popconfirm, message, Row, Col, Card, Upload, Tag, Switch } from 'antd';
 import { UploadOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
@@ -34,6 +34,9 @@ type Product = {
   category?: { id: string; name: string } | null;
   categoryId?: string | null;
   images?: { id: string; url: string; sortOrder?: number }[];
+  isHot?: boolean;        // 是否热门
+  isNew?: boolean;        // 是否新品
+  isFeatured?: boolean;   // 是否精选
 };
 
 type AdminFormValues = Product & {
@@ -73,6 +76,13 @@ export default function ProductsClient({ products, categories, locale }: { produ
             {r.sku && <span className="mobile-product-sku">SKU: {r.sku}</span>}
             {r.category && <Tag color="blue" style={{ marginLeft: 8 }}>{r.category.name}</Tag>}
           </div>
+          {(r.isHot || r.isNew || r.isFeatured) && (
+            <div style={{ marginTop: 4 }}>
+              {r.isHot && <Tag color="red" style={{ fontSize: '10px' }}>热门</Tag>}
+              {r.isNew && <Tag color="green" style={{ fontSize: '10px' }}>新品</Tag>}
+              {r.isFeatured && <Tag color="blue" style={{ fontSize: '10px' }}>精选</Tag>}
+            </div>
+          )}
         </div>
       )
     },
@@ -121,6 +131,18 @@ export default function ProductsClient({ products, categories, locale }: { produ
     { title: '评论数', dataIndex: 'reviewsCount', width: 80 },
     { title: '分类', dataIndex: ['category', 'name'], width: 120 },
     { title: '金额(CNY)', dataIndex: 'price', width: 100, render: (v: number) => (v / 100).toFixed(2) },
+    { 
+      title: '状态', 
+      key: 'status', 
+      width: 120, 
+      render: (_: any, r: Product) => (
+        <Space direction="vertical" size={2}>
+          {r.isHot && <Tag color="red">热门</Tag>}
+          {r.isNew && <Tag color="green">新品</Tag>}
+          {r.isFeatured && <Tag color="blue">精选</Tag>}
+        </Space>
+      ) 
+    },
     { title: '操作', key: 'actions', width: 220, fixed: 'right', render: (_: any, r: Product) => (
       <Space size={4}>
         <Button 
@@ -211,6 +233,9 @@ export default function ProductsClient({ products, categories, locale }: { produ
         rating: values.rating,
         reviewsCount: values.reviewsCount,
         images: imageUrls,
+        isHot: values.isHot || false,
+        isNew: values.isNew || false,
+        isFeatured: values.isFeatured || false,
         id: editing?.id,
       };
       const method = editing ? 'PUT' : 'POST';
@@ -444,8 +469,11 @@ export default function ProductsClient({ products, categories, locale }: { produ
                     : undefined,
                   rating: editing.rating ?? 0,
                   reviewsCount: editing.reviewsCount ?? 0,
+                  isHot: editing.isHot || false,
+                  isNew: editing.isNew || false,
+                  isFeatured: editing.isFeatured || false,
                 }
-              : { rating: 0, reviewsCount: 0 }
+              : { rating: 0, reviewsCount: 0, isHot: false, isNew: false, isFeatured: false }
           }
         >
           <Row gutter={12}>
@@ -488,6 +516,22 @@ export default function ProductsClient({ products, categories, locale }: { produ
             <Col xs={24} md={6}>
               <Form.Item name="reviewsCount" label="评论数">
                 <InputNumber min={0} step={1} style={{ width: '100%' }} />
+              </Form.Item>
+            </Col>
+            
+            <Col xs={24} md={8}>
+              <Form.Item name="isHot" label="热门商品" valuePropName="checked" tooltip="设置为热门后会在首页热门商品区域展示">
+                <Switch checkedChildren="是" unCheckedChildren="否" />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={8}>
+              <Form.Item name="isNew" label="新品" valuePropName="checked" tooltip="设置为新品后会在首页新品上市区域展示">
+                <Switch checkedChildren="是" unCheckedChildren="否" />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={8}>
+              <Form.Item name="isFeatured" label="精选推荐" valuePropName="checked" tooltip="设置为精选后会优先展示">
+                <Switch checkedChildren="是" unCheckedChildren="否" />
               </Form.Item>
             </Col>
           </Row>

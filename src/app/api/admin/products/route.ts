@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, price, description, categoryId, images, sku, model, rating, reviewsCount } = body || {};
+    const { name, price, description, categoryId, images, sku, model, rating, reviewsCount, isHot, isNew, isFeatured } = body || {};
     if (!name || price === undefined || !categoryId) {
       return NextResponse.json({ success: false, message: '缺少必要字段' }, { status: 400 });
     }
@@ -71,6 +71,9 @@ export async function POST(request: NextRequest) {
           model: model || null,
           rating: rating !== undefined ? Number(rating) : 0,
           reviewsCount: reviewsCount !== undefined ? Number(reviewsCount) : 0,
+          isHot: isHot || false,
+          isNew: isNew || false,
+          isFeatured: isFeatured || false,
           images: images?.length ? { createMany: { data: images.map((url: string, idx: number) => ({ url, sortOrder: idx })) } } : undefined,
         },
         include: { images: true, category: true },
@@ -89,6 +92,9 @@ export async function POST(request: NextRequest) {
             model: model || null,
             rating: rating !== undefined ? Number(rating) : 0,
             reviewsCount: reviewsCount !== undefined ? Number(reviewsCount) : 0,
+            isHot: isHot || false,
+            isNew: isNew || false,
+            isFeatured: isFeatured || false,
             images: images?.length ? { createMany: { data: images.map((url: string) => ({ url })) } } : undefined,
           },
           include: { images: true, category: true },
@@ -106,7 +112,7 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
-    const { id, name, price, description, categoryId, images, sku, model, rating, reviewsCount } = body || {};
+    const { id, name, price, description, categoryId, images, sku, model, rating, reviewsCount, isHot, isNew, isFeatured } = body || {};
     if (!id) return NextResponse.json({ success: false, message: '缺少产品ID' }, { status: 400 });
     await prisma.product.update({
       where: { id },
@@ -119,6 +125,9 @@ export async function PUT(request: NextRequest) {
         model: model || null,
         rating: rating !== undefined ? Number(rating) : undefined,
         reviewsCount: reviewsCount !== undefined ? Number(reviewsCount) : undefined,
+        isHot: isHot !== undefined ? isHot : undefined,
+        isNew: isNew !== undefined ? isNew : undefined,
+        isFeatured: isFeatured !== undefined ? isFeatured : undefined,
       },
     });
     if (Array.isArray(images)) {
