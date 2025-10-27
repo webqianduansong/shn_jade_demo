@@ -15,7 +15,8 @@
     "necklaces": "Necklaces",
     "bracelets": "Bracelets/Bangles",
     "collections": "Collections",
-    "cart": "Cart"
+    "cart": "Cart",
+    "profile": "Profile"
   },
   "features": {
     "typeA": "Type A Jade",
@@ -129,6 +130,40 @@
     "signinTitle": "Sign in",
     "requireLogin": "Please sign in first",
     "loginToContinue": "Please login to continue"
+  },
+  "profile": {
+    "title": "My Account",
+    "subtitle": "Manage your profile and orders",
+    "info": "Profile",
+    "orders": "My Orders",
+    "settings": "Account Settings",
+    "favorites": "My Favorites",
+    "userInfo": {
+      "id": "User ID",
+      "email": "Email",
+      "memberLevel": "Member Level",
+      "status": "Status",
+      "regularMember": "Regular Member",
+      "active": "Active",
+      "jadeLover": "Jade Lover"
+    },
+    "orderList": {
+      "orderId": "Order ID",
+      "items": "Items",
+      "amount": "Amount",
+      "status": "Status",
+      "date": "Date",
+      "noOrders": "No orders yet",
+      "startShopping": "Start Shopping",
+      "total": "Total"
+    },
+    "orderStatus": {
+      "pending": "Pending",
+      "paid": "Paid",
+      "shipped": "Shipped",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled"
+    }
   }
 }
 

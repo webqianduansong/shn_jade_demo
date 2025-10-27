@@ -140,13 +140,14 @@ body {
   width: 100%;
 }
 
-/* 英雄区域样式 - 参考Gransky的轮播设计 */
+/* 英雄区域样式 - 参考 jademine.com 移动端优化 */
 .hero-section {
   position: relative;
   height: 70vh;
   min-height: 500px;
+  max-height: 700px;
   overflow: hidden;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: #f8f9fa;
 }
 
 .hero-slide {
@@ -157,6 +158,9 @@ body {
   height: 100%;
   opacity: 0;
   transition: opacity 1s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-slide.active {
@@ -167,6 +171,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
 }
 
 .hero-overlay {
@@ -175,7 +180,8 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%);
+  background: linear-gradient(45deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 100%);
+  z-index: 1;
 }
 
 .hero-content {
@@ -188,6 +194,7 @@ body {
   z-index: 10;
   max-width: 800px;
   padding: 0 24px;
+  width: 100%;
 }
 
 .hero-title {
@@ -196,14 +203,16 @@ body {
   margin-bottom: 16px;
   font-family: var(--font-playfair), serif;
   line-height: 1.2;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 0 3px 6px rgba(0,0,0,0.4);
 }
 
 .hero-subtitle {
   font-size: 20px;
   margin-bottom: 32px;
-  opacity: 0.9;
-  font-weight: 300;
+  opacity: 0.95;
+  font-weight: 400;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  line-height: 1.5;
 }
 
 .hero-cta {
@@ -216,17 +225,23 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  text-transform: none;
+  letter-spacing: normal;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+  min-height: 52px;
 }
 
 .hero-cta:hover {
   background: #059669;
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.5);
 }
 
-/* 轮播指示器 */
+.hero-cta:active {
+  transform: translateY(0);
+}
+
+/* 轮播指示器 - 参考 jademine.com */
 .hero-dots {
   position: absolute;
   bottom: 32px;
@@ -241,15 +256,29 @@ body {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
-  border: none;
+  background: rgba(255, 255, 255, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.3);
   cursor: pointer;
   transition: all 0.3s ease;
+  padding: 0;
+}
+
+.hero-dot:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: scale(1.1);
 }
 
 .hero-dot.active {
   background: white;
-  transform: scale(1.2);
+  transform: scale(1.3);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* 桌面端显示指示器 */
+@media (min-width: 769px) {
+  .hero-dots {
+    display: flex;
+  }
 }
 
 /* 特色区域样式 */
@@ -306,10 +335,10 @@ body {
   line-height: 1.6;
 }
 
-/* 分类区域样式 */
+/* 分类区域样式 - 参考 jademine.com */
 .categories-section {
-  /* padding: 80px 0;
-  background: #fafafa; */
+  padding: 80px 0;
+  background: #fafafa;
 }
 
 .section-title {
@@ -319,59 +348,67 @@ body {
   margin-bottom: 60px;
   color: #1a1a1a;
   font-family: var(--font-playfair), serif;
+  line-height: 1.2;
 }
 
 .categories-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 32px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
 }
 
 .category-card {
   background: white;
-  border-radius: 16px;
+  border-radius: 12px;
   overflow: hidden;
   transition: all 0.3s ease;
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border: 1px solid #f0f0f0;
+  text-decoration: none;
+  display: block;
 }
 
 .category-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+  border-color: #e5e7eb;
 }
 
 .category-image {
   width: 100%;
   height: 280px;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s ease;
+  background: #f9fafb;
 }
 
 .category-card:hover .category-image {
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
 .category-content {
-  padding: 24px;
+  padding: 20px;
   text-align: center;
+  background: #fff;
 }
 
 .category-title {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   color: #1a1a1a;
   font-family: var(--font-playfair), serif;
+  line-height: 1.4;
 }
 
 .category-description {
   font-size: 14px;
-  color: #666;
-  line-height: 1.5;
+  color: #6b7280;
+  line-height: 1.6;
 }
 
-/* 产品区域样式 */
+/* 产品区域样式 - 参考 jademine.com */
 .products-section {
   padding: 80px 0;
   background: #ffffff;
@@ -382,6 +419,8 @@ body {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 60px;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .section-title-left {
@@ -389,6 +428,7 @@ body {
   font-weight: 700;
   color: #1a1a1a;
   font-family: var(--font-playfair), serif;
+  line-height: 1.2;
 }
 
 .view-all-btn {
@@ -396,21 +436,25 @@ body {
   text-decoration: none;
   font-weight: 600;
   font-size: 16px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  transition: color 0.3s ease;
+  text-transform: none;
+  letter-spacing: normal;
+  transition: all 0.3s ease;
   position: relative;
+  padding: 8px 16px;
+  border-radius: 6px;
+  white-space: nowrap;
 }
 
 .view-all-btn:hover {
   color: #059669;
+  background: rgba(16, 185, 129, 0.05);
 }
 
 .view-all-btn::after {
   content: '';
   position: absolute;
-  bottom: -4px;
-  left: 0;
+  bottom: 6px;
+  left: 16px;
   width: 0;
   height: 2px;
   background: #10b981;
@@ -418,13 +462,13 @@ body {
 }
 
 .view-all-btn:hover::after {
-  width: 100%;
+  width: calc(100% - 32px);
 }
 
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 32px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
 }
 
 /* 产品卡片样式 - 参考Gransky的产品展示 */
@@ -531,10 +575,69 @@ body {
   background: #f8f9fa; */
 }
 
+/* 按钮样式优化 - 参考 jademine.com */
+.btn {
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-size: 0.9375rem;
+  text-transform: none;
+  letter-spacing: normal;
+  min-height: 44px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-primary {
+  background: #10b981;
+  color: white;
+  box-shadow: 0 1px 3px rgba(16, 185, 129, 0.3);
+}
+
+.btn-primary:hover {
+  background: #059669;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(16, 185, 129, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
 /* 响应式设计 */
 @media (max-width: 1024px) {
+  .hero-section {
+    height: 65vh;
+    min-height: 450px;
+    max-height: 650px;
+  }
+  
   .hero-title {
-    font-size: 40px;
+    font-size: 38px;
+  }
+  
+  .hero-subtitle {
+    font-size: 18px;
+    margin-bottom: 28px;
+  }
+  
+  .hero-cta {
+    padding: 15px 30px;
+    font-size: 15px;
   }
   
   .section-title,
@@ -563,37 +666,114 @@ body {
   }
   
   .hero-section {
-    height: 60vh;
-    min-height: 400px;
+    height: 45vh;
+    min-height: 300px;
+    max-height: 450px;
+  }
+  
+  /* 移动端使用相同的图片显示方式 - 等比例缩小 */
+  .hero-image {
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  .hero-overlay {
+    background: linear-gradient(45deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 100%);
+  }
+  
+  .hero-content {
+    padding: 0 20px;
   }
   
   .hero-title {
-    font-size: 32px;
+    font-size: 26px;
+    margin-bottom: 10px;
+    text-shadow: 0 3px 6px rgba(0,0,0,0.5);
   }
   
   .hero-subtitle {
-    font-size: 18px;
+    font-size: 15px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+  }
+  
+  .hero-cta {
+    padding: 12px 24px;
+    font-size: 14px;
+    min-height: 44px;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.5);
+  }
+  
+  /* 移动端隐藏轮播指示器 - 参考 jademine.com */
+  .hero-dots {
+    display: none;
   }
   
   .section-title,
   .section-title-left {
     font-size: 32px;
+    margin-bottom: 40px;
   }
   
   .features-grid {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 20px;
+    margin-top: 40px;
   }
   
-  .categories-grid,
+  .feature-card {
+    padding: 32px 20px;
+  }
+  
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  
   .products-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  
+  .category-image {
+    height: 200px;
+  }
+  
+  .product-image {
+    height: 240px;
+  }
+  
+  .category-content {
+    padding: 14px;
+  }
+  
+  .category-title {
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+  
+  .category-description {
+    font-size: 12px;
+    line-height: 1.5;
   }
   
   .section-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
+    margin-bottom: 40px;
+  }
+  
+  .products-section,
+  .categories-section {
+    padding: 60px 0;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    font-size: 0.875rem;
+    min-height: 42px;
   }
 }
 
@@ -602,23 +782,142 @@ body {
     padding: 0 12px;
   }
   
+  .hero-section {
+    height: 40vh;
+    min-height: 280px;
+    max-height: 400px;
+  }
+  
+  /* 小屏幕使用相同的图片显示方式 - 等比例缩小 */
+  .hero-image {
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  .hero-overlay {
+    background: linear-gradient(45deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 100%);
+  }
+  
+  .hero-content {
+    padding: 0 16px;
+    max-width: 100%;
+  }
+  
   .hero-title {
-    font-size: 28px;
+    font-size: 20px;
+    margin-bottom: 8px;
+    text-shadow: 0 3px 6px rgba(0,0,0,0.5);
+    line-height: 1.3;
   }
   
   .hero-subtitle {
-    font-size: 16px;
+    font-size: 13px;
+    margin-bottom: 16px;
+    line-height: 1.5;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+  }
+  
+  .hero-cta {
+    padding: 10px 20px;
+    font-size: 13px;
+    min-height: 40px;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.5);
+  }
+  
+  /* 小屏幕也隐藏轮播指示器 */
+  .hero-dots {
+    display: none;
   }
   
   .section-title,
   .section-title-left {
-    font-size: 28px;
+    font-size: 26px;
+    margin-bottom: 32px;
   }
   
-  .feature-card,
-  .category-content,
+  .features-grid {
+    gap: 16px;
+    margin-top: 32px;
+  }
+  
+  .feature-card {
+    padding: 24px 16px;
+  }
+  
+  .feature-icon {
+    width: 56px;
+    height: 56px;
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .feature-title {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+  
+  .feature-description {
+    font-size: 14px;
+  }
+  
+  .category-content {
+    padding: 12px;
+  }
+  
   .product-info {
-    padding: 20px;
+    padding: 14px;
+  }
+  
+  .category-image {
+    height: 180px;
+  }
+  
+  .product-image {
+    height: 200px;
+  }
+  
+  .category-title {
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  
+  .product-title {
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+  
+  .category-description {
+    font-size: 11px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .product-description {
+    font-size: 12px;
+  }
+  
+  .categories-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .products-section,
+  .categories-section {
+    padding: 48px 0;
+  }
+  
+  .btn {
+    padding: 8px 18px;
+    font-size: 0.8125rem;
+    min-height: 40px;
   }
 }
 

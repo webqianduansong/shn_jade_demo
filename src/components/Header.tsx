@@ -1,7 +1,7 @@
 "use client";
 import Link from 'next/link';
-import { Badge, Button } from 'antd';
-import { ShoppingCartOutlined } from '@ant-design/icons';
+import { Badge, Button, Tooltip } from 'antd';
+import { ShoppingCartOutlined, UserOutlined, LogoutOutlined, UserAddOutlined } from '@ant-design/icons';
 import { useTranslations } from 'next-intl';
 import LanguageSwitcher from './LanguageSwitcher';
 import MobileNav from './MobileNav';
@@ -86,31 +86,50 @@ export default function Header({ locale }: HeaderProps) {
         
         {/* 右侧：语言切换器、登录/登出、购物车 */}
         <div className="header-actions">
-          <LanguageSwitcher currentLocale={locale} />
+          <div className="desktop-only">
+            <LanguageSwitcher currentLocale={locale} />
+          </div>
           {userEmail ? (
-            <Button
-              size="small"
-              onClick={async () => {
-                await fetch('/api/auth/logout', { method: 'POST' });
-                setUserEmail(null);
-              }}
-            >
-              {locale === 'zh' ? '登出' : 'Logout'}
-            </Button>
+            <>
+              <Tooltip title={locale === 'zh' ? '个人中心' : 'Profile'}>
+                <Link href={`/${locale}/profile`} className="icon-link">
+                  <UserAddOutlined className="icon-button-icon" />
+                  <span className="desktop-only-text">{locale === 'zh' ? '个人中心' : 'Profile'}</span>
+                </Link>
+              </Tooltip>
+              <Tooltip title={locale === 'zh' ? '登出' : 'Logout'}>
+                <Button
+                  type="text"
+                  icon={<LogoutOutlined />}
+                  onClick={async () => {
+                    await fetch('/api/auth/logout', { method: 'POST' });
+                    setUserEmail(null);
+                  }}
+                  className="icon-button"
+                >
+                  <span className="desktop-only-text">{locale === 'zh' ? '登出' : 'Logout'}</span>
+                </Button>
+              </Tooltip>
+            </>
           ) : (
-            <Link href={`/${locale}/login`} className="nav-link">
-              {locale === 'zh' ? '登录' : 'Login'}
-            </Link>
+            <Tooltip title={locale === 'zh' ? '登录' : 'Login'}>
+              <Link href={`/${locale}/login`} className="icon-link">
+                <UserOutlined className="icon-button-icon" />
+                <span className="desktop-only-text">{locale === 'zh' ? '登录' : 'Login'}</span>
+              </Link>
+            </Tooltip>
           )}
-          <Link 
-            href={`/${locale}/cart`} 
-            className="cart-link"
-          >
-            <Badge count={0} size="small">
-              <ShoppingCartOutlined />
-            </Badge>
-            <span className="hidden">{siteT('cart')}</span>
-          </Link>
+          <Tooltip title={siteT('cart')}>
+            <Link 
+              href={`/${locale}/cart`} 
+              className="cart-link"
+            >
+              <Badge count={0} size="small">
+                <ShoppingCartOutlined className="icon-button-icon" />
+              </Badge>
+              <span className="desktop-only-text">{siteT('cart')}</span>
+            </Link>
+          </Tooltip>
         </div>
       </div>
     </header>

@@ -15,7 +15,8 @@
     "necklaces": "项链",
     "bracelets": "手链/镯",
     "collections": "系列",
-    "cart": "购物车"
+    "cart": "购物车",
+    "profile": "个人中心"
   },
   "features": {
     "typeA": "A级玉石",
@@ -129,6 +130,40 @@
     "signinTitle": "登录账户",
     "requireLogin": "请先登录",
     "loginToContinue": "请登录后继续操作"
+  },
+  "profile": {
+    "title": "个人中心",
+    "subtitle": "管理您的个人信息和订单",
+    "info": "个人信息",
+    "orders": "我的订单",
+    "settings": "账户设置",
+    "favorites": "我的收藏",
+    "userInfo": {
+      "id": "用户ID",
+      "email": "注册邮箱",
+      "memberLevel": "会员等级",
+      "status": "账户状态",
+      "regularMember": "普通会员",
+      "active": "正常",
+      "jadeLover": "玉石爱好者"
+    },
+    "orderList": {
+      "orderId": "订单号",
+      "items": "商品信息",
+      "amount": "金额",
+      "status": "状态",
+      "date": "下单时间",
+      "noOrders": "暂无订单",
+      "startShopping": "去购物",
+      "total": "共"
+    },
+    "orderStatus": {
+      "pending": "待支付",
+      "paid": "已支付",
+      "shipped": "已发货",
+      "delivered": "已送达",
+      "cancelled": "已取消"
+    }
   }
 }
 

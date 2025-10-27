@@ -1,11 +1,26 @@
-/* MobileNav 组件样式 */
+/* MobileNav 组件样式 - 参考 jademine.com */
 .mobile-nav-button {
   display: block;
+  font-size: 20px !important;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1a1a1a;
+  border: none;
+  background: transparent;
+  transition: all 0.2s ease;
+}
+
+.mobile-nav-button:hover {
+  background: rgba(16, 185, 129, 0.05) !important;
+  color: #10b981 !important;
 }
 
 @media (min-width: 768px) {
   .mobile-nav-button {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -20,6 +35,8 @@
 
 .mobile-nav-drawer .text-sm {
   font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
 }
 
 .mobile-nav-drawer .text-gray-600 {
@@ -27,12 +44,81 @@
 }
 
 .mobile-nav-drawer .mb-2 {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+/* 抽屉内容样式 */
+.mobile-nav-drawer .ant-drawer-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.mobile-nav-drawer .ant-drawer-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.mobile-nav-drawer .ant-drawer-body {
+  padding: 20px 16px;
+}
+
+/* 菜单项样式 */
+.mobile-nav-drawer .ant-menu-item {
+  padding: 12px 16px;
+  height: auto;
+  line-height: 1.5;
+  margin-bottom: 4px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.mobile-nav-drawer .ant-menu-item:hover {
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.mobile-nav-drawer .ant-menu-item a {
+  color: #1a1a1a;
+  font-weight: 500;
+  font-size: 0.9375rem;
+}
+
+.mobile-nav-drawer .ant-divider {
+  margin: 16px 0;
+  border-color: #e5e7eb;
 }
 
 /* 响应式设计 */
 @media (max-width: 768px) {
   .mobile-nav-drawer {
     width: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mobile-nav-button {
+    width: 40px;
+    height: 40px;
+    font-size: 18px !important;
+  }
+  
+  .mobile-nav-drawer {
+    width: 260px;
+  }
+  
+  .mobile-nav-drawer .ant-drawer-header {
+    padding: 14px 16px;
+  }
+  
+  .mobile-nav-drawer .ant-drawer-body {
+    padding: 16px 12px;
+  }
+  
+  .mobile-nav-drawer .ant-menu-item {
+    padding: 10px 12px;
+  }
+  
+  .mobile-nav-drawer .ant-menu-item a {
+    font-size: 0.875rem;
   }
 }

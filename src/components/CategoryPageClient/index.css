@@ -1,39 +1,58 @@
-/* 商品卡片样式 - 与首页保持一致 */
+/* 商品卡片样式 - 参考 jademine.com */
 .jade-product-card {
   transition: all 0.3s ease;
   border: 1px solid #f0f0f0;
   border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
 }
 
 .jade-product-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+  border-color: #e5e7eb;
 }
 
 .jade-product-card .ant-card-cover {
   overflow: hidden;
+  background: #f9fafb;
 }
 
 .jade-product-card .ant-card-cover img {
-  transition: transform 0.3s ease;
+  transition: transform 0.4s ease;
 }
 
 .jade-product-card:hover .ant-card-cover img {
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
 .jade-product-card .ant-card-actions {
   background: #fafafa;
   border-top: 1px solid #f0f0f0;
+  padding: 8px 12px;
 }
 
 .jade-product-card .ant-card-actions > li {
-  margin: 8px 0;
+  margin: 0 4px;
 }
 
 .jade-product-card .ant-card-actions .ant-btn {
   border-radius: 6px;
-  font-weight: 500;
+  font-weight: 600;
+  height: 36px;
+  font-size: 13px;
+}
+
+.jade-product-card .ant-card-actions .ant-btn-primary {
+  background: #10b981;
+  border-color: #10b981;
+  box-shadow: 0 1px 3px rgba(16, 185, 129, 0.3);
+}
+
+.jade-product-card .ant-card-actions .ant-btn-primary:hover {
+  background: #059669;
+  border-color: #059669;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.4);
 }
 
 /* 商品图片容器 */
@@ -91,6 +110,42 @@
   font-weight: bold;
   color: #0b0c0b81;
 }
+/* 产品标题和描述样式 */
+.category-page-product-title {
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.category-page-product-description {
+  color: #6b7280;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  min-height: 2.6em;
+}
+
+.category-page-product-image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.category-page-product-price-container {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f3f4f6;
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
   .jade-product-card {
@@ -98,18 +153,107 @@
   }
   
   .jade-product-card .ant-card-body {
-    padding: 16px;
+    padding: 12px;
+  }
+  
+  .jade-product-card .ant-card-actions {
+    padding: 8px;
   }
   
   .jade-product-card .ant-card-actions .ant-btn {
-    min-width: 80px;
-    height: 32px;
-    font-size: 12px;
+    min-width: 100%;
+    height: 38px;
+    font-size: 13px;
+    margin: 4px 0;
+  }
+  
+  .jade-product-card .ant-card-actions > li {
+    width: 100%;
+    margin: 0;
+  }
+  
+  .category-page-product-title {
+    font-size: 0.9375rem;
+  }
+  
+  .category-page-product-description {
+    font-size: 0.8125rem;
   }
 }
+
+@media (max-width: 480px) {
+  .jade-product-card .ant-card-body {
+    padding: 10px;
+  }
+  
+  .jade-product-card .ant-card-actions {
+    padding: 6px;
+  }
+  
+  .jade-product-card .ant-card-actions .ant-btn {
+    height: 36px;
+    font-size: 12px;
+  }
+  
+  .category-page-product-title {
+    font-size: 0.875rem;
+  }
+  
+  .category-page-product-description {
+    font-size: 0.75rem;
+    -webkit-line-clamp: 1;
+    min-height: 1.3em;
+  }
+}
+/* 页面头部样式 */
+.category-page-header {
+  background: #fff;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 24px;
+  padding: 16px 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.view-mode-toggle .ant-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* 列表视图容器样式 */
 .list_View {
+  width: 100%;
+}
 
+/* 移动端头部优化 */
+@media (max-width: 768px) {
+  .category-page-header {
+    padding: 12px 16px;
+  }
+  
+  .category-page-header .ant-col {
+    text-align: center !important;
+  }
+  
+  .category-page-header .ant-space-horizontal {
+    justify-content: center;
+  }
+  
+  .view-mode-toggle {
+    display: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-page-header {
+    padding: 10px 12px;
+  }
+  
+  .category-page-header .ant-select {
+    width: 140px !important;
+  }
 }
 
 /* 列表项卡片样式 */

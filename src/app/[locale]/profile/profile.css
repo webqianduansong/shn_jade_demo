@@ -1,0 +1,446 @@
+/* 个人中心容器 */
+.profile-container {
+  min-height: calc(100vh - 160px);
+  background: #ffffff;
+  padding: 2rem 0;
+}
+
+.profile-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 769px) {
+  .profile-content {
+    padding: 0 2rem;
+  }
+}
+
+/* 页面头部 */
+.profile-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 0;
+}
+
+.profile-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.75rem;
+  background: linear-gradient(135deg, #2d5a3d 0%, #4a8c5f 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.profile-subtitle {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* 标签页样式 */
+.profile-tabs {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f0f0f0;
+}
+
+.profile-tabs .ant-tabs-nav {
+  margin-bottom: 2rem;
+  padding: 0 0.5rem;
+}
+
+.profile-tabs .ant-tabs-tab {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0 0.5rem;
+}
+
+.profile-tabs .ant-tabs-tab-active {
+  background: linear-gradient(135deg, #f0f7f3 0%, #e8f4ec 100%);
+  border-radius: 8px;
+}
+
+.profile-tabs .ant-tabs-ink-bar {
+  background: linear-gradient(90deg, #2d5a3d 0%, #4a8c5f 100%);
+  height: 3px;
+}
+
+.profile-tabs .ant-tabs-content-holder {
+  padding: 0;
+}
+
+.profile-tabs .ant-tabs-content {
+  margin-top: 0 !important;
+}
+
+.profile-tabs .ant-tabs-tabpane {
+  padding-top: 0 !important;
+}
+
+/* 用户信息卡片 */
+.info-card {
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 0;
+}
+
+.info-card .ant-card-body {
+  padding: 0;
+}
+
+.user-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.user-avatar {
+  background: linear-gradient(135deg, #2d5a3d 0%, #4a8c5f 100%);
+  flex-shrink: 0;
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 0.5rem 0;
+}
+
+.user-email {
+  font-size: 0.95rem;
+  color: #666;
+  margin: 0;
+}
+
+.user-details {
+  margin-top: 1rem;
+}
+
+.user-details .ant-descriptions-item {
+  padding-bottom: 1rem;
+}
+
+.user-details .ant-descriptions-item-label {
+  font-weight: 500;
+  color: #666;
+  padding-right: 1.5rem;
+}
+
+.user-details .ant-descriptions-item-content {
+  color: #1a1a1a;
+}
+
+/* 订单卡片 */
+.orders-card {
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 0;
+}
+
+.orders-card .ant-card-body {
+  padding: 0;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+/* 订单表格 */
+.orders-table {
+  overflow-x: auto;
+  margin: -0.5rem;
+  padding: 0.5rem;
+}
+
+.orders-table .ant-table {
+  border-radius: 8px;
+}
+
+.orders-table .ant-table-thead > tr > th {
+  background: linear-gradient(135deg, #f8faf9 0%, #f0f4f2 100%);
+  font-weight: 600;
+  color: #2d5a3d;
+  border-bottom: 2px solid #e8f0ec;
+  padding: 1rem 1rem;
+}
+
+.orders-table .ant-table-tbody > tr > td {
+  padding: 1rem 1rem;
+}
+
+.orders-table .ant-table-tbody > tr:hover {
+  background: #f8faf9;
+}
+
+.order-id {
+  font-family: 'Courier New', monospace;
+  font-weight: 500;
+  color: #2d5a3d;
+}
+
+.order-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.item-name {
+  flex: 1;
+  color: #1a1a1a;
+}
+
+.item-quantity {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.order-amount {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2d5a3d;
+}
+
+/* 空状态 */
+.orders-card .ant-empty {
+  padding: 3rem 0;
+}
+
+.orders-card .ant-empty-description {
+  color: #999;
+  font-size: 1rem;
+}
+
+.orders-card .ant-btn-primary {
+  background: linear-gradient(135deg, #2d5a3d 0%, #4a8c5f 100%);
+  border: none;
+  border-radius: 6px;
+  height: 40px;
+  padding: 0 2rem;
+  font-weight: 500;
+}
+
+.orders-card .ant-btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(45, 90, 61, 0.2);
+}
+
+/* 标签样式 */
+.ant-tag {
+  border-radius: 4px;
+  padding: 2px 12px;
+  font-size: 0.9rem;
+  border: none;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 1rem 0;
+  }
+
+  .profile-header {
+    padding: 0 1rem;
+  }
+
+  .profile-title {
+    font-size: 1.5rem;
+  }
+
+  .profile-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .profile-tabs {
+    padding: 0;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+
+  .profile-tabs .ant-tabs-nav {
+    margin-bottom: 0;
+    padding: 0.75rem 1rem;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .profile-tabs .ant-tabs-nav::before {
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .profile-tabs .ant-tabs-tab {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  .profile-tabs .ant-tabs-tab:first-child {
+    margin-left: 0;
+  }
+
+  .profile-tabs .ant-tabs-content-holder {
+    padding: 0;
+  }
+
+  .info-card {
+    padding: 1rem;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+  }
+
+  .orders-card {
+    padding: 1rem;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+  }
+
+  .user-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .user-name {
+    font-size: 1.25rem;
+  }
+
+  .user-email {
+    font-size: 0.9rem;
+  }
+
+  .orders-table {
+    font-size: 0.9rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .orders-table .ant-table {
+    min-width: 600px;
+  }
+
+  .orders-table .ant-table-thead > tr > th {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .orders-table .ant-table-tbody > tr > td {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .order-amount {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-container {
+    padding: 0.75rem 0;
+  }
+
+  .profile-header {
+    margin-bottom: 1rem;
+    padding: 0 0.75rem;
+  }
+
+  .profile-title {
+    font-size: 1.25rem;
+  }
+
+  .profile-tabs {
+    padding: 0;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+
+  .profile-tabs .ant-tabs-nav {
+    padding: 0.625rem 0.75rem;
+    margin-bottom: 0;
+  }
+
+  .profile-tabs .ant-tabs-tab {
+    margin: 0;
+    padding: 0.5rem 0.625rem;
+    font-size: 0.875rem;
+  }
+
+  .profile-tabs .ant-tabs-content-holder {
+    padding: 0;
+  }
+
+  .info-card {
+    padding: 0.75rem;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+  }
+
+  .orders-card {
+    padding: 0.75rem;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+  }
+
+  .user-header {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .user-avatar {
+    width: 60px;
+    height: 60px;
+  }
+
+  .user-name {
+    font-size: 1.1rem;
+  }
+
+  .orders-table {
+    margin: 0;
+    padding: 0;
+  }
+
+  .orders-table .ant-table {
+    min-width: 500px;
+  }
+
+  .orders-table .ant-table-thead > tr > th {
+    padding: 0.625rem 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .orders-table .ant-table-tbody > tr > td {
+    padding: 0.625rem 0.5rem;
+    font-size: 0.875rem;
+  }
+}
+

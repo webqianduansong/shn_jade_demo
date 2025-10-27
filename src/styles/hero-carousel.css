@@ -1,0 +1,229 @@
+/* 轮播图组件专用样式 - 移动端优化 */
+
+/* 基础容器 */
+.hero-section {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* 轮播图片包装器 */
+.hero-slide .absolute.inset-0 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* 确保图片容器完整 */
+.hero-slide .absolute.inset-0 img {
+  display: block;
+}
+
+/* 移动端图片适配策略 - 与PC端相同，等比例缩小 */
+@media (max-width: 768px) {
+  /* 移动端使用 cover 方式 - 与PC端一致 */
+  .hero-image {
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+  
+  /* 使用与桌面端相同的遮罩层 */
+  .hero-overlay {
+    background: linear-gradient(
+      45deg,
+      rgba(0, 0, 0, 0.35) 0%,
+      rgba(0, 0, 0, 0.15) 100%
+    ) !important;
+  }
+  
+  /* 内容区域优化 */
+  .hero-content {
+    width: 90%;
+    max-width: 500px;
+  }
+  
+  /* 移动端隐藏轮播指示器 - 参考 jademine.com */
+  .hero-dots {
+    display: none !important;
+  }
+}
+
+/* 小屏幕特殊处理 - 与PC端相同 */
+@media (max-width: 480px) {
+  .hero-image {
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+  
+  /* 使用与桌面端相同的遮罩层和阴影 */
+  .hero-title,
+  .hero-subtitle {
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+  }
+  
+  .hero-content {
+    width: 95%;
+  }
+  
+  /* 小屏幕也隐藏轮播指示器 */
+  .hero-dots {
+    display: none !important;
+  }
+}
+
+/* 横屏模式优化 - 与PC端相同显示方式 */
+@media (max-width: 768px) and (orientation: landscape) {
+  .hero-section {
+    height: 70vh;
+    min-height: 280px;
+  }
+  
+  .hero-image {
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+  
+  .hero-title {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  
+  .hero-subtitle {
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
+  
+  .hero-cta {
+    padding: 10px 20px;
+    font-size: 13px;
+    min-height: 38px;
+  }
+  
+  /* 横屏模式也隐藏指示器 */
+  .hero-dots {
+    display: none !important;
+  }
+}
+
+/* 超小屏幕（小于375px） - 与PC端相同显示方式 */
+@media (max-width: 375px) {
+  .hero-section {
+    min-height: 260px;
+    height: 35vh;
+  }
+  
+  .hero-image {
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+  
+  .hero-title {
+    font-size: 18px;
+  }
+  
+  .hero-subtitle {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  
+  .hero-cta {
+    padding: 8px 18px;
+    font-size: 12px;
+  }
+  
+  /* 超小屏幕也隐藏指示器 */
+  .hero-dots {
+    display: none !important;
+  }
+}
+
+/* 平板端优化 */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero-image {
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+}
+
+/* 大屏幕保持 cover */
+@media (min-width: 1025px) {
+  .hero-image {
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+}
+
+/* 触摸设备优化 - 移动端隐藏指示器 */
+@media (hover: none) and (pointer: coarse) {
+  .hero-cta {
+    min-height: 48px;
+    padding: 14px 28px;
+  }
+  
+  /* 触摸设备隐藏轮播指示器 */
+  .hero-dots {
+    display: none !important;
+  }
+}
+
+/* 图片加载状态 */
+.hero-slide .absolute.inset-0 {
+  background: #f8f9fa;
+}
+
+/* 确保图片不会变形 */
+.hero-image {
+  max-width: 100%;
+  max-height: 100%;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* 防止图片闪烁 */
+.hero-slide {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* 优化图片过渡 */
+.hero-slide.active .hero-image {
+  animation: fadeInImage 1s ease-in-out;
+}
+
+@keyframes fadeInImage {
+  from {
+    opacity: 0.8;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 可访问性改进 */
+.hero-dot:focus {
+  outline: 2px solid #10b981;
+  outline-offset: 4px;
+}
+
+.hero-cta:focus {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+/* 减少动画对性能的影响 */
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide,
+  .hero-dot,
+  .hero-cta {
+    transition: none;
+  }
+  
+  .hero-slide.active .hero-image {
+    animation: none;
+  }
+}
+

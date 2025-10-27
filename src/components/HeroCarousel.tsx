@@ -6,6 +6,7 @@ import Image from 'next/image';
 import lb1 from  '@/images/lb1.png';
 import lb2 from  '@/images/lb2.png';
 import lb3 from  '@/images/lb3.png';
+import '@/styles/hero-carousel.css';
 
 /**
  * 首页轮播图组件
@@ -57,14 +58,19 @@ export default function HeroCarousel() {
             index === currentSlide ? 'active' : ''
           }`}
         >
-          {/* 背景图片 */}
-          <div className="absolute inset-0">
+          {/* 背景图片容器 */}
+          <div className="absolute inset-0" style={{ background: '#f8f9fa' }}>
             <Image
               src={slide.image}
               alt={slide.title}
               fill
               className="hero-image"
               priority={index === 0}
+              sizes="100vw"
+              style={{
+                objectFit: 'cover',
+                objectPosition: 'center'
+              }}
             />
             {/* 遮罩层 */}
             <div className="hero-overlay"></div>
@@ -100,6 +106,7 @@ export default function HeroCarousel() {
             className={`hero-dot ${
               index === currentSlide ? 'active' : ''
             }`}
+            aria-label={`跳转到第 ${index + 1} 张轮播图`}
           />
         ))}
       </div>

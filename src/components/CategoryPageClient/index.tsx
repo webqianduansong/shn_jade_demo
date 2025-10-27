@@ -147,21 +147,21 @@ export default function CategoryPageClient({ products, locale }: CategoryPageCli
   return (
     <div>
       {/* Header Section */}
-      <div style={{ 
+      <div className="category-page-header" style={{ 
         backgroundColor: 'white', 
         borderBottom: '1px solid #f0f0f0', 
         marginBottom: '24px',
-        padding: '24px'
+        padding: '16px 24px'
       }}>
-        <Row justify="space-between" align="middle">
-          <Col>
+        <Row justify="space-between" align="middle" gutter={[16, 16]}>
+          <Col xs={24} sm={12}>
             <Text strong style={{ fontSize: '16px', color: '#262626' }}>
               {sortedProducts.length} {locale === 'zh' ? '件商品' : 'products'}
             </Text>
           </Col>
           
-          <Col>
-            <Space size="middle">
+          <Col xs={24} sm={12} style={{ textAlign: 'right' }}>
+            <Space size="middle" wrap>
               <Select
                 value={sortBy}
                 onChange={setSortBy}
@@ -176,7 +176,7 @@ export default function CategoryPageClient({ products, locale }: CategoryPageCli
                 ))}
               </Select>
               
-              <Space size="small">
+              <Space size="small" className="view-mode-toggle">
                 <Tooltip title={locale === 'zh' ? '网格视图' : 'Grid View'}>
                   <Button
                     type={viewMode === 'grid' ? 'primary' : 'text'}
