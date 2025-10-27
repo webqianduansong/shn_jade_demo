@@ -54,8 +54,30 @@ export default async function AdminDashboardPage() {
 
   return (
     <div className="max-w-7xl mx-auto py-8 px-6">
-      <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
-      {admin && <p className="text-gray-600 mb-6">Welcome, {admin.email}</p>}
+      <div style={{ 
+        marginBottom: '32px',
+        padding: '24px',
+        background: 'linear-gradient(135deg, #ffffff 0%, #f0f7f3 100%)',
+        borderRadius: '12px',
+        border: '1px solid #e8f0ec',
+        boxShadow: '0 2px 8px rgba(45, 90, 61, 0.08)'
+      }}>
+        <h1 style={{ 
+          fontSize: '28px',
+          fontWeight: 700,
+          color: '#2d5a3d',
+          margin: '0 0 8px 0',
+          background: 'linear-gradient(135deg, #2d5a3d 0%, #4a8c5f 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text'
+        }}>Admin Dashboard</h1>
+        {admin && <p style={{ 
+          fontSize: '15px',
+          color: '#666',
+          margin: 0
+        }}>Welcome, {admin.email}</p>}
+      </div>
       <DashboardClient metrics={metrics} recentOrders={recentOrders} locale={locale.startsWith('zh') ? 'zh' : 'en'} />
     </div>
   );

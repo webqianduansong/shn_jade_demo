@@ -1,7 +1,9 @@
 "use client";
 import { Card, Col, Row, Statistic, Table, Tag, Select, Space, Button } from 'antd';
+import { ShopOutlined, AppstoreOutlined, ShoppingOutlined, ClockCircleOutlined, DollarOutlined, LineChartOutlined } from '@ant-design/icons';
 import { useEffect, useMemo, useState } from 'react';
 import type { ColumnsType } from 'antd/es/table';
+import './dashboard.css';
 
 export interface DashboardMetrics {
   productCount: number;
@@ -68,7 +70,12 @@ export default function DashboardClient({ metrics, recentOrders, locale = 'zh' }
     return (
       <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`}>
         {gridY}
-        <polyline fill="none" stroke="#1677ff" strokeWidth={2} points={pts} />
+        <polyline fill="none" stroke="#2d5a3d" strokeWidth={3} points={pts} />
+        {series.map((s, i) => {
+          const x = pad + (i * (width - pad * 2)) / Math.max(1, series.length - 1);
+          const y = height - pad - (s.revenueCents / maxY) * (height - pad * 2);
+          return <circle key={i} cx={x} cy={y} r={4} fill="#4a8c5f" stroke="#fff" strokeWidth={2} />;
+        })}
       </svg>
     );
   }, [series]);
@@ -92,27 +99,82 @@ export default function DashboardClient({ metrics, recentOrders, locale = 'zh' }
       </Space>
       <Row gutter={[16, 16]}>
         <Col xs={12} md={6}>
-          <Card><Statistic title="商品数" value={metrics.productCount} /></Card>
+          <Card className="stat-card stat-card-product" bordered={false}>
+            <Statistic 
+              title="商品数" 
+              value={metrics.productCount} 
+              prefix={<ShopOutlined />}
+              valueStyle={{ color: '#2d5a3d' }}
+            />
+          </Card>
         </Col>
         <Col xs={12} md={6}>
-          <Card><Statistic title="分类数" value={metrics.categoryCount} /></Card>
+          <Card className="stat-card stat-card-category" bordered={false}>
+            <Statistic 
+              title="分类数" 
+              value={metrics.categoryCount}
+              prefix={<AppstoreOutlined />}
+              valueStyle={{ color: '#4a8c5f' }}
+            />
+          </Card>
         </Col>
         <Col xs={12} md={6}>
-          <Card><Statistic title="今日订单" value={metrics.todayOrderCount} /></Card>
+          <Card className="stat-card stat-card-order" bordered={false}>
+            <Statistic 
+              title="今日订单" 
+              value={metrics.todayOrderCount}
+              prefix={<ShoppingOutlined />}
+              valueStyle={{ color: '#1890ff' }}
+            />
+          </Card>
         </Col>
         <Col xs={12} md={6}>
-          <Card><Statistic title="待处理订单" value={metrics.pendingOrderCount} /></Card>
+          <Card className="stat-card stat-card-pending" bordered={false}>
+            <Statistic 
+              title="待处理订单" 
+              value={metrics.pendingOrderCount}
+              prefix={<ClockCircleOutlined />}
+              valueStyle={{ color: '#faad14' }}
+            />
+          </Card>
         </Col>
         <Col xs={24}>
-          <Card><Statistic title="今日收入" value={currency(metrics.todayRevenueCents)} /></Card>
+          <Card className="stat-card stat-card-revenue" bordered={false}>
+            <Statistic 
+              title="今日收入" 
+              value={currency(metrics.todayRevenueCents)}
+              prefix={<DollarOutlined />}
+              valueStyle={{ color: '#52c41a', fontSize: '32px' }}
+            />
+          </Card>
         </Col>
       </Row>
 
-      <Card title="收入趋势" bodyStyle={{ padding: 12 }}>
+      <Card 
+        title={
+          <span>
+            <LineChartOutlined style={{ marginRight: 8 }} />
+            收入趋势
+          </span>
+        }
+        className="chart-card"
+        bordered={false}
+        bodyStyle={{ padding: 12 }}
+      >
         {Timeline}
       </Card>
 
-      <Card title="最近订单" bodyStyle={{ padding: 0 }}>
+      <Card 
+        title={
+          <span>
+            <ShoppingOutlined style={{ marginRight: 8 }} />
+            最近订单
+          </span>
+        }
+        className="table-card"
+        bordered={false}
+        bodyStyle={{ padding: 0 }}
+      >
         <Table
           rowKey="id"
           columns={columns}

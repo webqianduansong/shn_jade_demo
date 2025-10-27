@@ -1,0 +1,220 @@
+/* 仪表盘样式 - 玉石绿主题 */
+
+/* 统计卡片样式 */
+.stat-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent 0%, currentColor 50%, transparent 100%);
+  opacity: 0.6;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.stat-card .ant-statistic-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.stat-card .ant-statistic-content {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.stat-card .ant-statistic-content-prefix {
+  font-size: 24px;
+  margin-right: 8px;
+}
+
+/* 不同类型卡片的颜色 */
+.stat-card-product {
+  background: linear-gradient(135deg, #ffffff 0%, #f0f7f3 100%);
+}
+
+.stat-card-product::before {
+  color: #2d5a3d;
+}
+
+.stat-card-category {
+  background: linear-gradient(135deg, #ffffff 0%, #f0f9f4 100%);
+}
+
+.stat-card-category::before {
+  color: #4a8c5f;
+}
+
+.stat-card-order {
+  background: linear-gradient(135deg, #ffffff 0%, #e6f7ff 100%);
+}
+
+.stat-card-order::before {
+  color: #1890ff;
+}
+
+.stat-card-pending {
+  background: linear-gradient(135deg, #ffffff 0%, #fffbe6 100%);
+}
+
+.stat-card-pending::before {
+  color: #faad14;
+}
+
+.stat-card-revenue {
+  background: linear-gradient(135deg, #f0f7f3 0%, #e8f4ec 100%);
+  border: 2px solid #2d5a3d;
+}
+
+.stat-card-revenue::before {
+  color: #52c41a;
+  height: 6px;
+}
+
+.stat-card-revenue .ant-statistic-title {
+  font-size: 16px;
+  color: #2d5a3d;
+  font-weight: 600;
+}
+
+.stat-card-revenue .ant-statistic-content {
+  color: #2d5a3d !important;
+}
+
+/* 图表卡片 */
+.chart-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e8f0ec;
+}
+
+.chart-card .ant-card-head {
+  background: linear-gradient(135deg, #f8faf9 0%, #f0f4f2 100%);
+  border-bottom: 2px solid #e8f0ec;
+  padding: 16px 24px;
+}
+
+.chart-card .ant-card-head-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2d5a3d;
+}
+
+.chart-card svg {
+  width: 100%;
+  height: auto;
+}
+
+/* 表格卡片 */
+.table-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e8f0ec;
+}
+
+.table-card .ant-card-head {
+  background: linear-gradient(135deg, #f8faf9 0%, #f0f4f2 100%);
+  border-bottom: 2px solid #e8f0ec;
+  padding: 16px 24px;
+}
+
+.table-card .ant-card-head-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2d5a3d;
+}
+
+.table-card .ant-table-thead > tr > th {
+  background: #f8faf9;
+  color: #2d5a3d;
+  font-weight: 600;
+  border-bottom: 2px solid #e8f0ec;
+}
+
+.table-card .ant-table-tbody > tr:hover {
+  background: #f0f7f3;
+}
+
+.table-card .ant-table-tbody > tr > td {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* 标签样式优化 */
+.table-card .ant-tag {
+  border-radius: 4px;
+  padding: 2px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  border: none;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .stat-card .ant-statistic-content {
+    font-size: 24px;
+  }
+
+  .stat-card .ant-statistic-content-prefix {
+    font-size: 20px;
+  }
+
+  .stat-card-revenue .ant-statistic-content {
+    font-size: 28px !important;
+  }
+
+  .chart-card .ant-card-head,
+  .table-card .ant-card-head {
+    padding: 12px 16px;
+  }
+
+  .chart-card .ant-card-head-title,
+  .table-card .ant-card-head-title {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stat-card {
+    border-radius: 8px;
+  }
+
+  .stat-card .ant-statistic-title {
+    font-size: 13px;
+  }
+
+  .stat-card .ant-statistic-content {
+    font-size: 20px;
+  }
+
+  .stat-card .ant-statistic-content-prefix {
+    font-size: 18px;
+  }
+
+  .stat-card-revenue .ant-statistic-title {
+    font-size: 14px;
+  }
+
+  .stat-card-revenue .ant-statistic-content {
+    font-size: 24px !important;
+  }
+
+  .chart-card,
+  .table-card {
+    border-radius: 8px;
+  }
+}
+

@@ -1,5 +1,6 @@
 "use client";
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Badge, Button, Tooltip } from 'antd';
 import { ShoppingCartOutlined, UserOutlined, LogoutOutlined, UserAddOutlined } from '@ant-design/icons';
 import { useTranslations } from 'next-intl';
@@ -17,6 +18,7 @@ interface HeaderProps {
 }
 
 export default function Header({ locale }: HeaderProps) {
+  const router = useRouter();
   const navT = useTranslations('nav'); // 导航相关翻译
   const siteT = useTranslations('site'); // 网站相关翻译
   const [userEmail, setUserEmail] = useState<string | null>(null);
@@ -104,6 +106,8 @@ export default function Header({ locale }: HeaderProps) {
                   onClick={async () => {
                     await fetch('/api/auth/logout', { method: 'POST' });
                     setUserEmail(null);
+                    // 退出后跳转到首页
+                    router.push(`/${locale}`);
                   }}
                   className="icon-button"
                 >
