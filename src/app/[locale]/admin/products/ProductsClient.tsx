@@ -1,8 +1,26 @@
 "use client";
-import { Table, Button, Modal, Form, Input, InputNumber, Select, Space, Popconfirm, message, Row, Col, Card, Upload } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { Table, Button, Modal, Form, Input, InputNumber, Select, Space, Popconfirm, message, Row, Col, Card, Upload, Tag } from 'antd';
+import { UploadOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
+
+// 响应式钩子
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  return isMobile;
+}
 
 type Product = {
   id: string;
@@ -38,25 +56,117 @@ export default function ProductsClient({ products, categories, locale }: { produ
   const [total, setTotal] = useState(products.length);
   const [remoteData, setRemoteData] = useState<Product[]>(products);
   const [loadingTable, setLoadingTable] = useState(false);
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const isMobile = useIsMobile();
 
-  const columns = useMemo(() => ([
-    { title: '名称', dataIndex: 'name' },
-    { title: 'SKU', dataIndex: 'sku' },
-    { title: '型号', dataIndex: 'model' },
-    { title: '评分', dataIndex: 'rating', render: (v: number) => (v ?? 0).toFixed(1) },
-    { title: '评论数', dataIndex: 'reviewsCount' },
-    { title: '分类', dataIndex: ['category', 'name'] },
-    { title: '金额(CNY)', dataIndex: 'price', render: (v: number) => (v / 100).toFixed(2) },
-    { title: '操作', key: 'actions', render: (_: any, r: Product) => (
-      <Space>
-        <a onClick={() => onEdit(r)}>编辑</a>
+  // 移动端简化列配置
+  const mobileColumns = useMemo(() => ([
+    {
+      title: '商品信息',
+      dataIndex: 'name',
+      key: 'info',
+      width: 200,
+      render: (_: any, r: Product) => (
+        <div className="mobile-product-cell">
+          <div className="mobile-product-name">{r.name}</div>
+          <div className="mobile-product-meta">
+            {r.sku && <span className="mobile-product-sku">SKU: {r.sku}</span>}
+            {r.category && <Tag color="blue" style={{ marginLeft: 8 }}>{r.category.name}</Tag>}
+          </div>
+        </div>
+      )
+    },
+    {
+      title: '价格/操作',
+      dataIndex: 'price',
+      key: 'actions',
+      width: 140,
+      render: (_: any, r: Product) => (
+        <div className="mobile-product-actions">
+          <div className="mobile-product-price">¥{(r.price / 100).toFixed(2)}</div>
+          <Space size={4} style={{ marginTop: 8 }}>
+            <Button 
+              type="link" 
+              size="small" 
+              icon={<EditOutlined />} 
+              onClick={() => onEdit(r)}
+              style={{ padding: '0 4px' }}
+            />
+            <Popconfirm 
+              title="确认删除？" 
+              onConfirm={() => onDelete(r.id)} 
+              okText="删除" 
+              cancelText="取消"
+            >
+              <Button 
+                type="link" 
+                size="small" 
+                danger 
+                icon={<DeleteOutlined />}
+                style={{ padding: '0 4px' }}
+              />
+            </Popconfirm>
+          </Space>
+        </div>
+      )
+    },
+  ]), []);
+
+  // 桌面端完整列配置
+  const desktopColumns = useMemo(() => ([
+    { title: '名称', dataIndex: 'name', width: 180 },
+    { title: 'SKU', dataIndex: 'sku', width: 120 },
+    { title: '型号', dataIndex: 'model', width: 100 },
+    { title: '评分', dataIndex: 'rating', width: 80, render: (v: number) => (v ?? 0).toFixed(1) },
+    { title: '评论数', dataIndex: 'reviewsCount', width: 80 },
+    { title: '分类', dataIndex: ['category', 'name'], width: 120 },
+    { title: '金额(CNY)', dataIndex: 'price', width: 100, render: (v: number) => (v / 100).toFixed(2) },
+    { title: '操作', key: 'actions', width: 220, fixed: 'right', render: (_: any, r: Product) => (
+      <Space size={4}>
+        <Button 
+          size="small" 
+          className="jade-btn" 
+          onClick={() => onEdit(r)}
+        >
+          编辑
+        </Button>
         <Popconfirm title="确认删除该商品？" onConfirm={() => onDelete(r.id)} okText="删除" cancelText="取消">
-          <a style={{ color: '#ff4d4f' }}>删除</a>
+          <Button size="small" danger>删除</Button>
         </Popconfirm>
-        <Link href={`/${locale}/products/${r.id}`}>前台查看</Link>
+        <Link href={`/${locale}/products/${r.id}`}>
+          <Button size="small" className="jade-btn-outline">查看</Button>
+        </Link>
       </Space>
     ) },
   ]), [locale]);
+
+  const columns = isMobile ? mobileColumns : desktopColumns;
+
+  // 批量删除
+  const onBulkDelete = async () => {
+    if (!selectedRowKeys.length) return message.info('请选择要删除的商品');
+    await fetch('/api/admin/products/bulk', { 
+      method: 'POST', 
+      headers: { 'Content-Type': 'application/json' }, 
+      body: JSON.stringify({ action: 'delete', ids: selectedRowKeys }) 
+    });
+    message.success('批量删除成功');
+    setSelectedRowKeys([]);
+    window.location.reload();
+  };
+
+  // 批量调价
+  const onBulkReprice = async (percent: number) => {
+    if (!selectedRowKeys.length) return message.info('请选择要调整的商品');
+    await fetch('/api/admin/products/bulk', { 
+      method: 'POST', 
+      headers: { 'Content-Type': 'application/json' }, 
+      body: JSON.stringify({ action: 'repricePercent', ids: selectedRowKeys, payload: { percent } }) 
+    });
+    message.success('批量调价成功');
+    setSelectedRowKeys([]);
+    window.location.reload();
+  };
 
   const onCreate = () => {
     setEditing(null);
@@ -200,57 +310,110 @@ export default function ProductsClient({ products, categories, locale }: { produ
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 12 }}>
         <h2 style={{ margin: 0 }}>商品管理</h2>
-        <Button type="primary" onClick={onCreate}>新增商品</Button>
+        <Space wrap>
+          <Button className="jade-btn-primary" onClick={onCreate}>新增商品</Button>
+        </Space>
       </div>
 
       <Card bordered={false} style={{ marginBottom: 12 }}>
         <Row gutter={[12, 12]}>
           <Col xs={24} md={10}>
-            <Input allowClear placeholder="搜索名称/描述" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+            <Input 
+              allowClear 
+              placeholder={isMobile ? "搜索..." : "搜索名称/描述"} 
+              value={keyword} 
+              onChange={(e) => setKeyword(e.target.value)} 
+            />
           </Col>
-          <Col xs={12} md={6}>
-            <Select allowClear style={{ width: '100%' }} placeholder="分类筛选" value={categoryId} onChange={setCategoryId} options={categories.map((c) => ({ value: c.id, label: c.name }))} />
+          <Col xs={24} sm={12} md={6}>
+            <Select 
+              allowClear 
+              style={{ width: '100%' }} 
+              placeholder="分类筛选" 
+              value={categoryId} 
+              onChange={setCategoryId} 
+              options={categories.map((c) => ({ value: c.id, label: c.name }))} 
+            />
           </Col>
-          <Col xs={12} md={4}>
-            <InputNumber style={{ width: '100%' }} placeholder="最低价(元)" value={minPrice} onChange={(v) => setMinPrice(v ?? undefined)} min={0} />
+          <Col xs={12} sm={6} md={4}>
+            <InputNumber 
+              style={{ width: '100%' }} 
+              placeholder={isMobile ? "最低" : "最低价(元)"} 
+              value={minPrice} 
+              onChange={(v) => setMinPrice(v ?? undefined)} 
+              min={0} 
+            />
           </Col>
-          <Col xs={12} md={4}>
-            <InputNumber style={{ width: '100%' }} placeholder="最高价(元)" value={maxPrice} onChange={(v) => setMaxPrice(v ?? undefined)} min={0} />
+          <Col xs={12} sm={6} md={4}>
+            <InputNumber 
+              style={{ width: '100%' }} 
+              placeholder={isMobile ? "最高" : "最高价(元)"} 
+              value={maxPrice} 
+              onChange={(v) => setMaxPrice(v ?? undefined)} 
+              min={0} 
+            />
           </Col>
         </Row>
       </Card>
+
+      {!isMobile && (
+        <div style={{ marginBottom: 12, display: 'flex', alignItems: 'center', gap: 12 }}>
+          <span style={{ color: '#666', fontSize: '14px' }}>
+            {selectedRowKeys.length > 0 ? `已选择 ${selectedRowKeys.length} 项` : '批量操作：'}
+          </span>
+          <Space>
+            <Popconfirm 
+              title="确认删除选中的商品？" 
+              onConfirm={onBulkDelete}
+              disabled={selectedRowKeys.length === 0}
+            >
+              <Button 
+                danger 
+                disabled={selectedRowKeys.length === 0}
+              >
+                批量删除
+              </Button>
+            </Popconfirm>
+            <Button 
+              className="jade-btn-outline"
+              onClick={() => onBulkReprice(10)}
+              disabled={selectedRowKeys.length === 0}
+            >
+              调价 +10%
+            </Button>
+            <Button 
+              className="jade-btn-outline"
+              onClick={() => onBulkReprice(-10)}
+              disabled={selectedRowKeys.length === 0}
+            >
+              调价 -10%
+            </Button>
+          </Space>
+        </div>
+      )}
 
       <Table
         rowKey="id"
         dataSource={remoteData}
         columns={columns as any}
-        rowSelection={{}}
-        loading={loadingTable}
-        pagination={{ pageSize, current: page, total, showSizeChanger: false, onChange: (p) => setPage(p) }}
-        footer={(selection) => {
-          const keys = (selection as any)?.selectedRowKeys || [];
-          const onBulkDelete = async () => {
-            if (!keys.length) return message.info('请选择要删除的商品');
-            await fetch('/api/admin/products/bulk', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'delete', ids: keys }) });
-            message.success('批量删除成功');
-            window.location.reload();
-          };
-          const onBulkReprice = async (percent: number) => {
-            if (!keys.length) return message.info('请选择要调整的商品');
-            await fetch('/api/admin/products/bulk', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'repricePercent', ids: keys, payload: { percent } }) });
-            message.success('批量调价成功');
-            window.location.reload();
-          };
-          return (
-            <Space>
-              <Button danger onClick={onBulkDelete}>批量删除</Button>
-              <Button onClick={() => onBulkReprice(10)}>所有选中 +10%</Button>
-              <Button onClick={() => onBulkReprice(-10)}>所有选中 -10%</Button>
-            </Space>
-          );
+        rowSelection={isMobile ? undefined : {
+          selectedRowKeys,
+          onChange: (keys) => setSelectedRowKeys(keys),
         }}
+        loading={loadingTable}
+        pagination={{ 
+          pageSize, 
+          current: page, 
+          total, 
+          showSizeChanger: false, 
+          onChange: (p) => setPage(p),
+          simple: isMobile,
+          size: isMobile ? 'small' : 'default'
+        }}
+        scroll={isMobile ? { x: 'max-content' } : { x: 1400 }}
+        size={isMobile ? 'small' : 'middle'}
       />
 
       <Modal

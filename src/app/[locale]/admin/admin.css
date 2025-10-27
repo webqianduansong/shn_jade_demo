@@ -255,6 +255,94 @@
   color: #666;
 }
 
+/* 移动端商品表格单元格 */
+.mobile-product-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mobile-product-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  line-height: 1.4;
+}
+
+.mobile-product-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.mobile-product-sku {
+  font-size: 12px;
+  color: #666;
+}
+
+.mobile-product-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.mobile-product-price {
+  font-size: 16px;
+  font-weight: 700;
+  color: #2d5a3d;
+}
+
+/* 玉石绿渐变按钮样式 - 适中版本 */
+.jade-btn-primary {
+  background: linear-gradient(135deg, #3f8f4d 0%, #5fa873 100%) !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-weight: 500 !important;
+  box-shadow: 0 2px 6px rgba(63, 143, 77, 0.3) !important;
+  transition: all 0.3s ease !important;
+}
+
+.jade-btn-primary:hover {
+  background: linear-gradient(135deg, #2d7039 0%, #3f8f4d 100%) !important;
+  box-shadow: 0 4px 12px rgba(63, 143, 77, 0.4) !important;
+  transform: translateY(-1px) !important;
+  color: #ffffff !important;
+}
+
+.jade-btn-primary:active {
+  transform: translateY(0) !important;
+}
+
+.jade-btn {
+  background: linear-gradient(135deg, #3f8f4d 0%, #5fa873 100%) !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+}
+
+.jade-btn:hover {
+  background: linear-gradient(135deg, #2d7039 0%, #3f8f4d 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(63, 143, 77, 0.3) !important;
+}
+
+.jade-btn-outline {
+  background: transparent !important;
+  border: 1px solid #3f8f4d !important;
+  color: #3f8f4d !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+}
+
+.jade-btn-outline:hover {
+  background: linear-gradient(135deg, #3f8f4d 0%, #5fa873 100%) !important;
+  border-color: #3f8f4d !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(63, 143, 77, 0.3) !important;
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
   .admin-header {
@@ -310,6 +398,41 @@
   .ant-table-thead > tr > th,
   .ant-table-tbody > tr > td {
     padding: 10px 8px;
+  }
+
+  /* 表格容器横向滚动 */
+  .ant-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ant-table {
+    min-width: 600px;
+  }
+
+  /* 商品表格移动端优化 */
+  .mobile-product-cell {
+    padding: 4px 0;
+  }
+
+  .mobile-product-name {
+    font-size: 13px;
+  }
+
+  .mobile-product-sku {
+    font-size: 11px;
+  }
+
+  .mobile-product-price {
+    font-size: 15px;
+  }
+
+  .mobile-product-actions .ant-space {
+    gap: 2px !important;
+  }
+
+  .mobile-product-actions .ant-btn {
+    font-size: 16px !important;
   }
 
   /* 移动端卡片优化 */
@@ -382,11 +505,45 @@
   /* 极小屏幕表格优化 */
   .ant-table {
     font-size: 12px;
+    min-width: 500px;
   }
 
   .ant-table-thead > tr > th,
   .ant-table-tbody > tr > td {
     padding: 8px 6px;
+  }
+
+  /* 表格操作按钮 */
+  .ant-table-tbody .ant-btn {
+    padding: 2px 8px;
+    font-size: 12px;
+    height: 28px;
+  }
+
+  .ant-table-tbody .ant-space {
+    gap: 4px !important;
+  }
+
+  /* 商品表格极小屏幕优化 */
+  .mobile-product-name {
+    font-size: 12px;
+  }
+
+  .mobile-product-sku {
+    font-size: 10px;
+  }
+
+  .mobile-product-price {
+    font-size: 14px;
+  }
+
+  .mobile-product-actions .ant-btn {
+    font-size: 14px !important;
+  }
+
+  .ant-tag {
+    font-size: 10px;
+    padding: 0px 6px;
   }
 
   /* 极小屏幕按钮优化 */

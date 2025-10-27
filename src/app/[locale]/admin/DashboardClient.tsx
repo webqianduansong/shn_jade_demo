@@ -5,6 +5,24 @@ import { useEffect, useMemo, useState } from 'react';
 import type { ColumnsType } from 'antd/es/table';
 import './dashboard.css';
 
+// 响应式钩子
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  return isMobile;
+}
+
 export interface DashboardMetrics {
   productCount: number;
   categoryCount: number;
@@ -26,6 +44,7 @@ export default function DashboardClient({ metrics, recentOrders, locale = 'zh' }
   const [days, setDays] = useState(7);
   const [loading, setLoading] = useState(false);
   const [series, setSeries] = useState<{ date: string; orderCount: number; revenueCents: number }[]>([]);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const run = async () => {
@@ -42,14 +61,46 @@ export default function DashboardClient({ metrics, recentOrders, locale = 'zh' }
   }, [days]);
   const currency = (cents: number) => new Intl.NumberFormat(locale === 'zh' ? 'zh-CN' : 'en-US', { style: 'currency', currency: 'CNY', maximumFractionDigits: 2 }).format((cents || 0) / 100);
 
-  const columns: ColumnsType<RecentOrderRow> = [
+  // 移动端简化列配置
+  const mobileColumns: ColumnsType<RecentOrderRow> = [
+    { 
+      title: '订单信息', 
+      dataIndex: 'id', 
+      key: 'id',
+      width: 200,
+      ellipsis: true,
+      render: (id: string, record: RecentOrderRow) => (
+        <div className="mobile-order-cell">
+          <div className="mobile-order-id">{id.slice(0, 12)}...</div>
+          <div className="mobile-order-email">{record.userEmail}</div>
+        </div>
+      )
+    },
+    { 
+      title: '金额/状态', 
+      dataIndex: 'totalAmountCents', 
+      key: 'total',
+      width: 120,
+      render: (v: number, record: RecentOrderRow) => (
+        <div className="mobile-order-amount">
+          <div style={{ fontWeight: 600, color: '#2d5a3d' }}>{currency(v)}</div>
+          <div style={{ marginTop: 4 }}>{tagForStatus(record.status)}</div>
+        </div>
+      )
+    },
+  ];
+
+  // 桌面端完整列配置
+  const desktopColumns: ColumnsType<RecentOrderRow> = [
     { title: '订单号', dataIndex: 'id', key: 'id', width: 220, ellipsis: true },
     { title: '用户邮箱', dataIndex: 'userEmail', key: 'userEmail', width: 220, ellipsis: true },
-    { title: '金额', dataIndex: 'totalAmountCents', key: 'total', render: (v: number) => currency(v) },
+    { title: '金额', dataIndex: 'totalAmountCents', key: 'total', width: 120, render: (v: number) => currency(v) },
     { title: '商品数', dataIndex: 'itemsCount', key: 'itemsCount', width: 100 },
     { title: '状态', dataIndex: 'status', key: 'status', width: 120, render: (s: string) => tagForStatus(s) },
     { title: '创建时间', dataIndex: 'createdAt', key: 'createdAt', width: 180 },
   ];
+
+  const columns = isMobile ? mobileColumns : desktopColumns;
 
   const Timeline = useMemo(() => {
     // 简易收入折线：使用原生 SVG，避免额外依赖
@@ -179,7 +230,14 @@ export default function DashboardClient({ metrics, recentOrders, locale = 'zh' }
           rowKey="id"
           columns={columns}
           dataSource={recentOrders}
-          pagination={{ pageSize: 6, hideOnSinglePage: true }}
+          pagination={{ 
+            pageSize: isMobile ? 5 : 6, 
+            hideOnSinglePage: true,
+            simple: isMobile,
+            size: isMobile ? 'small' : 'default'
+          }}
+          scroll={isMobile ? { x: 'max-content' } : undefined}
+          size={isMobile ? 'small' : 'middle'}
         />
       </Card>
     </div>
