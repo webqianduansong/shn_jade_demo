@@ -29,7 +29,8 @@
   "sections": {
     "categories": "按分类浏览",
     "popular": "热门商品",
-    "newArrivals": "新品上市"
+    "newArrivals": "新品上市",
+    "productsCount": "{count} 件商品"
   },
   "actions": {
     "viewAll": "查看全部"

@@ -27,7 +27,8 @@
   "sections": {
     "categories": "카테고리별",
     "popular": "인기 상품",
-    "newArrivals": "신상품"
+    "newArrivals": "신상품",
+    "productsCount": "{count}개 상품"
   },
   "actions": {
     "viewAll": "전체 보기"

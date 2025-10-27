@@ -27,7 +27,8 @@
   "sections": {
     "categories": "Por categoria",
     "popular": "Mais populares",
-    "newArrivals": "Novidades"
+    "newArrivals": "Novidades",
+    "productsCount": "{count} Produtos"
   },
   "actions": {
     "viewAll": "Ver tudo"

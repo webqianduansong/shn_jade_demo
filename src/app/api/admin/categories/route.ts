@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { name, slug } = body;
+    const { name, slug, image } = body;
 
     if (!name || !slug) {
       return NextResponse.json({ error: '名称和Slug不能为空' }, { status: 400 });
@@ -51,7 +51,11 @@ export async function POST(req: NextRequest) {
     }
 
     const category = await prisma.category.create({
-      data: { name, slug }
+      data: { 
+        name, 
+        slug,
+        image: image || null
+      }
     });
 
     return NextResponse.json({ success: true, category });
@@ -70,10 +74,23 @@ export async function PUT(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { id, name, slug } = body;
+    const { id, name, slug, image } = body;
+
+    console.log('收到更新请求:', { id, name, slug, image });
 
     if (!id || !name || !slug) {
+      console.error('参数不完整:', { id, name, slug });
       return NextResponse.json({ error: '参数不完整' }, { status: 400 });
+    }
+
+    // 检查分类是否存在
+    const category = await prisma.category.findUnique({
+      where: { id }
+    });
+
+    if (!category) {
+      console.error('分类不存在:', id);
+      return NextResponse.json({ error: '分类不存在' }, { status: 404 });
     }
 
     // 检查slug是否被其他分类使用
@@ -85,18 +102,39 @@ export async function PUT(req: NextRequest) {
     });
 
     if (existing) {
+      console.error('Slug冲突:', slug, existing.id);
       return NextResponse.json({ error: 'Slug已被其他分类使用' }, { status: 400 });
     }
 
-    const category = await prisma.category.update({
+    // 构建更新数据
+    const updateData: any = { 
+      name, 
+      slug
+    };
+    
+    // 只有当image字段存在时才更新
+    if (image !== undefined) {
+      updateData.image = image;
+    }
+
+    console.log('更新数据:', updateData);
+
+    const updatedCategory = await prisma.category.update({
       where: { id },
-      data: { name, slug }
+      data: updateData
     });
 
-    return NextResponse.json({ success: true, category });
+    console.log('更新成功:', updatedCategory);
+
+    return NextResponse.json({ success: true, category: updatedCategory });
   } catch (error) {
     console.error('更新分类失败:', error);
-    return NextResponse.json({ error: '更新分类失败' }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : '更新分类失败';
+    return NextResponse.json({ 
+      success: false,
+      error: errorMessage,
+      details: error instanceof Error ? error.stack : String(error)
+    }, { status: 500 });
   }
 }
 

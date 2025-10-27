@@ -19,6 +19,7 @@ interface ProductDetailLayoutProps {
     descriptionEn: string;
     price: number;
     image: unknown;
+    images?: string[];
   };
   locale: string;
 }

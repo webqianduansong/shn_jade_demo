@@ -27,7 +27,8 @@
   "sections": {
     "categories": "حسب الفئة",
     "popular": "الأكثر شعبية",
-    "newArrivals": "وصل حديثاً"
+    "newArrivals": "وصل حديثاً",
+    "productsCount": "{count} منتجات"
   },
   "actions": {
     "viewAll": "عرض الكل"

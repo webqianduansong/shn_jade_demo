@@ -27,7 +27,8 @@
   "sections": {
     "categories": "カテゴリー別",
     "popular": "人気商品",
-    "newArrivals": "新着商品"
+    "newArrivals": "新着商品",
+    "productsCount": "{count} 商品"
   },
   "actions": {
     "viewAll": "すべて表示"

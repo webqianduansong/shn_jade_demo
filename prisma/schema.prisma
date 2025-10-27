@@ -30,6 +30,7 @@ model Category {
   id       String    @id @default(cuid())
   name     String
   slug     String    @unique
+  image    String?   // 分类封面图片
   products Product[]
 }
 

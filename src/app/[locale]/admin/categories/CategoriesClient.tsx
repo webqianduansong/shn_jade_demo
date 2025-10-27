@@ -1,6 +1,6 @@
 "use client";
-import { Table, Button, Space, message, Tag, Modal, Form, Input } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Table, Button, Space, message, Tag, Modal, Form, Input, Upload, Image } from 'antd';
+import { EditOutlined, DeleteOutlined, UploadOutlined } from '@ant-design/icons';
 import { useEffect, useMemo, useState, useCallback } from 'react';
 import type { ColumnsType } from 'antd/es/table';
 
@@ -22,7 +22,7 @@ function useIsMobile() {
   return isMobile;
 }
 
-type Category = { id: string; name: string; slug: string; _count?: { products: number } };
+type Category = { id: string; name: string; slug: string; image?: string | null; _count?: { products: number } };
 
 export default function CategoriesClient({ categories: initialCategories }: { categories: Category[] }) {
   const [categories, setCategories] = useState<Category[]>(initialCategories);
@@ -32,6 +32,8 @@ export default function CategoriesClient({ categories: initialCategories }: { ca
   const [editing, setEditing] = useState<Category | null>(null);
   const [form] = Form.useForm();
   const isMobile = useIsMobile();
+  const [imageUrl, setImageUrl] = useState<string>('');
+  const [uploading, setUploading] = useState(false);
 
   // 刷新分类列表
   const refreshCategories = useCallback(async () => {
@@ -79,10 +81,53 @@ export default function CategoriesClient({ categories: initialCategories }: { ca
     }
   }, [refreshCategories]);
 
+  // 图片上传处理
+  const handleUpload = async (file: File) => {
+    const accept = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+    if (!accept.includes(file.type)) {
+      message.error('仅支持 JPG/PNG/WebP/GIF 图片');
+      return Upload.LIST_IGNORE as unknown as boolean;
+    }
+    const maxSize = 2 * 1024 * 1024;
+    if (file.size > maxSize) {
+      message.error('图片大小不能超过 2MB');
+      return Upload.LIST_IGNORE as unknown as boolean;
+    }
+    const fd = new FormData();
+    fd.append('file', file);
+    setUploading(true);
+    try {
+      const res = await fetch('/api/admin/upload', { method: 'POST', body: fd });
+      const ct = res.headers.get('content-type') || '';
+      if (!res.ok) {
+        let msg = '上传失败';
+        if (ct.includes('application/json')) {
+          const j = await res.json();
+          msg = j?.message || msg;
+        } else {
+          msg = await res.text() || msg;
+        }
+        message.error(msg);
+        return false;
+      }
+      const data = ct.includes('application/json') ? await res.json() : { url: await res.text() };
+      if (data?.url) {
+        setImageUrl(data.url);
+        message.success('图片上传成功');
+      } else {
+        message.error('上传失败');
+      }
+    } finally {
+      setUploading(false);
+    }
+    return false; // 阻止 antd 自动上传
+  };
+
   // 新增分类
   const handleCreate = useCallback(() => {
     setEditing(null);
     form.resetFields();
+    setImageUrl('');
     setModalOpen(true);
   }, [form]);
 
@@ -94,6 +139,7 @@ export default function CategoriesClient({ categories: initialCategories }: { ca
       slug: category.slug,
       productCount: category._count?.products || 0,
     });
+    setImageUrl(category.image || '');
     setModalOpen(true);
   }, [form]);
 
@@ -286,35 +332,57 @@ export default function CategoriesClient({ categories: initialCategories }: { ca
       const url = '/api/admin/categories';
       const method = editing ? 'PUT' : 'POST';
       const body = editing 
-        ? { id: editing.id, ...values }
-        : values;
+        ? { id: editing.id, ...values, image: imageUrl || null }
+        : { ...values, image: imageUrl || null };
+
+      console.log('提交数据:', body);
 
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
+      
+      console.log('响应状态:', res.status, res.statusText);
+      
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error('请求失败:', res.status, errorText);
+        
+        try {
+          const errorData = JSON.parse(errorText);
+          message.error(errorData.error || `请求失败: ${res.status}`);
+        } catch {
+          message.error(`请求失败: ${res.status} ${res.statusText}`);
+        }
+        return;
+      }
+      
       const data = await res.json();
+      console.log('响应数据:', data);
 
       if (data.success) {
         message.success(editing ? '更新成功' : '创建成功');
         setModalOpen(false);
         form.resetFields();
+        setImageUrl('');
         await refreshCategories();
       } else {
-        message.error(data.error || '操作失败');
+        const errorMsg = data.error || '操作失败';
+        console.error('操作失败:', errorMsg, data);
+        message.error(errorMsg);
       }
     } catch (error: unknown) {
       if (error && typeof error === 'object' && 'errorFields' in error) {
         // 表单验证错误，不显示消息
         return;
       }
-      message.error('操作失败');
-      console.error(error);
+      console.error('提交失败:', error);
+      message.error('操作失败: ' + (error instanceof Error ? error.message : '未知错误'));
     } finally {
       setConfirmLoading(false);
     }
-  }, [form, editing, refreshCategories]);
+  }, [form, editing, imageUrl, refreshCategories]);
 
   return (
     <div>
@@ -365,6 +433,7 @@ export default function CategoriesClient({ categories: initialCategories }: { ca
         onCancel={() => {
           setModalOpen(false);
           form.resetFields();
+          setImageUrl('');
         }}
         confirmLoading={confirmLoading}
         okText={editing ? '更新' : '创建'}
@@ -400,6 +469,49 @@ export default function CategoriesClient({ categories: initialCategories }: { ca
             tooltip="Slug用于URL，只能包含小写字母、数字和连字符，例如：jade-bracelet"
           >
             <Input placeholder="jade-bracelet" />
+          </Form.Item>
+
+          <Form.Item
+            label="分类图片"
+            tooltip="上传分类封面图片，建议尺寸280x280，如不上传将使用该分类下第一个商品的图片"
+          >
+            <Space direction="vertical" style={{ width: '100%' }}>
+              <Upload 
+                beforeUpload={handleUpload} 
+                showUploadList={false}
+                accept="image/*"
+              >
+                <Button icon={<UploadOutlined />} loading={uploading}>
+                  {imageUrl ? '更换图片' : '上传图片'}
+                </Button>
+              </Upload>
+              {imageUrl && (
+                <div style={{ position: 'relative', width: 120, height: 120 }}>
+                  <Image
+                    src={imageUrl}
+                    alt="分类图片"
+                    style={{ 
+                      width: '100%', 
+                      height: '100%', 
+                      objectFit: 'cover',
+                      borderRadius: 8
+                    }}
+                  />
+                  <Button
+                    size="small"
+                    danger
+                    onClick={() => setImageUrl('')}
+                    style={{ 
+                      position: 'absolute', 
+                      top: 4, 
+                      right: 4 
+                    }}
+                  >
+                    删除
+                  </Button>
+                </div>
+              )}
+            </Space>
           </Form.Item>
 
           {editing && (

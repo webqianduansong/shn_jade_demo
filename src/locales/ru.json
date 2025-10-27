@@ -27,7 +27,8 @@
   "sections": {
     "categories": "По категориям",
     "popular": "Популярные",
-    "newArrivals": "Новинки"
+    "newArrivals": "Новинки",
+    "productsCount": "{count} товаров"
   },
   "actions": {
     "viewAll": "Показать все"
