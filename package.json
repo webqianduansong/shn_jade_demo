@@ -39,7 +39,6 @@
     "zustand": "^5.0.8"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.13.16",
     "@eslint/eslintrc": "^3",
     "@types/bcrypt": "^6.0.0",
     "@types/negotiator": "^0.6.4",
@@ -53,7 +52,6 @@
     "prisma": "^6.17.0",
     "style-loader": "^4.0.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5",
-    "vercel": "^48.6.0"
+    "typescript": "^5"
   }
 }
