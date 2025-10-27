@@ -162,6 +162,18 @@
   border: none;
 }
 
+/* 移动端优化 */
+@media (max-width: 1024px) {
+  .stat-card {
+    margin-bottom: 12px;
+  }
+
+  .chart-card,
+  .table-card {
+    margin-bottom: 16px;
+  }
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
   .stat-card .ant-statistic-content {
