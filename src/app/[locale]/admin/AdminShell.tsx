@@ -22,41 +22,39 @@ export default function AdminShell({ children, locale }: { children: ReactNode; 
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider theme="light" width={220} className="admin-sider">
-        <div className="admin-logo">
-          玉石管理系统
+      <Header className="admin-header">
+        <div className="admin-header-left">
+          <div className="admin-header-logo">临熙珠宝玉石管理系统</div>
+          <div className="admin-header-title"></div>
         </div>
-        <Menu
-          mode="inline"
-          className="admin-menu"
-          defaultSelectedKeys={[typeof window !== 'undefined' ? window.location.pathname.split('/').at(-1) || 'dashboard' : 'dashboard']}
-          items={[
-            { key: 'admin', label: <Link href={`/${locale}/admin`}>仪表盘</Link> },
-            { key: 'products', label: <Link href={`/${locale}/admin/products`}>商品管理</Link> },
-            { key: 'categories', label: <Link href={`/${locale}/admin/categories`}>分类管理</Link> },
-            { key: 'orders', label: <Link href={`/${locale}/admin/orders`}>订单管理</Link> },
-          ]}
-        />
-      </Sider>
+        <div className="admin-header-actions">
+          <div className="admin-user-info">
+            <UserOutlined />
+            <span>管理员</span>
+          </div>
+          <Button 
+            icon={<LogoutOutlined />}
+            onClick={handleLogout}
+            className="admin-logout-btn"
+          >
+            退出登录
+          </Button>
+        </div>
+      </Header>
       <Layout>
-        <Header className="admin-header">
-          <div className="admin-header-title">
-            管理后台
-          </div>
-          <div className="admin-header-actions">
-            <div className="admin-user-info">
-              <UserOutlined />
-              <span>管理员</span>
-            </div>
-            <Button 
-              icon={<LogoutOutlined />}
-              onClick={handleLogout}
-              className="admin-logout-btn"
-            >
-              退出登录
-            </Button>
-          </div>
-        </Header>
+        <Sider theme="light" width={220} className="admin-sider">
+          <Menu
+            mode="inline"
+            className="admin-menu"
+            defaultSelectedKeys={[typeof window !== 'undefined' ? window.location.pathname.split('/').at(-1) || 'dashboard' : 'dashboard']}
+            items={[
+              { key: 'admin', label: <Link href={`/${locale}/admin`}>仪表盘</Link> },
+              { key: 'products', label: <Link href={`/${locale}/admin/products`}>商品管理</Link> },
+              { key: 'categories', label: <Link href={`/${locale}/admin/categories`}>分类管理</Link> },
+              { key: 'orders', label: <Link href={`/${locale}/admin/orders`}>订单管理</Link> },
+            ]}
+          />
+        </Sider>
         <Content className="admin-content">{children}</Content>
       </Layout>
     </Layout>

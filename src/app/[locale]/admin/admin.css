@@ -5,32 +5,22 @@
   box-shadow: 2px 0 12px rgba(0, 0, 0, 0.06);
   background: #ffffff !important;
   border-right: 1px solid #e8f0ec;
+  margin-top: 0 !important;
 }
 
 .admin-sider .ant-layout-sider-children {
   display: flex;
   flex-direction: column;
-}
-
-.admin-logo {
-  height: 64px;
-  display: flex;
-  align-items: center;
-  padding: 0 24px;
-  font-weight: 600;
-  font-size: 17px;
-  background: linear-gradient(135deg, #2d5a3d 0%, #4a8c5f 100%);
-  color: #ffffff;
-  border-bottom: 2px solid #2d5a3d;
-  letter-spacing: 0.5px;
+  padding-top: 0;
 }
 
 /* 菜单样式优化 */
 .admin-menu {
   flex: 1;
-  padding-top: 12px;
+  padding-top: 16px;
   border-right: none;
   background: #ffffff !important;
+  border-top: none;
 }
 
 .admin-menu .ant-menu-item {
@@ -80,21 +70,39 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 32px;
+  padding: 0 32px 0 12px;
   height: 64px;
   box-shadow: 0 2px 8px rgba(45, 90, 61, 0.2);
+  line-height: 64px;
+  position: relative;
+  z-index: 10;
 }
 
 .ant-layout-header.admin-header {
   background: linear-gradient(135deg, #2d5a3d 0%, #4a8c5f 100%) !important;
 }
 
-.admin-header-title {
+.admin-header-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.admin-header-logo {
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 700;
   color: #ffffff;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   letter-spacing: 0.5px;
+  padding-right: 24px;
+  padding-left: 12px;
+  /* border-right: 1px solid rgba(255, 255, 255, 0.2); */
+}
+
+.admin-header-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.3px;
 }
 
 .admin-header-actions {
@@ -167,13 +175,18 @@
 
 /* 响应式设计 */
 @media (max-width: 768px) {
-  .admin-logo {
-    padding: 0 16px;
-    font-size: 14px;
+  .admin-header {
+    padding: 0 16px 0 12px;
   }
 
-  .admin-header {
-    padding: 0 16px;
+  .admin-header-left {
+    gap: 12px;
+  }
+
+  .admin-header-logo {
+    font-size: 16px;
+    padding-right: 12px;
+    padding-left: 12px;
   }
 
   .admin-header-title {
@@ -190,8 +203,17 @@
 }
 
 @media (max-width: 480px) {
-  .admin-logo {
-    font-size: 13px;
+  .admin-header {
+    padding: 0 12px 0 8px;
+  }
+
+  .admin-header-logo {
+    font-size: 14px;
+    padding-left: 8px;
+  }
+
+  .admin-header-title {
+    display: none;
   }
 
   .admin-header-actions {
