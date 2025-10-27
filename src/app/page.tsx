@@ -23,7 +23,7 @@ function detectLanguage(acceptLanguage: string): string {
   
   // 尝试找到最高优先级的支持语言
   for (const lang of langPriorities) {
-    if (locales.includes(lang.code)) {
+    if ((locales as readonly string[]).includes(lang.code)) {
       return lang.code;
     }
   }

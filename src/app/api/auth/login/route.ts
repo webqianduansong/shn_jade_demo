@@ -44,7 +44,6 @@ export async function POST(request: NextRequest) {
                 productId,
                 quantity,
               })),
-              skipDuplicates: true,
             }),
           ]);
           // 清空匿名购物车 Cookie

@@ -44,8 +44,8 @@ model Product {
   reviewsCount Int           @default(0)
   price       Int            // 金额（分）
   images      ProductImage[]
-  categoryId  String
-  category    Category       @relation(fields: [categoryId], references: [id])
+  categoryId  String?
+  category    Category?      @relation(fields: [categoryId], references: [id])
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
   cartItems   CartItem[]

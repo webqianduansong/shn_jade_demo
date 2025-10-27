@@ -31,8 +31,8 @@ type Product = {
   model?: string | null;
   rating?: number;
   reviewsCount?: number;
-  category?: { id: string; name: string };
-  categoryId?: string;
+  category?: { id: string; name: string } | null;
+  categoryId?: string | null;
   images?: { id: string; url: string; sortOrder?: number }[];
 };
 

@@ -83,7 +83,7 @@ export default function ProductDetailModal({
           <div className="product-detail-content">
             {/* 产品图片画廊 */}
             <div className="mb-8">
-              <ProductImageGallery product={product} />
+              <ProductImageGallery product={product} locale={locale} />
             </div>
             
             {/* 产品信息 */}

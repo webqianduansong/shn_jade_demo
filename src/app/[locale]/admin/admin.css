@@ -343,6 +343,49 @@
   box-shadow: 0 2px 8px rgba(63, 143, 77, 0.3) !important;
 }
 
+/* 移动端分类表格单元格 */
+.mobile-category-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mobile-category-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.mobile-category-name span {
+  flex-shrink: 0;
+}
+
+.mobile-category-name .ant-tag {
+  font-size: 11px !important;
+  line-height: 18px !important;
+  padding: 0 6px !important;
+  margin: 0 !important;
+  border-radius: 3px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.mobile-category-slug {
+  font-size: 12px;
+  color: #666;
+}
+
+/* 移动端订单表格单元格 */
+.mobile-order-user {
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
   .admin-header {
@@ -433,6 +476,22 @@
 
   .mobile-product-actions .ant-btn {
     font-size: 16px !important;
+  }
+
+  /* 分类表格移动端优化 */
+  .mobile-category-name {
+    font-size: 13px;
+    gap: 5px;
+  }
+
+  .mobile-category-name .ant-tag {
+    font-size: 10px !important;
+    line-height: 17px !important;
+    padding: 0 5px !important;
+  }
+
+  .mobile-category-slug {
+    font-size: 11px;
   }
 
   /* 移动端卡片优化 */
@@ -544,6 +603,22 @@
   .ant-tag {
     font-size: 10px;
     padding: 0px 6px;
+  }
+
+  /* 分类表格极小屏幕优化 */
+  .mobile-category-name {
+    font-size: 12px;
+    gap: 4px;
+  }
+
+  .mobile-category-name .ant-tag {
+    font-size: 9px !important;
+    line-height: 15px !important;
+    padding: 0 4px !important;
+  }
+
+  .mobile-category-slug {
+    font-size: 10px;
   }
 
   /* 极小屏幕按钮优化 */
