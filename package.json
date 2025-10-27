@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
+    "build:cloudflare": "prisma generate && npx @cloudflare/next-on-pages@1",
     "start": "next start",
     "lint": "eslint",
+    "postinstall": "prisma generate",
     "prisma:migrate": "prisma migrate dev --name init",
     "prisma:generate": "prisma generate",
     "prisma:studio": "prisma studio",
@@ -18,6 +20,7 @@
   "dependencies": {
     "@ant-design/icons": "^6.0.2",
     "@ant-design/nextjs-registry": "^1.1.0",
+    "@aws-sdk/client-s3": "^3.917.0",
     "@formatjs/intl-localematcher": "^0.6.1",
     "@next/bundle-analyzer": "^14.2.15",
     "@prisma/client": "^6.17.0",
@@ -36,6 +39,7 @@
     "zustand": "^5.0.8"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.13.16",
     "@eslint/eslintrc": "^3",
     "@types/bcrypt": "^6.0.0",
     "@types/negotiator": "^0.6.4",
@@ -49,6 +53,7 @@
     "prisma": "^6.17.0",
     "style-loader": "^4.0.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vercel": "^48.6.0"
   }
 }
