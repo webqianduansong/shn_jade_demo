@@ -4,7 +4,7 @@ import { PhoneOutlined, EnvironmentOutlined, ClockCircleOutlined } from '@ant-de
 import { useTranslations } from 'next-intl';
 import FooterSection from './footer/FooterSection';
 import NewsletterForm from './footer/NewsletterForm';
-import './Footer/Footer.css';
+import './footer/Footer.css';
 
 /**
  * 网站底部组件
