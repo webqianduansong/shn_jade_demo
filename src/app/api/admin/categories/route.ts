@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-export const dynamic = 'force-dynamic';
 import { prisma } from '@/lib/db';
 import { getAdminUser } from '@/lib/adminAuth';
+
+export const dynamic = 'force-dynamic';
 
 // 获取所有分类
 export async function GET(req: NextRequest) {
@@ -202,4 +202,3 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ error: '删除分类失败' }, { status: 500 });
   }
 }
-

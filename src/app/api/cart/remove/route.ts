@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { removeFromCart } from '@/store/cartActions';
 
 export const dynamic = 'force-dynamic';
-import { removeFromCart } from '@/store/cartActions';
 
 /**
  * 从购物车移除商品API端点

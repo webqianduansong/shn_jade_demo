@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-export const dynamic = 'force-dynamic';
 import { prisma } from '@/lib/db';
 import { getAdminUser } from '@/lib/adminAuth';
+
+export const dynamic = 'force-dynamic';
 
 // 批量操作
 export async function POST(req: NextRequest) {
@@ -71,4 +71,3 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: '批量操作失败' }, { status: 500 });
   }
 }
-

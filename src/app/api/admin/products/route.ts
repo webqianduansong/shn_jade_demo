@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
-import { prisma } from '@/lib/db';
 
 function error(e: unknown, status = 500) {
   const message = e instanceof Error ? e.message : 'Server Error';

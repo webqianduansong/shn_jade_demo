@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
-import { prisma } from '@/lib/db';
 
 function dayStart(date: Date) {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);

@@ -1,9 +1,9 @@
 import {NextRequest, NextResponse} from 'next/server';
-
-export const dynamic = 'force-dynamic';
 import Stripe from 'stripe';
 import { prisma } from '@/lib/db';
 import { getAuthUser } from '@/lib/auth';
+
+export const dynamic = 'force-dynamic';
 
 export async function POST(request: NextRequest) {
   const user = await getAuthUser();
