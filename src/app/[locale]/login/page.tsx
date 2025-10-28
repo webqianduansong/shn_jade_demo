@@ -2,8 +2,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams, useParams } from 'next/navigation';
-import { Form, Input, Button, Card, Typography, Space, Divider, Checkbox } from 'antd';
+import { Form, Input, Button, Card, Typography, Space, Divider, Checkbox, message } from 'antd';
 import { GoogleOutlined, AppleOutlined } from '@ant-design/icons';
+import { apiPost } from '@/lib/apiClient';
 
 export default function LoginPage() {
   const params = useParams<{ locale: string }>();
@@ -18,12 +19,12 @@ export default function LoginPage() {
     try {
       // Demo: 模拟三方登录成功后写入会话
       const email = provider === 'google' ? 'google_user@example.com' : 'apple_user@example.com';
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password: 'oauth' })
+      const result = await apiPost('/api/auth/login', { email, password: 'oauth' }, {
+        showError: true,
+        showSuccess: false
       });
-      if (res.ok) {
+      
+      if (result.success) {
         router.replace(redirect || `/${locale}`);
       }
     } finally {
@@ -31,22 +32,21 @@ export default function LoginPage() {
     }
   };
 
-  const [errorMsg, setErrorMsg] = useState<string>('');
-
   const onFinish = async (values: { email: string; password: string }) => {
     setLoading(true);
     try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values),
+      const result = await apiPost('/api/auth/login', values, {
+        showError: true,
+        errorMessage: locale === 'zh' ? '登录失败，请检查邮箱与密码' : 'Login failed',
+        showSuccess: true,
+        successMessage: locale === 'zh' ? '登录成功！' : 'Login successful!'
       });
-      if (res.ok) {
+      
+      if (result.success) {
         router.replace(redirect || `/${locale}`);
-      } else {
-        const data = await res.json();
-        setErrorMsg(data.message || (locale === 'zh' ? '登录失败，请检查邮箱与密码' : 'Login failed'));
       }
+    } catch (error) {
+      console.error('Login error:', error);
     } finally {
       setLoading(false);
     }
@@ -95,11 +95,6 @@ export default function LoginPage() {
             </Button>
           </Space>
 
-          {errorMsg && (
-            <Typography.Paragraph type="danger" style={{ margin: 0 }}>
-              {errorMsg}
-            </Typography.Paragraph>
-          )}
           <Form layout="vertical" onFinish={onFinish} validateTrigger={["onBlur", "onSubmit"]}>
             <Form.Item
               name="email"
