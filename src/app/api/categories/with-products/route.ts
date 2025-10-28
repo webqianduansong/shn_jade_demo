@@ -4,8 +4,7 @@ import { prisma } from '@/lib/db';
 // 获取分类及其商品
 export async function GET(req: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url);
-    const limit = parseInt(searchParams.get('limit') || '4'); // 每个分类显示的商品数量
+    const limit = parseInt(req.nextUrl.searchParams.get('limit') || '4'); // 每个分类显示的商品数量
 
     const categories = await prisma.category.findMany({
       include: {

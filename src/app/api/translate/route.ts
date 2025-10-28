@@ -34,10 +34,9 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const text = searchParams.get('text');
-  const targetLang = searchParams.get('targetLang');
-  const sourceLang = searchParams.get('sourceLang') || 'en';
+  const text = req.nextUrl.searchParams.get('text');
+  const targetLang = req.nextUrl.searchParams.get('targetLang');
+  const sourceLang = req.nextUrl.searchParams.get('sourceLang') || 'en';
 
   if (!text || !targetLang) {
     return NextResponse.json(

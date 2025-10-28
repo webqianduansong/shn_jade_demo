@@ -6,9 +6,8 @@ export const dynamic = 'force-dynamic';
 // 获取热门商品
 export async function GET(req: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url);
-    const type = searchParams.get('type'); // 'hot', 'new', 'featured'
-    const limit = parseInt(searchParams.get('limit') || '8');
+    const type = req.nextUrl.searchParams.get('type'); // 'hot', 'new', 'featured'
+    const limit = parseInt(req.nextUrl.searchParams.get('limit') || '8');
 
     let where: any = {};
     

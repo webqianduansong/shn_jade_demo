@@ -146,9 +146,8 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ error: '未授权' }, { status: 401 });
     }
 
-    const { searchParams } = new URL(req.url);
-    const id = searchParams.get('id');
-    const force = searchParams.get('force') === 'true'; // 是否强制删除
+    const id = req.nextUrl.searchParams.get('id');
+    const force = req.nextUrl.searchParams.get('force') === 'true'; // 是否强制删除
 
     if (!id) {
       return NextResponse.json({ error: '分类ID不能为空' }, { status: 400 });
