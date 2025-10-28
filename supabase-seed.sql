@@ -1,9 +1,12 @@
 -- 插入测试数据到 Supabase
 
--- 1. 插入测试用户 (密码: song1234)
+-- 1. 插入测试用户
+-- song@demo.com 密码: song1234
+-- admin@example.com 密码: admin123
 INSERT INTO "User" (id, email, password, name, "createdAt", "updatedAt")
 VALUES 
-  ('demo-user-001', 'song@demo.com', '$2b$10$YourHashedPasswordHere', '演示用户', NOW(), NOW())
+  ('demo-user-001', 'song@demo.com', '$2b$10$3DvCgIkpLSxXOP/kz2qQR.8kAoNRPvYcfHC.V1IuCX6l7L6StX3IK', '演示用户', NOW(), NOW()),
+  ('admin-user-001', 'admin@example.com', '$2b$10$wchmeI89Yv9.jJq4f/XPhOBRFg.ecJDGHl1mnAoCYXSUp2do/7rea', '管理员', NOW(), NOW())
 ON CONFLICT (email) DO NOTHING;
 
 -- 2. 插入分类
