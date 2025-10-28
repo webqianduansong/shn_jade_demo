@@ -28,7 +28,8 @@ export default async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next|.*\..*).*)']
+  // 排除 API 路由、Next.js 内部路径和静态文件
+  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)']
 };
 
 
