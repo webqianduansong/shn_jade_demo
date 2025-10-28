@@ -44,7 +44,7 @@ export default function AdminLoginPage() {
       <Card className="admin-login-card" bordered={false}>
         <div className="admin-login-header">
           <div className="admin-login-logo">
-            <div className="admin-login-logo-icon">临熙</div>
+            {/* <div className="admin-login-logo-icon">临熙</div> */}
             <Typography.Title level={2} className="admin-login-title">
               {locale === 'zh' ? '玉石管理系统' : 'Jade Admin'}
             </Typography.Title>
