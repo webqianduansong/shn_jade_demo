@@ -25,9 +25,12 @@ export default function AdminProductsPage() {
       ]);
       
       if (productsResult.success && productsResult.data) {
-        setProducts(productsResult.data);
+        // products API 返回 { success, list, total, ... }
+        const data = productsResult.data as any;
+        setProducts(data.list || data);
       }
       if (categoriesResult.success && categoriesResult.data) {
+        // categories API 直接返回数组
         setCategories(categoriesResult.data);
       }
     } catch (error) {
