@@ -18,24 +18,40 @@ export default function AdminProductsPage() {
 
   const loadData = async () => {
     setLoading(true);
+    
+    // 设置超时：最多加载 5 秒
+    const timeoutId = setTimeout(() => {
+      console.log('[Products] 加载超时，显示空列表');
+      setLoading(false);
+    }, 5000);
+
     try {
       const [productsResult, categoriesResult] = await Promise.all([
         apiGet('/api/admin/products', { showError: false }),
         apiGet('/api/admin/categories', { showError: false })
       ]);
       
+      clearTimeout(timeoutId);
+      
       if (productsResult.success && productsResult.data) {
         // products API 返回 { success, list, total, ... }
         const data = productsResult.data as any;
         setProducts(data.list || data);
+      } else {
+        console.warn('[Products] 产品API返回失败，显示空列表');
       }
+      
       if (categoriesResult.success && categoriesResult.data) {
         // categories API 直接返回数组
         setCategories(categoriesResult.data);
+      } else {
+        console.warn('[Products] 分类API返回失败，显示空列表');
       }
     } catch (error) {
-      console.error('Load products error:', error);
+      clearTimeout(timeoutId);
+      console.error('[Products] 加载失败:', error);
     } finally {
+      clearTimeout(timeoutId);
       setLoading(false);
     }
   };
@@ -48,7 +64,7 @@ export default function AdminProductsPage() {
         alignItems: 'center', 
         minHeight: '400px' 
       }}>
-        <Spin size="large" tip={locale === 'zh' ? '加载中...' : 'Loading...'} />
+        <Spin size="large" tip={locale === 'zh' ? '加载数据中...' : 'Loading data...'} />
       </div>
     );
   }

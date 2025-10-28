@@ -17,14 +17,27 @@ export default function AdminOrdersPage() {
 
   const loadOrders = async () => {
     setLoading(true);
+    
+    // 设置超时：最多加载 5 秒
+    const timeoutId = setTimeout(() => {
+      console.log('[Orders] 加载超时，显示空列表');
+      setLoading(false);
+    }, 5000);
+
     try {
       const result = await apiGet('/api/admin/orders', { showError: false });
+      clearTimeout(timeoutId);
+      
       if (result.success && result.data) {
         setOrders(result.data);
+      } else {
+        console.warn('[Orders] API 返回失败，显示空列表');
       }
     } catch (error) {
-      console.error('Load orders error:', error);
+      clearTimeout(timeoutId);
+      console.error('[Orders] 加载失败:', error);
     } finally {
+      clearTimeout(timeoutId);
       setLoading(false);
     }
   };
@@ -37,7 +50,7 @@ export default function AdminOrdersPage() {
         alignItems: 'center', 
         minHeight: '400px' 
       }}>
-        <Spin size="large" tip={locale === 'zh' ? '加载中...' : 'Loading...'} />
+        <Spin size="large" tip={locale === 'zh' ? '加载数据中...' : 'Loading data...'} />
       </div>
     );
   }

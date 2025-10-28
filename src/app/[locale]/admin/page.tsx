@@ -33,22 +33,36 @@ export default function AdminDashboardPage() {
 
   const loadDashboardData = async () => {
     setLoading(true);
+    
+    // 设置超时：最多加载 5 秒
+    const timeoutId = setTimeout(() => {
+      console.log('[Dashboard] 加载超时，显示默认数据');
+      setLoading(false);
+    }, 5000);
+
     try {
       const result = await apiGet('/api/admin/dashboard?days=7', { 
         showError: false 
       });
       
+      clearTimeout(timeoutId);
+      
       if (result.success && result.data) {
         setMetrics(result.data.metrics || metrics);
         setRecentOrders(result.data.recentOrders || []);
+      } else {
+        console.warn('[Dashboard] API 返回失败，使用默认数据');
       }
     } catch (error) {
-      console.error('Load dashboard data error:', error);
+      clearTimeout(timeoutId);
+      console.error('[Dashboard] 加载失败，使用默认数据:', error);
     } finally {
+      clearTimeout(timeoutId);
       setLoading(false);
     }
   };
 
+  // 即使加载中也最多显示 5 秒，之后强制显示页面
   if (loading) {
     return (
       <div style={{ 
@@ -57,7 +71,7 @@ export default function AdminDashboardPage() {
         alignItems: 'center', 
         minHeight: '400px' 
       }}>
-        <Spin size="large" tip={locale === 'zh' ? '加载中...' : 'Loading...'} />
+        <Spin size="large" tip={locale === 'zh' ? '加载数据中...' : 'Loading data...'} />
       </div>
     );
   }

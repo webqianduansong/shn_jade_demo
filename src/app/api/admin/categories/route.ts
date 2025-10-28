@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { getAdminUser } from '@/lib/adminAuth';
 
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 // 获取所有分类
@@ -32,27 +33,36 @@ export async function GET(req: NextRequest) {
 // 创建新分类
 export async function POST(req: NextRequest) {
   try {
+    console.log('[Categories POST] 开始处理请求');
+    
     const admin = await getAdminUser();
     if (!admin) {
+      console.log('[Categories POST] 未授权');
       return NextResponse.json({ error: '未授权' }, { status: 401 });
     }
 
     const body = await req.json();
     const { name, slug, image } = body;
 
+    console.log('[Categories POST] 请求数据:', { name, slug, hasImage: !!image });
+
     if (!name || !slug) {
+      console.log('[Categories POST] 参数不完整');
       return NextResponse.json({ error: '名称和Slug不能为空' }, { status: 400 });
     }
 
     // 检查slug是否已存在
+    console.log('[Categories POST] 检查 slug 是否存在');
     const existing = await prisma.category.findUnique({
       where: { slug }
     });
 
     if (existing) {
+      console.log('[Categories POST] Slug 已存在:', slug);
       return NextResponse.json({ error: 'Slug已存在' }, { status: 400 });
     }
 
+    console.log('[Categories POST] 创建分类...');
     const category = await prisma.category.create({
       data: { 
         name, 
@@ -61,10 +71,14 @@ export async function POST(req: NextRequest) {
       }
     });
 
+    console.log('[Categories POST] 创建成功:', category.id);
     return NextResponse.json({ success: true, category });
   } catch (error) {
-    console.error('创建分类失败:', error);
-    return NextResponse.json({ error: '创建分类失败' }, { status: 500 });
+    console.error('[Categories POST] 错误:', error);
+    return NextResponse.json({ 
+      error: '创建分类失败',
+      message: error instanceof Error ? error.message : String(error)
+    }, { status: 500 });
   }
 }
 
