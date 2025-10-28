@@ -1,34 +1,35 @@
 "use client";
 import { useState } from 'react';
 import { useRouter, useParams, useSearchParams } from 'next/navigation';
-import { Form, Input, Button, Card, Typography, Alert } from 'antd';
+import { Form, Input, Button, Card, Typography } from 'antd';
 import { UserOutlined, LockOutlined, KeyOutlined, LoginOutlined } from '@ant-design/icons';
+import { apiPost } from '@/lib/apiClient';
 import './login.css';
 
 export default function AdminLoginPage() {
   const params = useParams<{ locale: string }>();
   const locale = (params?.locale as string) || 'en';
   const [loading, setLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
   const router = useRouter();
   const search = useSearchParams();
   const redirect = search.get('redirect') || '';
 
   const onFinish = async (values: { email: string; password: string; accessKey?: string }) => {
     setLoading(true);
-    setErrorMsg('');
     try {
-      const res = await fetch('/api/admin/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values),
+      const result = await apiPost('/api/admin/login', values, {
+        showError: true,
+        errorMessage: locale === 'zh' ? '登录失败，请检查邮箱和密码' : 'Login failed',
+        showSuccess: true,
+        successMessage: locale === 'zh' ? '登录成功！' : 'Login successful!'
       });
-      const data = await res.json();
-      if (res.ok) {
-        router.replace(redirect || `/${locale}/admin`);
-      } else {
-        setErrorMsg(data.message || 'Login failed');
+      
+      if (result.success) {
+        // 使用 window.location 强制刷新，确保加载管理后台
+        window.location.href = redirect || `/${locale}/admin`;
       }
+    } catch (error) {
+      console.error('Admin login error:', error);
     } finally {
       setLoading(false);
     }
@@ -52,17 +53,6 @@ export default function AdminLoginPage() {
             {locale === 'zh' ? '欢迎登录管理后台' : 'Welcome to Admin Portal'}
           </Typography.Paragraph>
         </div>
-
-        {errorMsg && (
-          <Alert
-            message={errorMsg}
-            type="error"
-            showIcon
-            closable
-            onClose={() => setErrorMsg('')}
-            style={{ marginBottom: 24 }}
-          />
-        )}
 
         <Form layout="vertical" onFinish={onFinish} size="large">
           <Form.Item 

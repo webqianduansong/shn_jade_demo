@@ -2,15 +2,27 @@
 import { useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { Layout, Menu, Button, Drawer } from 'antd';
-import { LogoutOutlined, UserOutlined, MenuOutlined } from '@ant-design/icons';
-import Link from 'next/link';
+import { 
+  LogoutOutlined, 
+  UserOutlined, 
+  MenuOutlined, 
+  DashboardOutlined,
+  ShoppingOutlined,
+  AppstoreOutlined,
+  ShoppingCartOutlined
+} from '@ant-design/icons';
+import { useRouter, usePathname } from 'next/navigation';
+import { apiPost } from '@/lib/apiClient';
 import './admin.css';
 
 const { Header, Sider, Content } = Layout;
 
 export default function AdminShell({ children, locale }: { children: ReactNode; locale: string }) {
+  const router = useRouter();
+  const pathname = usePathname();
   const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [selectedKey, setSelectedKey] = useState('admin');
 
   useEffect(() => {
     const checkMobile = () => {
@@ -23,32 +35,82 @@ export default function AdminShell({ children, locale }: { children: ReactNode; 
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const handleLogout = async () => {
-    try {
-      const res = await fetch('/api/admin/logout', { method: 'POST' });
-      if (res.ok) {
-        // 使用 window.location 强制刷新页面并跳转
-        window.location.href = `/${locale}/admin/login`;
+  // 根据当前路径设置选中的菜单项
+  useEffect(() => {
+    if (pathname) {
+      if (pathname.includes('/admin/products')) {
+        setSelectedKey('products');
+      } else if (pathname.includes('/admin/categories')) {
+        setSelectedKey('categories');
+      } else if (pathname.includes('/admin/orders')) {
+        setSelectedKey('orders');
+      } else {
+        setSelectedKey('admin');
       }
-    } catch (error) {
-      console.error('退出登录失败:', error);
+    }
+  }, [pathname]);
+
+  const handleLogout = async () => {
+    const result = await apiPost('/api/admin/logout', {}, {
+      showError: true,
+      showSuccess: true,
+      successMessage: locale === 'zh' ? '退出成功' : 'Logout successful'
+    });
+    
+    if (result.success) {
+      // 使用 window.location 强制刷新页面并跳转
+      window.location.href = `/${locale}/admin/login`;
+    }
+  };
+
+  const handleMenuClick = ({ key }: { key: string }) => {
+    if (isMobile) {
+      setMobileMenuVisible(false);
+    }
+    
+    // 使用 router.push 进行导航
+    const routes: Record<string, string> = {
+      'admin': `/${locale}/admin`,
+      'products': `/${locale}/admin/products`,
+      'categories': `/${locale}/admin/categories`,
+      'orders': `/${locale}/admin/orders`,
+    };
+    
+    if (routes[key]) {
+      router.push(routes[key]);
     }
   };
 
   const menuItems = [
-    { key: 'admin', label: <Link href={`/${locale}/admin`}>仪表盘</Link> },
-    { key: 'products', label: <Link href={`/${locale}/admin/products`}>商品管理</Link> },
-    { key: 'categories', label: <Link href={`/${locale}/admin/categories`}>分类管理</Link> },
-    { key: 'orders', label: <Link href={`/${locale}/admin/orders`}>订单管理</Link> },
+    { 
+      key: 'admin', 
+      icon: <DashboardOutlined />,
+      label: locale === 'zh' ? '仪表盘' : 'Dashboard'
+    },
+    { 
+      key: 'products', 
+      icon: <ShoppingOutlined />,
+      label: locale === 'zh' ? '商品管理' : 'Products'
+    },
+    { 
+      key: 'categories', 
+      icon: <AppstoreOutlined />,
+      label: locale === 'zh' ? '分类管理' : 'Categories'
+    },
+    { 
+      key: 'orders', 
+      icon: <ShoppingCartOutlined />,
+      label: locale === 'zh' ? '订单管理' : 'Orders'
+    },
   ];
 
   const MenuComponent = (
     <Menu
       mode="inline"
       className="admin-menu"
-      defaultSelectedKeys={[typeof window !== 'undefined' ? window.location.pathname.split('/').at(-1) || 'dashboard' : 'dashboard']}
+      selectedKeys={[selectedKey]}
       items={menuItems}
-      onClick={() => isMobile && setMobileMenuVisible(false)}
+      onClick={handleMenuClick}
     />
   );
 

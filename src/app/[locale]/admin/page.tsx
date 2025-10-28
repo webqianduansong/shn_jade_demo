@@ -1,69 +1,66 @@
-import { getAdminUser } from '@/lib/adminAuth';
+"use client";
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+import { Spin } from 'antd';
 import DashboardClient, { type DashboardMetrics, type RecentOrderRow } from './DashboardClient';
-import { prisma } from '@/lib/db';
-import { cookies } from 'next/headers';
+import { apiGet } from '@/lib/apiClient';
 
-export default async function AdminDashboardPage() {
-  const admin = await getAdminUser();
-  const jar = await cookies();
-  const locale = jar.get('NEXT_LOCALE')?.value || 'zh-CN';
+export default function AdminDashboardPage() {
+  const params = useParams<{ locale: string }>();
+  const locale = (params?.locale as string) || 'zh';
+  const [loading, setLoading] = useState(true);
+  const [metrics, setMetrics] = useState<DashboardMetrics>({
+    productCount: 0,
+    categoryCount: 0,
+    pendingOrderCount: 0,
+    todayOrderCount: 0,
+    todayRevenueCents: 0,
+  });
+  const [recentOrders, setRecentOrders] = useState<RecentOrderRow[]>([]);
+  const [adminEmail, setAdminEmail] = useState<string>('');
 
-  let productCount = 0;
-  let categoryCount = 0;
-  let pendingOrderCount = 0;
-  let todayOrderCount = 0;
-  let todayRevenueCents = 0;
-  let recentOrders: RecentOrderRow[] = [];
+  useEffect(() => {
+    loadDashboardData();
+    checkAdminUser();
+  }, []);
 
-  try {
-    const today = await getTodayRange();
-    
-    [productCount, categoryCount, pendingOrderCount] = await Promise.all([
-      prisma.product.count(),
-      prisma.category.count(),
-      prisma.order.count({ where: { status: 'PENDING' } }),
-    ]);
-
-    const todayOrders = await prisma.order.findMany({
-      where: { createdAt: { gte: today.start, lte: today.end } },
-      select: { id: true, totalAmount: true },
-    });
-    todayOrderCount = todayOrders.length;
-    todayRevenueCents = todayOrders.reduce((sum, o) => sum + (o.totalAmount || 0), 0);
-
-    const recentOrdersRaw = await prisma.order.findMany({
-      orderBy: { createdAt: 'desc' },
-      take: 10,
-      select: {
-        id: true,
-        totalAmount: true,
-        status: true,
-        createdAt: true,
-        user: { select: { email: true } },
-        items: { select: { id: true, quantity: true } },
-      },
-    });
-
-    recentOrders = recentOrdersRaw.map((o) => ({
-      id: o.id,
-      userEmail: o.user.email,
-      totalAmountCents: o.totalAmount,
-      status: o.status,
-      itemsCount: o.items.reduce((n, i) => n + i.quantity, 0),
-      createdAt: new Intl.DateTimeFormat(locale, { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).format(o.createdAt),
-    }));
-  } catch (error) {
-    console.error('Dashboard data fetch error:', error);
-    // Return empty data instead of crashing
-  }
-
-  const metrics: DashboardMetrics = {
-    productCount,
-    categoryCount,
-    pendingOrderCount,
-    todayOrderCount,
-    todayRevenueCents,
+  const checkAdminUser = async () => {
+    const result = await apiGet('/api/admin/me', { showError: false });
+    if (result.success && result.data?.user) {
+      setAdminEmail(result.data.user.email);
+    }
   };
+
+  const loadDashboardData = async () => {
+    setLoading(true);
+    try {
+      const result = await apiGet('/api/admin/dashboard?days=7', { 
+        showError: false 
+      });
+      
+      if (result.success && result.data) {
+        setMetrics(result.data.metrics || metrics);
+        setRecentOrders(result.data.recentOrders || []);
+      }
+    } catch (error) {
+      console.error('Load dashboard data error:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        minHeight: '400px' 
+      }}>
+        <Spin size="large" tip={locale === 'zh' ? '加载中...' : 'Loading...'} />
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto py-8 px-6">
@@ -84,24 +81,20 @@ export default async function AdminDashboardPage() {
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           backgroundClip: 'text'
-        }}>Admin Dashboard</h1>
-        {admin && <p style={{ 
+        }}>
+          {locale === 'zh' ? '管理仪表盘' : 'Admin Dashboard'}
+        </h1>
+        {adminEmail && <p style={{ 
           fontSize: '15px',
           color: '#666',
           margin: 0
-        }}>Welcome, {admin.email}</p>}
+        }}>
+          {locale === 'zh' ? '欢迎,' : 'Welcome,'} {adminEmail}
+        </p>}
       </div>
-      <DashboardClient metrics={metrics} recentOrders={recentOrders} locale={locale.startsWith('zh') ? 'zh' : 'en'} />
+      <DashboardClient metrics={metrics} recentOrders={recentOrders} locale={locale} />
     </div>
   );
-}
-
-
-async function getTodayRange() {
-  const now = new Date();
-  const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
-  const end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
-  return { start, end };
 }
 
 
