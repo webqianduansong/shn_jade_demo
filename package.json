@@ -27,7 +27,7 @@
     "@stripe/stripe-js": "^7.9.0",
     "antd": "^5.27.4",
     "axios": "^1.12.2",
-    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.2",
     "less": "^4.4.1",
     "negotiator": "^1.0.0",
     "next": "^14.2.15",

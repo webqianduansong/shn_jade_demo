@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { prisma } from '@/lib/db';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { ADMIN_COOKIE_NAME, ADMIN_COOKIE_OPTIONS, isEmailAdmin } from '@/lib/adminAuth';
 
 // 强制使用 Node.js Runtime（Prisma 和 bcrypt 需要）
