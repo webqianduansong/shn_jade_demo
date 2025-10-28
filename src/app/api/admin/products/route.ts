@@ -12,7 +12,7 @@ function error(e: unknown, status = 500) {
 
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
+    const searchParams = request.nextUrl.searchParams;
     const page = Math.max(1, Number(searchParams.get('page') || '1'));
     const pageSize = Math.min(100, Math.max(1, Number(searchParams.get('pageSize') || '10')));
     const keyword = (searchParams.get('q') || '').trim();
@@ -155,8 +155,7 @@ export async function PUT(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
-    const id = searchParams.get('id');
+    const id = request.nextUrl.searchParams.get('id');
     if (!id) return NextResponse.json({ success: false, message: '缺少产品ID' }, { status: 400 });
     await prisma.productImage.deleteMany({ where: { productId: id } });
     await prisma.product.delete({ where: { id } });
