@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { addToCart } from '@/store/cartActions';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * 添加商品到购物车API端点
  */

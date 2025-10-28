@@ -4,6 +4,8 @@ import { prisma } from '@/lib/db';
 import bcrypt from 'bcrypt';
 import { ADMIN_COOKIE_NAME, ADMIN_COOKIE_OPTIONS, isEmailAdmin } from '@/lib/adminAuth';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: NextRequest) {
   const { email, password, accessKey } = await request.json();
   if (!email || !password) {
