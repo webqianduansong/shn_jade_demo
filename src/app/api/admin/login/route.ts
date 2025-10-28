@@ -4,6 +4,8 @@ import { prisma } from '@/lib/db';
 import bcrypt from 'bcrypt';
 import { ADMIN_COOKIE_NAME, ADMIN_COOKIE_OPTIONS, isEmailAdmin } from '@/lib/adminAuth';
 
+// 强制使用 Node.js Runtime（Prisma 和 bcrypt 需要）
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: NextRequest) {
