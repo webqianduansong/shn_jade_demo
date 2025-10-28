@@ -12,31 +12,61 @@ export async function GET(request: NextRequest) {
     const range = Number(request.nextUrl.searchParams.get('days') || '7');
     const days = Math.max(1, Math.min(90, range));
 
-    const [productCount, categoryCount, pendingOrderCount] = await Promise.all([
-      prisma.product.count(),
-      prisma.category.count(),
-      prisma.order.count({ where: { status: 'PENDING' } }),
-    ]);
+    // 基础统计 - 分别查询以便更好的错误处理
+    let productCount = 0;
+    let categoryCount = 0;
+    let pendingOrderCount = 0;
+
+    try {
+      productCount = await prisma.product.count();
+    } catch (e) {
+      console.error('Count products error:', e);
+    }
+
+    try {
+      categoryCount = await prisma.category.count();
+    } catch (e) {
+      console.error('Count categories error:', e);
+    }
+
+    try {
+      pendingOrderCount = await prisma.order.count({ where: { status: 'PENDING' } });
+    } catch (e) {
+      console.error('Count orders error:', e);
+    }
 
     const now = new Date();
     const start = new Date(now);
     start.setDate(now.getDate() - (days - 1));
     const startOfStart = dayStart(start);
 
-    const orders = await prisma.order.findMany({
-      where: { createdAt: { gte: startOfStart, lte: now } },
-      select: { id: true, createdAt: true, totalAmount: true, status: true, user: { select: { email: true } }, items: { select: { quantity: true } } },
-      orderBy: { createdAt: 'desc' },
-      take: 50,
-    });
+    let orders: any[] = [];
+    try {
+      orders = await prisma.order.findMany({
+        where: { createdAt: { gte: startOfStart, lte: now } },
+        select: { 
+          id: true, 
+          createdAt: true, 
+          totalAmount: true, 
+          status: true, 
+          user: { select: { email: true } }, 
+          items: { select: { quantity: true } } 
+        },
+        orderBy: { createdAt: 'desc' },
+        take: 50,
+      });
+    } catch (e) {
+      console.error('Fetch orders error:', e);
+      orders = [];
+    }
 
     // 最近订单
     const recentOrders = orders.slice(0, 10).map((o) => ({
       id: o.id,
-      userEmail: o.user.email,
-      totalAmountCents: o.totalAmount,
+      userEmail: o.user?.email || 'Unknown',
+      totalAmountCents: o.totalAmount || 0,
       status: o.status,
-      itemsCount: o.items.reduce((n, i) => n + i.quantity, 0),
+      itemsCount: o.items?.reduce((n: number, i: any) => n + (i.quantity || 0), 0) || 0,
       createdAt: o.createdAt,
     }));
 
