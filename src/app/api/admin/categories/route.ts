@@ -21,7 +21,8 @@ export async function GET(req: NextRequest) {
       }
     });
 
-    return NextResponse.json({ success: true, categories });
+    // 直接返回数组，不包装在对象中
+    return NextResponse.json(categories);
   } catch (error) {
     console.error('获取分类失败:', error);
     return NextResponse.json({ error: '获取分类失败' }, { status: 500 });
