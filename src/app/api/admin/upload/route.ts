@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+
+export const dynamic = 'force-dynamic';
 import { getUploadAdapter } from '@/lib/uploadAdapter';
 
 export async function POST(request: NextRequest) {

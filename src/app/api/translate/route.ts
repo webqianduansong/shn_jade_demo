@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+
+export const dynamic = 'force-dynamic';
 import { translateText, SupportedLanguage } from '@/lib/translation';
 
 export async function POST(req: NextRequest) {
