@@ -8,41 +8,54 @@ export default async function AdminDashboardPage() {
   const jar = await cookies();
   const locale = jar.get('NEXT_LOCALE')?.value || 'zh-CN';
 
-  const [productCount, categoryCount, pendingOrderCount, today] = await Promise.all([
-    prisma.product.count(),
-    prisma.category.count(),
-    prisma.order.count({ where: { status: 'PENDING' } }),
-    getTodayRange(),
-  ]);
+  let productCount = 0;
+  let categoryCount = 0;
+  let pendingOrderCount = 0;
+  let todayOrderCount = 0;
+  let todayRevenueCents = 0;
+  let recentOrders: RecentOrderRow[] = [];
 
-  const todayOrders = await prisma.order.findMany({
-    where: { createdAt: { gte: today.start, lte: today.end } },
-    select: { id: true, totalAmount: true },
-  });
-  const todayOrderCount = todayOrders.length;
-  const todayRevenueCents = todayOrders.reduce((sum, o) => sum + (o.totalAmount || 0), 0);
+  try {
+    const today = await getTodayRange();
+    
+    [productCount, categoryCount, pendingOrderCount] = await Promise.all([
+      prisma.product.count(),
+      prisma.category.count(),
+      prisma.order.count({ where: { status: 'PENDING' } }),
+    ]);
 
-  const recentOrdersRaw = await prisma.order.findMany({
-    orderBy: { createdAt: 'desc' },
-    take: 10,
-    select: {
-      id: true,
-      totalAmount: true,
-      status: true,
-      createdAt: true,
-      user: { select: { email: true } },
-      items: { select: { id: true, quantity: true } },
-    },
-  });
+    const todayOrders = await prisma.order.findMany({
+      where: { createdAt: { gte: today.start, lte: today.end } },
+      select: { id: true, totalAmount: true },
+    });
+    todayOrderCount = todayOrders.length;
+    todayRevenueCents = todayOrders.reduce((sum, o) => sum + (o.totalAmount || 0), 0);
 
-  const recentOrders: RecentOrderRow[] = recentOrdersRaw.map((o) => ({
-    id: o.id,
-    userEmail: o.user.email,
-    totalAmountCents: o.totalAmount,
-    status: o.status,
-    itemsCount: o.items.reduce((n, i) => n + i.quantity, 0),
-    createdAt: new Intl.DateTimeFormat(locale, { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).format(o.createdAt),
-  }));
+    const recentOrdersRaw = await prisma.order.findMany({
+      orderBy: { createdAt: 'desc' },
+      take: 10,
+      select: {
+        id: true,
+        totalAmount: true,
+        status: true,
+        createdAt: true,
+        user: { select: { email: true } },
+        items: { select: { id: true, quantity: true } },
+      },
+    });
+
+    recentOrders = recentOrdersRaw.map((o) => ({
+      id: o.id,
+      userEmail: o.user.email,
+      totalAmountCents: o.totalAmount,
+      status: o.status,
+      itemsCount: o.items.reduce((n, i) => n + i.quantity, 0),
+      createdAt: new Intl.DateTimeFormat(locale, { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).format(o.createdAt),
+    }));
+  } catch (error) {
+    console.error('Dashboard data fetch error:', error);
+    // Return empty data instead of crashing
+  }
 
   const metrics: DashboardMetrics = {
     productCount,
