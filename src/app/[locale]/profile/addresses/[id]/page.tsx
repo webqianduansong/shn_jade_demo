@@ -4,6 +4,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { Form, Input, Button, Card, Checkbox, Select, message, Spin } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { apiGet, apiPut } from '@/lib/apiClient';
+import '../addresses.css';
 
 // 国家列表（常用国家）
 const COUNTRIES = [
@@ -88,30 +89,35 @@ export default function EditAddressPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto py-8 px-6">
-      {/* 页头 */}
-      <div style={{ marginBottom: '32px' }}>
-        <Button
-          type="text"
-          icon={<ArrowLeftOutlined />}
-          onClick={() => router.back()}
-          style={{ marginBottom: '16px', color: '#2d5a3d' }}
-        >
-          {locale === 'zh' ? '返回' : 'Back'}
-        </Button>
-        <h1 style={{ 
-          fontSize: '28px',
-          fontWeight: 700,
-          color: '#2d5a3d',
-          margin: 0,
-          background: 'linear-gradient(135deg, #2d5a3d 0%, #4a8c5f 100%)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          backgroundClip: 'text'
-        }}>
-          {locale === 'zh' ? '编辑收货地址' : 'Edit Shipping Address'}
-        </h1>
-      </div>
+    <div style={{ 
+      minHeight: 'calc(100vh - 160px)',
+      background: '#f8f9fa',
+      padding: '2rem 1rem'
+    }}>
+      <div className="max-w-4xl mx-auto">
+        {/* 页头 */}
+        <div style={{ marginBottom: '24px' }}>
+          <Button
+            type="text"
+            icon={<ArrowLeftOutlined />}
+            onClick={() => router.back()}
+            style={{ marginBottom: '16px', color: '#2d5a3d' }}
+          >
+            {locale === 'zh' ? '返回' : 'Back'}
+          </Button>
+          <h1 style={{ 
+            fontSize: '28px',
+            fontWeight: 700,
+            color: '#2d5a3d',
+            margin: 0,
+            background: 'linear-gradient(135deg, #2d5a3d 0%, #4a8c5f 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text'
+          }}>
+            {locale === 'zh' ? '编辑收货地址' : 'Edit Shipping Address'}
+          </h1>
+        </div>
 
       {/* 表单 */}
       <Card
@@ -275,6 +281,7 @@ export default function EditAddressPage() {
           </div>
         </Form>
       </Card>
+      </div>
     </div>
   );
 }

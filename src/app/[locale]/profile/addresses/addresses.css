@@ -1,0 +1,83 @@
+/* 地址管理页面通用样式 */
+
+/* 页面容器 */
+.address-page-container {
+  min-height: calc(100vh - 160px);
+  background: #f8f9fa;
+  padding: 2rem 1rem;
+}
+
+/* 内容容器 */
+.address-content-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 表单容器 */
+.address-form-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* 页面标题 */
+.address-page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2d5a3d;
+  margin: 0;
+  background: linear-gradient(135deg, #2d5a3d 0%, #4a8c5f 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 卡片样式 */
+.address-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(45, 90, 61, 0.08);
+  border: 1px solid #e8f0ec;
+  background: #ffffff;
+}
+
+/* 响应式设计 - 平板 */
+@media (max-width: 768px) {
+  .address-page-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .address-page-title {
+    font-size: 24px;
+  }
+
+  .address-card {
+    border-radius: 8px;
+  }
+}
+
+/* 响应式设计 - 手机 */
+@media (max-width: 480px) {
+  .address-page-container {
+    padding: 1rem 0.75rem;
+  }
+
+  .address-page-title {
+    font-size: 20px;
+  }
+
+  .address-card {
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(45, 90, 61, 0.08);
+  }
+}
+
+/* 超小屏幕 */
+@media (max-width: 375px) {
+  .address-page-container {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .address-page-title {
+    font-size: 18px;
+  }
+}
+

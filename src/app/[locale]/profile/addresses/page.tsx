@@ -4,6 +4,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { Button, Card, Empty, Spin, Tag, Modal, message } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined, StarOutlined, StarFilled } from '@ant-design/icons';
 import { apiGet, apiPut, apiDelete } from '@/lib/apiClient';
+import './addresses.css';
 
 interface Address {
   id: string;
@@ -94,14 +95,19 @@ export default function AddressesPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto py-8 px-6">
-      {/* 页头 */}
-      <div style={{ 
-        marginBottom: '32px',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-      }}>
+    <div style={{ 
+      minHeight: 'calc(100vh - 160px)',
+      background: '#f8f9fa',
+      padding: '2rem 1rem'
+    }}>
+      <div className="max-w-7xl mx-auto">
+        {/* 页头 */}
+        <div style={{ 
+          marginBottom: '24px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
         <div>
           <h1 style={{ 
             fontSize: '28px',
@@ -235,6 +241,7 @@ export default function AddressesPage() {
           ))}
         </div>
       )}
+      </div>
     </div>
   );
 }
