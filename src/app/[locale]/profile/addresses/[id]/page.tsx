@@ -83,7 +83,7 @@ export default function EditAddressPage() {
         alignItems: 'center', 
         minHeight: '400px' 
       }}>
-        <Spin size="large" tip={locale === 'zh' ? '加载中...' : 'Loading...'} />
+        <Spin tip={locale === 'zh' ? '加载中...' : 'Loading...'} />
       </div>
     );
   }
@@ -92,28 +92,32 @@ export default function EditAddressPage() {
     <div style={{ 
       minHeight: 'calc(100vh - 160px)',
       background: '#f8f9fa',
-      padding: '2rem 1rem'
+      padding: '1.5rem 1rem'
     }}>
       <div className="max-w-4xl mx-auto">
-        {/* 页头 */}
-        <div style={{ marginBottom: '24px' }}>
+        {/* 页头 - 返回按钮和标题在同一行 */}
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center',
+          marginBottom: '20px',
+          position: 'relative'
+        }}>
           <Button
             type="text"
             icon={<ArrowLeftOutlined />}
             onClick={() => router.back()}
-            style={{ marginBottom: '16px', color: '#2d5a3d' }}
+            style={{ color: '#2d5a3d', padding: '4px 8px' }}
           >
             {locale === 'zh' ? '返回' : 'Back'}
           </Button>
           <h1 style={{ 
-            fontSize: '28px',
-            fontWeight: 700,
+            position: 'absolute',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            fontSize: '20px',
+            fontWeight: 600,
             color: '#2d5a3d',
-            margin: 0,
-            background: 'linear-gradient(135deg, #2d5a3d 0%, #4a8c5f 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text'
+            margin: 0
           }}>
             {locale === 'zh' ? '编辑收货地址' : 'Edit Shipping Address'}
           </h1>
@@ -148,7 +152,7 @@ export default function EditAddressPage() {
                 label={locale === 'zh' ? '收件人姓名' : 'Full Name'}
                 rules={[{ required: true, message: locale === 'zh' ? '请输入收件人姓名' : 'Please enter full name' }]}
               >
-                <Input size="large" placeholder={locale === 'zh' ? '请输入姓名' : 'Enter name'} />
+                <Input placeholder={locale === 'zh' ? '请输入姓名' : 'Enter name'} />
               </Form.Item>
 
               <Form.Item
@@ -159,7 +163,7 @@ export default function EditAddressPage() {
                   { pattern: /^[\d\s\-\+\(\)]+$/, message: locale === 'zh' ? '请输入有效的手机号码' : 'Invalid phone number' }
                 ]}
               >
-                <Input size="large" placeholder={locale === 'zh' ? '+86 138 0000 0000' : '+1 555 1234567'} />
+                <Input placeholder={locale === 'zh' ? '+86 138 0000 0000' : '+1 555 1234567'} />
               </Form.Item>
             </div>
 
@@ -168,7 +172,7 @@ export default function EditAddressPage() {
               label={locale === 'zh' ? '邮箱（选填）' : 'Email (Optional)'}
               rules={[{ type: 'email', message: locale === 'zh' ? '请输入有效的邮箱地址' : 'Invalid email address' }]}
             >
-              <Input size="large" placeholder={locale === 'zh' ? 'name@example.com' : 'name@example.com'} />
+              <Input placeholder={locale === 'zh' ? 'name@example.com' : 'name@example.com'} />
             </Form.Item>
           </div>
 
@@ -209,7 +213,7 @@ export default function EditAddressPage() {
                     options={CHINA_PROVINCES.map(p => ({ value: p, label: p }))}
                   />
                 ) : (
-                  <Input size="large" placeholder={locale === 'zh' ? '请输入省/州' : 'Enter state'} />
+                  <Input placeholder={locale === 'zh' ? '请输入省/州' : 'Enter state'} />
                 )}
               </Form.Item>
 
@@ -218,7 +222,7 @@ export default function EditAddressPage() {
                 label={locale === 'zh' ? '城市' : 'City'}
                 rules={[{ required: true, message: locale === 'zh' ? '请输入城市' : 'Please enter city' }]}
               >
-                <Input size="large" placeholder={locale === 'zh' ? '请输入城市' : 'Enter city'} />
+                <Input placeholder={locale === 'zh' ? '请输入城市' : 'Enter city'} />
               </Form.Item>
             </div>
 
@@ -227,7 +231,7 @@ export default function EditAddressPage() {
                 name="district"
                 label={locale === 'zh' ? '区/县（选填）' : 'District (Optional)'}
               >
-                <Input size="large" placeholder={locale === 'zh' ? '请输入区/县' : 'Enter district'} />
+                <Input placeholder={locale === 'zh' ? '请输入区/县' : 'Enter district'} />
               </Form.Item>
 
               <Form.Item
@@ -235,7 +239,7 @@ export default function EditAddressPage() {
                 label={locale === 'zh' ? '邮政编码' : 'Postal Code'}
                 rules={[{ required: true, message: locale === 'zh' ? '请输入邮政编码' : 'Please enter postal code' }]}
               >
-                <Input size="large" placeholder={locale === 'zh' ? '100000' : '10001'} />
+                <Input placeholder={locale === 'zh' ? '100000' : '10001'} />
               </Form.Item>
             </div>
 
@@ -244,14 +248,14 @@ export default function EditAddressPage() {
               label={locale === 'zh' ? '详细地址' : 'Address Line 1'}
               rules={[{ required: true, message: locale === 'zh' ? '请输入详细地址' : 'Please enter address' }]}
             >
-              <Input size="large" placeholder={locale === 'zh' ? '街道、门牌号' : 'Street address'} />
+              <Input placeholder={locale === 'zh' ? '街道、门牌号' : 'Street address'} />
             </Form.Item>
 
             <Form.Item
               name="addressLine2"
               label={locale === 'zh' ? '补充地址（选填）' : 'Address Line 2 (Optional)'}
             >
-              <Input size="large" placeholder={locale === 'zh' ? '公寓、楼层、单元等' : 'Apt, Suite, Unit, etc.'} />
+              <Input placeholder={locale === 'zh' ? '公寓、楼层、单元等' : 'Apt, Suite, Unit, etc.'} />
             </Form.Item>
           </div>
 
@@ -262,7 +266,7 @@ export default function EditAddressPage() {
 
           {/* 操作按钮 */}
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}>
-            <Button size="large" onClick={() => router.back()}>
+            <Button onClick={() => router.back()}>
               {locale === 'zh' ? '取消' : 'Cancel'}
             </Button>
             <Button
