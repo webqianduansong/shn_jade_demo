@@ -53,12 +53,18 @@ export default function CartPage({
         if (!mounted) return;
 
         if (response.ok && data.success) {
-          console.log('[购物车] 获取成功，商品数:', data.data.length);
-          setCart(data.data);
+          console.log('[购物车] API 响应:', data);
+          console.log('[购物车] data.data 类型:', typeof data.data, '是否数组:', Array.isArray(data.data));
+          console.log('[购物车] data.data 内容:', data.data);
+          
+          const cartData = Array.isArray(data.data) ? data.data : [];
+          console.log('[购物车] 获取成功，商品数:', cartData.length);
+          setCart(cartData);
           
           // 获取购物车中所有商品的详细信息
-          if (data.data.length > 0) {
-            const productIds = data.data.map((item: CartItem) => item.productId);
+          if (cartData.length > 0) {
+            const productIds = cartData.map((item: CartItem) => item.productId);
+            console.log('[购物车] 商品ID列表:', productIds);
             await fetchProducts(productIds);
           }
           
@@ -84,21 +90,28 @@ export default function CartPage({
 
     const fetchProducts = async (productIds: string[]) => {
       try {
+        console.log('[购物车] 开始获取商品详情，商品数:', productIds.length);
         // 并发获取所有商品信息
         const productPromises = productIds.map(id => 
           fetch(`/api/products/${id}`).then(res => res.json())
         );
         
         const productResponses = await Promise.all(productPromises);
+        console.log('[购物车] 商品API响应:', productResponses);
         
         const productMap: Record<string, Product> = {};
-        productResponses.forEach(response => {
+        productResponses.forEach((response, index) => {
+          console.log(`[购物车] 商品 ${productIds[index]} 响应:`, response);
           if (response.success && response.data) {
             productMap[response.data.id] = response.data;
+            console.log(`[购物车] 商品 ${response.data.id} 添加成功:`, response.data.name);
+          } else {
+            console.warn(`[购物车] 商品 ${productIds[index]} 获取失败:`, response);
           }
         });
         
         console.log('[购物车] 获取商品信息成功:', Object.keys(productMap).length);
+        console.log('[购物车] 商品详情映射:', productMap);
         setProducts(productMap);
       } catch (err) {
         console.error('[购物车] 获取商品信息失败:', err);
@@ -129,12 +142,16 @@ export default function CartPage({
     }
   };
 
+  console.log('[购物车] 当前 cart 状态:', cart);
+  console.log('[购物车] 当前 products 状态:', products);
+  
   const items = cart.map((i) => {
     const product = products[i.productId];
     if (!product) {
-      console.warn('[购物车] 找不到商品:', i.productId);
+      console.warn('[购物车] 找不到商品:', i.productId, '可用商品:', Object.keys(products));
       return null;
     }
+    console.log('[购物车] 商品映射成功:', i.productId, product.name);
     return {
       ...i,
       product: {
@@ -145,6 +162,9 @@ export default function CartPage({
     };
   }).filter(Boolean) as any[];
 
+  console.log('[购物车] 最终 items 数量:', items.length);
+  console.log('[购物车] 最终 items 内容:', items);
+  
   const totalAmount = items.reduce((sum, i) => sum + (i.product?.price || 0) * i.quantity, 0);
 
   if (loading) {
