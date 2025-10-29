@@ -1,7 +1,7 @@
 "use client";
 import { Row, Col, Divider, Space } from 'antd';
 import { PhoneOutlined, EnvironmentOutlined, ClockCircleOutlined } from '@ant-design/icons';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import FooterSection from './footer/FooterSection';
 import NewsletterForm from './footer/NewsletterForm';
 import './footer/Footer.css';
@@ -12,6 +12,7 @@ import './footer/Footer.css';
  */
 export default function Footer() {
   const t = useTranslations('footer');
+  const locale = useLocale();
 
   return (
     <footer className="jade-footer">
