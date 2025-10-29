@@ -416,3 +416,6 @@ npm run test:coverage
 # Manual deployment trigger
 
 测试自动部署 - 2025-10-29 16:18:28
+
+强制部署触发 - 2025-10-29 16:41:01
+仓库已设为公开，重新测试自动部署
