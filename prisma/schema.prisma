@@ -9,10 +9,12 @@ datasource db {
 }
 
 enum OrderStatus {
-  PENDING
-  PAID
-  FAILED
-  SHIPPED
+  PENDING    // 待支付
+  PAID       // 已支付
+  FAILED     // 支付失败
+  SHIPPED    // 已发货
+  DELIVERED  // 已送达
+  CANCELLED  // 已取消
 }
 
 model User {
@@ -88,17 +90,41 @@ model CartItem {
 }
 
 model Order {
-  id           String       @id @default(cuid())
-  userId       String
-  user         User         @relation(fields: [userId], references: [id])
-  status       OrderStatus  @default(PENDING)
-  totalAmount  Int
-  paymentRef   String?
-  addressId    String?
-  address      Address?     @relation(fields: [addressId], references: [id])
-  items        OrderItem[]
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
+  id            String       @id @default(cuid())
+  orderNo       String       @unique  // 订单号
+  userId        String
+  user          User         @relation(fields: [userId], references: [id])
+  status        OrderStatus  @default(PENDING)
+  
+  // 收货地址（快照，JSON 格式）
+  shippingAddress Json
+  
+  // 金额信息（单位：分）
+  subtotalCents   Int         // 商品小计
+  shippingCents   Int         // 运费
+  discountCents   Int         @default(0)  // 优惠金额
+  totalCents      Int         // 订单总额
+  
+  // 配送信息
+  shippingMethod   String?    // 配送方式
+  shippingStatus   String?    // 物流状态
+  trackingNumber   String?    // 物流单号
+  shippingCompany  String?    // 物流公司
+  shippedAt        DateTime?  // 发货时间
+  deliveredAt      DateTime?  // 签收时间
+  
+  // 支付信息
+  paymentMethod String?       // 支付方式
+  paymentRef    String?       // 支付参考号
+  paidAt        DateTime?     // 支付时间
+  
+  // 备注
+  remark        String?       // 用户备注
+  
+  items         OrderItem[]
+  tracking      ShippingTracking[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
 }
 
 model OrderItem {
@@ -112,16 +138,38 @@ model OrderItem {
 }
 
 model Address {
-  id        String  @id @default(cuid())
-  userId    String
-  user      User    @relation(fields: [userId], references: [id])
-  line1     String
-  line2     String?
-  city      String
-  state     String?
-  country   String
-  postal    String
-  orders    Order[]
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  isDefault    Boolean  @default(false)  // 是否默认地址
+  
+  // 收件人信息
+  fullName     String   // 收件人姓名
+  phone        String   // 手机号码
+  email        String?  // 邮箱（可选）
+  
+  // 地址信息
+  country      String   // 国家
+  state        String   // 省/州
+  city         String   // 城市
+  district     String?  // 区/县（可选）
+  addressLine1 String   // 详细地址行1
+  addressLine2 String?  // 详细地址行2（可选）
+  postalCode   String   // 邮政编码
+  
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model ShippingTracking {
+  id              String   @id @default(cuid())
+  orderId         String
+  order           Order    @relation(fields: [orderId], references: [id])
+  trackingNumber  String   // 物流单号
+  shippingCompany String   // 物流公司
+  timeline        Json     // 物流轨迹（JSON 数组）
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 

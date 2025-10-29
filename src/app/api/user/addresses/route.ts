@@ -1,0 +1,143 @@
+import { NextRequest, NextResponse } from 'next/server';
+import prisma from '@/lib/prisma';
+import { cookies } from 'next/headers';
+
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
+/**
+ * 获取用户地址列表
+ * GET /api/user/addresses
+ */
+export async function GET(request: NextRequest) {
+  try {
+    const cookieStore = await cookies();
+    const authCookie = cookieStore.get('auth_user');
+    
+    if (!authCookie?.value) {
+      return NextResponse.json(
+        { success: false, error: '未登录' },
+        { status: 401 }
+      );
+    }
+    
+    const session = JSON.parse(authCookie.value);
+    
+    // 获取用户所有地址，默认地址排在前面
+    const addresses = await prisma.address.findMany({
+      where: { userId: session.userId },
+      orderBy: [
+        { isDefault: 'desc' },
+        { createdAt: 'desc' }
+      ]
+    });
+    
+    return NextResponse.json({
+      success: true,
+      data: { list: addresses }
+    });
+  } catch (error) {
+    console.error('[Addresses API] Error:', error);
+    return NextResponse.json(
+      { success: false, error: '获取地址列表失败' },
+      { status: 500 }
+    );
+  }
+}
+
+/**
+ * 添加新地址
+ * POST /api/user/addresses
+ */
+export async function POST(request: NextRequest) {
+  try {
+    const cookieStore = await cookies();
+    const authCookie = cookieStore.get('auth_user');
+    
+    if (!authCookie?.value) {
+      return NextResponse.json(
+        { success: false, error: '未登录' },
+        { status: 401 }
+      );
+    }
+    
+    const session = JSON.parse(authCookie.value);
+    const body = await request.json();
+    
+    const {
+      fullName,
+      phone,
+      email,
+      country,
+      state,
+      city,
+      district,
+      addressLine1,
+      addressLine2,
+      postalCode,
+      isDefault = false
+    } = body;
+    
+    // 验证必填字段
+    if (!fullName || !phone || !country || !state || !city || !addressLine1 || !postalCode) {
+      return NextResponse.json(
+        { success: false, error: '请填写完整的地址信息' },
+        { status: 400 }
+      );
+    }
+    
+    // 如果设置为默认地址，先取消其他默认地址
+    if (isDefault) {
+      await prisma.address.updateMany({
+        where: { 
+          userId: session.userId,
+          isDefault: true
+        },
+        data: { isDefault: false }
+      });
+    }
+    
+    // 检查地址数量限制（最多10个）
+    const addressCount = await prisma.address.count({
+      where: { userId: session.userId }
+    });
+    
+    if (addressCount >= 10) {
+      return NextResponse.json(
+        { success: false, error: '最多只能保存10个收货地址' },
+        { status: 400 }
+      );
+    }
+    
+    // 创建新地址
+    const address = await prisma.address.create({
+      data: {
+        userId: session.userId,
+        fullName,
+        phone,
+        email,
+        country,
+        state,
+        city,
+        district,
+        addressLine1,
+        addressLine2,
+        postalCode,
+        isDefault
+      }
+    });
+    
+    return NextResponse.json({
+      success: true,
+      data: { address },
+      message: '地址添加成功'
+    });
+  } catch (error) {
+    console.error('[Addresses API] Error:', error);
+    return NextResponse.json(
+      { success: false, error: '添加地址失败' },
+      { status: 500 }
+    );
+  }
+}
+
