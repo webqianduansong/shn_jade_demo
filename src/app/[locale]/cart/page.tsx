@@ -2,13 +2,20 @@
 import { useEffect, useState } from 'react';
 import { Spin, Result, Button, message } from 'antd';
 import { useRouter } from 'next/navigation';
-import products from '@/data/products';
 import CartClient from '@/components/CartClient';
 import CartHeader from '@/components/cart/CartHeader';
 
 interface CartItem {
   productId: string;
   quantity: number;
+}
+
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  category?: string;
 }
 
 /**
@@ -23,6 +30,7 @@ export default function CartPage({
   const { locale } = params;
   const router = useRouter();
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [products, setProducts] = useState<Record<string, Product>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -47,6 +55,13 @@ export default function CartPage({
         if (response.ok && data.success) {
           console.log('[购物车] 获取成功，商品数:', data.data.length);
           setCart(data.data);
+          
+          // 获取购物车中所有商品的详细信息
+          if (data.data.length > 0) {
+            const productIds = data.data.map((item: CartItem) => item.productId);
+            await fetchProducts(productIds);
+          }
+          
           setError(null);
         } else {
           console.error('[购物车] 获取失败:', data.message);
@@ -64,6 +79,29 @@ export default function CartPage({
           clearTimeout(timeoutId);
           setLoading(false);
         }
+      }
+    };
+
+    const fetchProducts = async (productIds: string[]) => {
+      try {
+        // 并发获取所有商品信息
+        const productPromises = productIds.map(id => 
+          fetch(`/api/products/${id}`).then(res => res.json())
+        );
+        
+        const productResponses = await Promise.all(productPromises);
+        
+        const productMap: Record<string, Product> = {};
+        productResponses.forEach(response => {
+          if (response.success && response.data) {
+            productMap[response.data.id] = response.data;
+          }
+        });
+        
+        console.log('[购物车] 获取商品信息成功:', Object.keys(productMap).length);
+        setProducts(productMap);
+      } catch (err) {
+        console.error('[购物车] 获取商品信息失败:', err);
       }
     };
 
@@ -92,19 +130,22 @@ export default function CartPage({
   };
 
   const items = cart.map((i) => {
-    const product = products.find((p) => p.id === i.productId);
-    if (!product) return null;
+    const product = products[i.productId];
+    if (!product) {
+      console.warn('[购物车] 找不到商品:', i.productId);
+      return null;
+    }
     return {
       ...i,
       product: {
         ...product,
-        category: 'jade',
-        image: typeof product.image === 'string' ? product.image : product.image.src
+        category: product.category || 'jade',
+        image: typeof product.image === 'string' ? product.image : product.image
       },
     };
   }).filter(Boolean) as any[];
 
-  const totalAmount = items.reduce((sum, i) => sum + i.product.price * i.quantity, 0);
+  const totalAmount = items.reduce((sum, i) => sum + (i.product?.price || 0) * i.quantity, 0);
 
   if (loading) {
     return (
