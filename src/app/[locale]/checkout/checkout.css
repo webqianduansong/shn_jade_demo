@@ -1,0 +1,405 @@
+/* 结算页面样式 */
+
+.checkout-container {
+  min-height: calc(100vh - 160px);
+  background: #f8f9fa;
+  padding: 2rem 1rem;
+}
+
+.checkout-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.checkout-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2d5a3d;
+  margin: 0 0 24px 0;
+  background: linear-gradient(135deg, #2d5a3d 0%, #4a8c5f 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.checkout-grid {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 24px;
+  align-items: start;
+}
+
+.checkout-main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.checkout-section {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(45, 90, 61, 0.08);
+  border: 1px solid #e8f0ec;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.section-icon {
+  font-size: 20px;
+  color: #2d5a3d;
+  margin-right: 8px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2d5a3d;
+  margin: 0;
+}
+
+/* 地址选择 */
+.address-radio-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.address-radio {
+  display: flex !important;
+  align-items: flex-start;
+  padding: 12px;
+  border: 1px solid #e8f0ec;
+  border-radius: 8px;
+  transition: all 0.3s;
+  margin: 0 !important;
+}
+
+.address-radio:hover {
+  border-color: #4a8c5f;
+  background: #f0f7f3;
+}
+
+.address-radio .ant-radio {
+  margin-top: 4px;
+}
+
+.address-item {
+  flex: 1;
+  margin-left: 8px;
+}
+
+.address-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.address-phone {
+  color: #666;
+  font-size: 14px;
+}
+
+.default-badge {
+  background: linear-gradient(135deg, #2d5a3d 0%, #4a8c5f 100%);
+  color: white;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.address-detail {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* 配送方式 */
+.shipping-radio-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.shipping-radio {
+  display: flex !important;
+  padding: 12px;
+  border: 1px solid #e8f0ec;
+  border-radius: 8px;
+  transition: all 0.3s;
+  margin: 0 !important;
+}
+
+.shipping-radio:hover {
+  border-color: #4a8c5f;
+  background: #f0f7f3;
+}
+
+.shipping-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: 8px;
+}
+
+.shipping-time {
+  color: #666;
+  font-size: 14px;
+  flex: 1;
+}
+
+.shipping-price {
+  color: #2d5a3d;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* 支付方式 */
+.payment-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.payment-radio-group .ant-radio-wrapper {
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.payment-radio-group .ant-radio-wrapper:hover {
+  background: #f0f7f3;
+}
+
+/* 备注 */
+.remark-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2d5a3d;
+  margin: 0 0 12px 0;
+}
+
+/* 订单摘要 */
+.checkout-sidebar {
+  position: sticky;
+  top: 24px;
+}
+
+.order-summary {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(45, 90, 61, 0.08);
+  border: 1px solid #e8f0ec;
+}
+
+.summary-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2d5a3d;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.summary-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.summary-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.summary-item-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.summary-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.summary-item-name {
+  font-size: 14px;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.summary-item-quantity {
+  font-size: 13px;
+  color: #666;
+}
+
+.summary-item-price {
+  font-weight: 600;
+  color: #2d5a3d;
+  white-space: nowrap;
+}
+
+.summary-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #666;
+}
+
+.summary-row.discount {
+  color: #f5222d;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.total-price {
+  font-size: 24px;
+  color: #2d5a3d;
+}
+
+.submit-button {
+  margin-top: 16px;
+  height: 50px;
+  font-size: 16px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #2d5a3d 0%, #4a8c5f 100%);
+  border: none;
+  border-radius: 8px;
+}
+
+.submit-button:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(45, 90, 61, 0.3);
+}
+
+.submit-button:disabled {
+  background: #d9d9d9;
+}
+
+/* 响应式设计 - 平板 */
+@media (max-width: 1024px) {
+  .checkout-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-sidebar {
+    position: static;
+    order: -1;
+  }
+}
+
+/* 响应式设计 - 手机 */
+@media (max-width: 768px) {
+  .checkout-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .checkout-title {
+    font-size: 24px;
+  }
+
+  .checkout-main {
+    gap: 16px;
+  }
+
+  .section-title {
+    font-size: 16px;
+  }
+
+  .address-item {
+    margin-left: 0;
+  }
+
+  .shipping-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    margin-left: 0;
+  }
+
+  .summary-item-image {
+    width: 50px;
+    height: 50px;
+  }
+
+  .total-price {
+    font-size: 20px;
+  }
+
+  .submit-button {
+    height: 46px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .checkout-container {
+    padding: 1rem 0.75rem;
+  }
+
+  .checkout-title {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .checkout-section {
+    border-radius: 8px;
+  }
+
+  .address-radio,
+  .shipping-radio {
+    padding: 10px;
+  }
+
+  .address-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .summary-item-image {
+    width: 45px;
+    height: 45px;
+  }
+
+  .summary-item-name {
+    font-size: 13px;
+  }
+
+  .summary-item-quantity {
+    font-size: 12px;
+  }
+}
+
