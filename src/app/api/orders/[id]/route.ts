@@ -31,7 +31,7 @@ export async function GET(
     const order = await prisma.order.findFirst({
       where: {
         id,
-        userId: session.userId
+        userId: session.id
       },
       include: {
         items: {
@@ -123,7 +123,7 @@ export async function PUT(
     const order = await prisma.order.findFirst({
       where: {
         id,
-        userId: session.userId
+        userId: session.id
       }
     });
     

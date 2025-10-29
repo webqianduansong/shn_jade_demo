@@ -30,7 +30,7 @@ export async function GET(
     const address = await prisma.address.findFirst({
       where: { 
         id,
-        userId: session.userId
+        userId: session.id
       }
     });
     
@@ -81,7 +81,7 @@ export async function PUT(
     const existingAddress = await prisma.address.findFirst({
       where: { 
         id,
-        userId: session.userId
+        userId: session.id
       }
     });
     
@@ -110,7 +110,7 @@ export async function PUT(
     if (isDefault && !existingAddress.isDefault) {
       await prisma.address.updateMany({
         where: { 
-          userId: session.userId,
+          userId: session.id,
           isDefault: true
         },
         data: { isDefault: false }
@@ -175,7 +175,7 @@ export async function DELETE(
     const address = await prisma.address.findFirst({
       where: { 
         id,
-        userId: session.userId
+        userId: session.id
       }
     });
     

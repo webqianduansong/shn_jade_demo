@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
     
     // 获取用户所有地址，默认地址排在前面
     const addresses = await prisma.address.findMany({
-      where: { userId: session.userId },
+      where: { userId: session.id },
       orderBy: [
         { isDefault: 'desc' },
         { createdAt: 'desc' }
@@ -101,7 +101,7 @@ export async function POST(request: NextRequest) {
     if (isDefault) {
       await prisma.address.updateMany({
         where: { 
-          userId: session.userId,
+          userId: session.id,
           isDefault: true
         },
         data: { isDefault: false }
@@ -110,7 +110,7 @@ export async function POST(request: NextRequest) {
     
     // 检查地址数量限制（最多10个）
     const addressCount = await prisma.address.count({
-      where: { userId: session.userId }
+      where: { userId: session.id }
     });
     
     if (addressCount >= 10) {
@@ -123,7 +123,7 @@ export async function POST(request: NextRequest) {
     // 创建新地址
     const address = await prisma.address.create({
       data: {
-        userId: session.userId,
+        userId: session.id,
         fullName,
         phone,
         email,

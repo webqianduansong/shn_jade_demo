@@ -31,7 +31,7 @@ export async function PUT(
     const address = await prisma.address.findFirst({
       where: { 
         id,
-        userId: session.userId
+        userId: session.id
       }
     });
     
@@ -45,7 +45,7 @@ export async function PUT(
     // 先取消所有默认地址
     await prisma.address.updateMany({
       where: { 
-        userId: session.userId,
+        userId: session.id,
         isDefault: true
       },
       data: { isDefault: false }

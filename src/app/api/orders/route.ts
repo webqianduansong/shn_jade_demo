@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
     
     // 构建查询条件
     const where: any = {
-      userId: session.userId
+      userId: session.id
     };
     
     if (status && status !== 'all') {
