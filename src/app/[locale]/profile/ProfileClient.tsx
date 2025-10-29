@@ -1,8 +1,10 @@
 "use client";
 import { useState, useEffect } from 'react';
-import { Card, Tabs, Descriptions, Table, Tag, Empty, Spin, Avatar, Space, Button } from 'antd';
-import { UserOutlined, ShoppingOutlined, SettingOutlined, HeartOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/navigation';
+import { Card, Tabs, Descriptions, Table, Tag, Empty, Spin, Avatar, Space, Button, Modal, message } from 'antd';
+import { UserOutlined, ShoppingOutlined, SettingOutlined, HeartOutlined, EnvironmentOutlined, PlusOutlined, EditOutlined, DeleteOutlined, StarOutlined, StarFilled } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
+import { apiGet, apiPut, apiDelete } from '@/lib/apiClient';
 import './profile.css';
 
 interface User {
@@ -23,19 +25,43 @@ interface Order {
   }>;
 }
 
+interface Address {
+  id: string;
+  fullName: string;
+  phone: string;
+  email?: string;
+  country: string;
+  state: string;
+  city: string;
+  district?: string;
+  addressLine1: string;
+  addressLine2?: string;
+  postalCode: string;
+  isDefault: boolean;
+}
+
 interface ProfileClientProps {
   locale: string;
   user: User;
 }
 
 export default function ProfileClient({ locale, user }: ProfileClientProps) {
+  const router = useRouter();
   const [orders, setOrders] = useState<Order[]>([]);
+  const [addresses, setAddresses] = useState<Address[]>([]);
   const [loading, setLoading] = useState(true);
+  const [addressLoading, setAddressLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('info');
 
   useEffect(() => {
     fetchOrders();
   }, []);
+
+  useEffect(() => {
+    if (activeTab === 'addresses') {
+      fetchAddresses();
+    }
+  }, [activeTab]);
 
   const fetchOrders = async () => {
     try {
@@ -49,6 +75,55 @@ export default function ProfileClient({ locale, user }: ProfileClientProps) {
     } finally {
       setLoading(false);
     }
+  };
+
+  const fetchAddresses = async () => {
+    setAddressLoading(true);
+    const result = await apiGet('/api/user/addresses');
+    if (result.success && result.data) {
+      setAddresses(result.data.list || []);
+    }
+    setAddressLoading(false);
+  };
+
+  const handleSetDefault = async (id: string) => {
+    const result = await apiPut(`/api/user/addresses/${id}/default`, {});
+    if (result.success) {
+      message.success(locale === 'zh' ? '已设为默认地址' : 'Set as default address');
+      fetchAddresses();
+    }
+  };
+
+  const handleDeleteAddress = (address: Address) => {
+    Modal.confirm({
+      title: locale === 'zh' ? '确认删除' : 'Confirm Delete',
+      content: locale === 'zh' 
+        ? `确定要删除地址"${address.fullName}"吗？` 
+        : `Are you sure you want to delete address "${address.fullName}"?`,
+      okText: locale === 'zh' ? '删除' : 'Delete',
+      cancelText: locale === 'zh' ? '取消' : 'Cancel',
+      okButtonProps: { danger: true },
+      onOk: async () => {
+        const result = await apiDelete(`/api/user/addresses/${address.id}`);
+        if (result.success) {
+          message.success(locale === 'zh' ? '地址删除成功' : 'Address deleted');
+          fetchAddresses();
+        }
+      }
+    });
+  };
+
+  const formatAddress = (address: Address) => {
+    const parts = [
+      address.addressLine1,
+      address.addressLine2,
+      address.district,
+      address.city,
+      address.state,
+      address.country,
+      address.postalCode
+    ].filter(Boolean);
+    return parts.join(', ');
   };
 
   const getStatusTag = (status: string) => {
@@ -183,6 +258,124 @@ export default function ProfileClient({ locale, user }: ProfileClientProps) {
                 {locale === 'zh' ? '去购物' : 'Start Shopping'}
               </Button>
             </Empty>
+          )}
+        </Card>
+      ),
+    },
+    {
+      key: 'addresses',
+      label: (
+        <span>
+          <EnvironmentOutlined />
+          {locale === 'zh' ? '收货地址' : 'Addresses'}
+        </span>
+      ),
+      children: (
+        <Card className="addresses-card" bordered={false}>
+          {addressLoading ? (
+            <div className="loading-container">
+              <Spin size="large" />
+            </div>
+          ) : (
+            <>
+              <div style={{ marginBottom: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div>
+                  <p style={{ margin: 0, color: '#666', fontSize: '14px' }}>
+                    {locale === 'zh' 
+                      ? `您有 ${addresses.length} 个收货地址，最多可保存 10 个` 
+                      : `You have ${addresses.length} addresses, max 10 addresses`}
+                  </p>
+                </div>
+                <Button
+                  type="primary"
+                  icon={<PlusOutlined />}
+                  onClick={() => router.push(`/${locale}/profile/addresses/new`)}
+                  disabled={addresses.length >= 10}
+                  style={{
+                    background: 'linear-gradient(135deg, #2d5a3d 0%, #4a8c5f 100%)',
+                    border: 'none'
+                  }}
+                >
+                  {locale === 'zh' ? '添加新地址' : 'Add New'}
+                </Button>
+              </div>
+
+              {addresses.length === 0 ? (
+                <Empty
+                  description={locale === 'zh' ? '暂无收货地址' : 'No addresses yet'}
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                >
+                  <Button
+                    type="primary"
+                    icon={<PlusOutlined />}
+                    onClick={() => router.push(`/${locale}/profile/addresses/new`)}
+                  >
+                    {locale === 'zh' ? '添加地址' : 'Add Address'}
+                  </Button>
+                </Empty>
+              ) : (
+                <div style={{ display: 'grid', gap: '12px' }}>
+                  {addresses.map((address) => (
+                    <Card
+                      key={address.id}
+                      size="small"
+                      style={{
+                        borderRadius: '8px',
+                        border: address.isDefault ? '2px solid #4a8c5f' : '1px solid #e8f0ec',
+                        background: address.isDefault 
+                          ? 'linear-gradient(135deg, #ffffff 0%, #f0f7f3 100%)' 
+                          : '#ffffff'
+                      }}
+                    >
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <strong style={{ fontSize: '14px', color: '#2d5a3d' }}>
+                              {address.fullName}
+                            </strong>
+                            <span style={{ color: '#666', fontSize: '13px' }}>{address.phone}</span>
+                            {address.isDefault && (
+                              <Tag color="green" icon={<StarFilled />} style={{ marginLeft: '4px' }}>
+                                {locale === 'zh' ? '默认' : 'Default'}
+                              </Tag>
+                            )}
+                          </div>
+                          <div style={{ color: '#666', fontSize: '13px', lineHeight: 1.5 }}>
+                            {formatAddress(address)}
+                          </div>
+                        </div>
+                        <div style={{ display: 'flex', gap: '8px', marginLeft: '16px' }}>
+                          {!address.isDefault && (
+                            <Button
+                              size="small"
+                              icon={<StarOutlined />}
+                              onClick={() => handleSetDefault(address.id)}
+                            >
+                              {locale === 'zh' ? '设为默认' : 'Default'}
+                            </Button>
+                          )}
+                          <Button
+                            size="small"
+                            icon={<EditOutlined />}
+                            onClick={() => router.push(`/${locale}/profile/addresses/${address.id}`)}
+                          >
+                            {locale === 'zh' ? '编辑' : 'Edit'}
+                          </Button>
+                          <Button
+                            size="small"
+                            danger
+                            icon={<DeleteOutlined />}
+                            onClick={() => handleDeleteAddress(address)}
+                          >
+                            {locale === 'zh' ? '删除' : 'Delete'}
+                          </Button>
+                        </div>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </>
           )}
         </Card>
       ),
