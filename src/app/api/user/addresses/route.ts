@@ -143,10 +143,19 @@ export async function POST(request: NextRequest) {
       data: { address },
       message: '地址添加成功'
     });
-  } catch (error) {
-    console.error('[Addresses API] Error:', error);
+  } catch (error: any) {
+    console.error('[Addresses API] Add address error:', error);
+    console.error('[Addresses API] Error code:', error?.code);
+    console.error('[Addresses API] Error message:', error?.message);
+    console.error('[Addresses API] Error stack:', error?.stack);
+    
     return NextResponse.json(
-      { success: false, error: '添加地址失败' },
+      { 
+        success: false, 
+        error: '添加地址失败', 
+        details: error?.message || 'Unknown error',
+        code: error?.code
+      },
       { status: 500 }
     );
   }
