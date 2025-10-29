@@ -36,19 +36,29 @@ export default function CartPage({
 
   useEffect(() => {
     let mounted = true;
-    const timeoutId = setTimeout(() => {
-      if (mounted && loading) {
-        console.log('[购物车] 5秒超时，停止加载');
-        setLoading(false);
-        setCart([]);
-      }
-    }, 5000);
+    let timeoutId: NodeJS.Timeout | null = null;
 
     const fetchCart = async () => {
       try {
         console.log('[购物车] 开始获取购物车数据');
+        
+        // 设置超时定时器
+        timeoutId = setTimeout(() => {
+          if (mounted) {
+            console.log('[购物车] 10秒超时，停止加载');
+            setLoading(false);
+            setError(locale === 'zh' ? '加载超时，请重试' : 'Loading timeout, please try again');
+          }
+        }, 10000);
+        
         const response = await fetch('/api/cart/get');
         const data = await response.json();
+
+        // 清除超时定时器
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+          timeoutId = null;
+        }
 
         if (!mounted) return;
 
@@ -82,7 +92,11 @@ export default function CartPage({
         }
       } finally {
         if (mounted) {
-          clearTimeout(timeoutId);
+          // 确保清除超时定时器
+          if (timeoutId) {
+            clearTimeout(timeoutId);
+            timeoutId = null;
+          }
           setLoading(false);
         }
       }
@@ -122,7 +136,9 @@ export default function CartPage({
 
     return () => {
       mounted = false;
-      clearTimeout(timeoutId);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
     };
   }, [locale]);
 
