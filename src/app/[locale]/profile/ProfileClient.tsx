@@ -57,7 +57,6 @@ export default function ProfileClient({ locale, user }: ProfileClientProps) {
   // 初始化时检查 URL 参数
   useEffect(() => {
     const tabParam = searchParams.get('tab');
-    console.log('[ProfileClient] URL tab param:', tabParam);
     if (tabParam && ['info', 'orders', 'addresses'].includes(tabParam)) {
       setActiveTab(tabParam);
     }
@@ -68,9 +67,7 @@ export default function ProfileClient({ locale, user }: ProfileClientProps) {
   }, []);
 
   useEffect(() => {
-    console.log('[ProfileClient] Active tab changed to:', activeTab);
     if (activeTab === 'addresses') {
-      console.log('[ProfileClient] Fetching addresses...');
       fetchAddresses();
     }
   }, [activeTab]);
@@ -78,9 +75,7 @@ export default function ProfileClient({ locale, user }: ProfileClientProps) {
   // 监听刷新参数
   useEffect(() => {
     const refreshParam = searchParams.get('refresh');
-    console.log('[ProfileClient] Refresh param:', refreshParam, 'activeTab:', activeTab);
     if (refreshParam && activeTab === 'addresses') {
-      console.log('[ProfileClient] Refreshing addresses...');
       fetchAddresses();
     }
   }, [searchParams, activeTab]);
@@ -103,16 +98,13 @@ export default function ProfileClient({ locale, user }: ProfileClientProps) {
     setAddressLoading(true);
     try {
       const result = await apiGet('/api/user/addresses');
-      console.log('[ProfileClient] Address API response:', result);
       if (result.success && result.data) {
-        console.log('[ProfileClient] Setting addresses:', result.data.list);
         setAddresses(result.data.list || []);
       } else {
-        console.error('[ProfileClient] Failed to fetch addresses:', result);
         setAddresses([]);
       }
     } catch (error) {
-      console.error('[ProfileClient] Error fetching addresses:', error);
+      console.error('Error fetching addresses:', error);
       setAddresses([]);
     } finally {
       setAddressLoading(false);
@@ -328,24 +320,22 @@ export default function ProfileClient({ locale, user }: ProfileClientProps) {
                 </Button>
               </div>
 
-              {(() => {
-                console.log('[ProfileClient] Rendering addresses, count:', addresses.length, 'data:', addresses);
-                return addresses.length === 0 ? (
-                  <Empty
-                    description={locale === 'zh' ? '暂无收货地址' : 'No addresses yet'}
-                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+              {addresses.length === 0 ? (
+                <Empty
+                  description={locale === 'zh' ? '暂无收货地址' : 'No addresses yet'}
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                >
+                  <Button
+                    type="primary"
+                    icon={<PlusOutlined />}
+                    onClick={() => router.push(`/${locale}/profile/addresses/new`)}
                   >
-                    <Button
-                      type="primary"
-                      icon={<PlusOutlined />}
-                      onClick={() => router.push(`/${locale}/profile/addresses/new`)}
-                    >
-                      {locale === 'zh' ? '添加地址' : 'Add Address'}
-                    </Button>
-                  </Empty>
-                ) : (
-                  <div className="addresses-list">
-                    {addresses.map((address) => (
+                    {locale === 'zh' ? '添加地址' : 'Add Address'}
+                  </Button>
+                </Empty>
+              ) : (
+                <div className="addresses-list">
+                  {addresses.map((address) => (
                     <Card
                       key={address.id}
                       size="small"
@@ -397,10 +387,9 @@ export default function ProfileClient({ locale, user }: ProfileClientProps) {
                         </div>
                       </div>
                     </Card>
-                    ))}
-                  </div>
-                );
-              })()}
+                  ))}
+                </div>
+              )}
             </>
           )}
         </Card>
