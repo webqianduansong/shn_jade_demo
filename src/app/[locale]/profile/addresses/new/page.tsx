@@ -48,7 +48,10 @@ export default function NewAddressPage() {
       });
       
       if (result.success) {
-        router.push(`/${locale}/profile/addresses`);
+        // 跳转到个人中心页面并激活地址标签页
+        router.push(`/${locale}/profile?tab=addresses&refresh=${Date.now()}`);
+        // 备用跳转到地址列表页面
+        // router.push(`/${locale}/profile/addresses`);
       }
     } finally {
       setLoading(false);

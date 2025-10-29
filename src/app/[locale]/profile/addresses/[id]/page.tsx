@@ -68,7 +68,8 @@ export default function EditAddressPage() {
       });
       
       if (result.success) {
-        router.push(`/${locale}/profile/addresses`);
+        // 跳转到个人中心页面并激活地址标签页
+        router.push(`/${locale}/profile?tab=addresses&refresh=${Date.now()}`);
       }
     } finally {
       setLoading(false);

@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Card, Tabs, Descriptions, Table, Tag, Empty, Spin, Avatar, Space, Button, Modal, message } from 'antd';
 import { UserOutlined, ShoppingOutlined, SettingOutlined, HeartOutlined, EnvironmentOutlined, PlusOutlined, EditOutlined, DeleteOutlined, StarOutlined, StarFilled } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
@@ -47,11 +47,20 @@ interface ProfileClientProps {
 
 export default function ProfileClient({ locale, user }: ProfileClientProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [orders, setOrders] = useState<Order[]>([]);
   const [addresses, setAddresses] = useState<Address[]>([]);
   const [loading, setLoading] = useState(true);
   const [addressLoading, setAddressLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('info');
+
+  // 初始化时检查 URL 参数
+  useEffect(() => {
+    const tabParam = searchParams.get('tab');
+    if (tabParam && ['info', 'orders', 'addresses'].includes(tabParam)) {
+      setActiveTab(tabParam);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     fetchOrders();
@@ -62,6 +71,14 @@ export default function ProfileClient({ locale, user }: ProfileClientProps) {
       fetchAddresses();
     }
   }, [activeTab]);
+  
+  // 监听刷新参数
+  useEffect(() => {
+    const refreshParam = searchParams.get('refresh');
+    if (refreshParam && activeTab === 'addresses') {
+      fetchAddresses();
+    }
+  }, [searchParams, activeTab]);
 
   const fetchOrders = async () => {
     try {

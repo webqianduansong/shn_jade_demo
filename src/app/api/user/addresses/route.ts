@@ -73,23 +73,6 @@ export async function POST(request: NextRequest) {
     }
     
     const session = JSON.parse(authCookie.value);
-    console.log('[Addresses API] Session data:', session);
-    console.log('[Addresses API] User ID:', session.id);
-    
-    // 验证用户是否存在
-    const userExists = await prisma.user.findUnique({
-      where: { id: session.id },
-      select: { id: true, email: true }
-    });
-    console.log('[Addresses API] User exists:', userExists);
-    
-    if (!userExists) {
-      return NextResponse.json(
-        { success: false, error: '用户不存在，请重新登录' },
-        { status: 401 }
-      );
-    }
-    
     const body = await request.json();
     
     const {
@@ -162,17 +145,8 @@ export async function POST(request: NextRequest) {
     });
   } catch (error: any) {
     console.error('[Addresses API] Add address error:', error);
-    console.error('[Addresses API] Error code:', error?.code);
-    console.error('[Addresses API] Error message:', error?.message);
-    console.error('[Addresses API] Error stack:', error?.stack);
-    
     return NextResponse.json(
-      { 
-        success: false, 
-        error: '添加地址失败', 
-        details: error?.message || 'Unknown error',
-        code: error?.code
-      },
+      { success: false, error: '添加地址失败' },
       { status: 500 }
     );
   }
