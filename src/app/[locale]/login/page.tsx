@@ -25,7 +25,8 @@ export default function LoginPage() {
       });
       
       if (result.success) {
-        router.replace(redirect || `/${locale}`);
+        // 使用 window.location.href 强制刷新页面，确保 Header 重新获取用户状态
+        window.location.href = redirect || `/${locale}`;
       }
     } finally {
       setLoading(false);
@@ -43,7 +44,8 @@ export default function LoginPage() {
       });
       
       if (result.success) {
-        router.replace(redirect || `/${locale}`);
+        // 使用 window.location.href 强制刷新页面，确保 Header 重新获取用户状态
+        window.location.href = redirect || `/${locale}`;
       }
     } catch (error) {
       console.error('Login error:', error);
