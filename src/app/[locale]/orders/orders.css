@@ -1,0 +1,457 @@
+/* 订单列表页面样式 */
+
+.orders-page-container {
+  min-height: calc(100vh - 160px);
+  background: #f8f9fa;
+  padding: 2rem 1rem;
+}
+
+.orders-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.orders-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2d5a3d;
+  margin: 0 0 24px 0;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #2d5a3d 0%, #4a8c5f 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.orders-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(45, 90, 61, 0.08);
+  border: 1px solid #e8f0ec;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.order-item {
+  border-radius: 8px;
+  border: 1px solid #e8f0ec;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.order-item:hover {
+  border-color: #4a8c5f;
+  box-shadow: 0 4px 12px rgba(45, 90, 61, 0.12);
+  transform: translateY(-2px);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 12px;
+}
+
+.order-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.order-no {
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+  color: #2d5a3d;
+  font-size: 14px;
+}
+
+.order-date {
+  font-size: 13px;
+  color: #999;
+}
+
+.order-status {
+  font-size: 13px;
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+
+.order-products {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.order-product {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.product-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.product-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.product-name {
+  font-size: 14px;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.product-quantity {
+  font-size: 13px;
+  color: #666;
+}
+
+.product-price {
+  font-weight: 600;
+  color: #2d5a3d;
+  white-space: nowrap;
+}
+
+.order-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.order-total {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.total-label {
+  font-size: 14px;
+  color: #666;
+}
+
+.total-amount {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2d5a3d;
+}
+
+/* 响应式设计 - 平板 */
+@media (max-width: 768px) {
+  .orders-page-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .orders-title {
+    font-size: 24px;
+  }
+
+  .orders-card {
+    border-radius: 8px;
+  }
+
+  .order-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .product-image {
+    width: 50px;
+    height: 50px;
+  }
+
+  .total-amount {
+    font-size: 18px;
+  }
+}
+
+/* 响应式设计 - 手机 */
+@media (max-width: 480px) {
+  .orders-page-container {
+    padding: 1rem 0.75rem;
+  }
+
+  .orders-title {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .order-item {
+    border-radius: 6px;
+  }
+
+  .order-no {
+    font-size: 13px;
+  }
+
+  .order-date {
+    font-size: 12px;
+  }
+
+  .product-image {
+    width: 45px;
+    height: 45px;
+  }
+
+  .product-name {
+    font-size: 13px;
+  }
+
+  .product-quantity {
+    font-size: 12px;
+  }
+
+  .product-price {
+    font-size: 14px;
+  }
+
+  .total-label {
+    font-size: 13px;
+  }
+
+  .total-amount {
+    font-size: 16px;
+  }
+
+  .order-footer button {
+    font-size: 13px;
+    height: 32px;
+    padding: 0 12px;
+  }
+}
+
+/* ============= 订单详情页面样式 ============= */
+
+.status-card {
+  border-radius: 12px;
+  border: 1px solid #e8f0ec;
+  box-shadow: 0 2px 8px rgba(45, 90, 61, 0.08);
+}
+
+.status-card .ant-steps {
+  padding: 12px 0;
+}
+
+.info-card {
+  border-radius: 12px;
+  border: 1px solid #e8f0ec;
+  box-shadow: 0 2px 8px rgba(45, 90, 61, 0.08);
+}
+
+.info-card .ant-card-head-title {
+  color: #2d5a3d;
+  font-weight: 600;
+}
+
+.order-summary {
+  margin-top: 16px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.summary-row.discount {
+  color: #f5222d;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-top: 8px;
+}
+
+/* ============= 物流追踪页面样式 ============= */
+
+.tracking-card {
+  border-radius: 12px;
+  border: 1px solid #e8f0ec;
+  box-shadow: 0 2px 8px rgba(45, 90, 61, 0.08);
+}
+
+.tracking-header {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 24px;
+}
+
+.tracking-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.info-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.info-label {
+  font-size: 14px;
+  color: #666;
+  min-width: 80px;
+}
+
+.info-value {
+  font-size: 14px;
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+.tracking-number {
+  font-family: 'Courier New', monospace;
+  background: #f0f7f3;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: #2d5a3d;
+  font-weight: 600;
+}
+
+.tracking-timeline {
+  padding-left: 8px;
+}
+
+.timeline-item {
+  padding-bottom: 8px;
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.timeline-status {
+  font-size: 15px;
+  color: #2d5a3d;
+  font-weight: 600;
+}
+
+.timeline-time {
+  font-size: 13px;
+  color: #999;
+}
+
+.timeline-desc {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 4px;
+  line-height: 1.5;
+}
+
+.timeline-location {
+  font-size: 13px;
+  color: #999;
+  display: flex;
+  align-items: center;
+}
+
+/* 响应式 - 物流追踪 */
+@media (max-width: 768px) {
+  .timeline-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .info-label {
+    min-width: 70px;
+    font-size: 13px;
+  }
+
+  .info-value {
+    font-size: 13px;
+  }
+
+  .timeline-status {
+    font-size: 14px;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tracking-header {
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+  }
+
+  .tracking-info {
+    gap: 10px;
+  }
+
+  .info-row {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .info-label {
+    min-width: auto;
+    font-size: 12px;
+  }
+
+  .info-value {
+    font-size: 13px;
+  }
+
+  .tracking-number {
+    font-size: 12px;
+    padding: 3px 6px;
+  }
+
+  .timeline-status {
+    font-size: 13px;
+  }
+
+  .timeline-time {
+    font-size: 12px;
+  }
+
+  .timeline-desc {
+    font-size: 12px;
+  }
+
+  .timeline-location {
+    font-size: 12px;
+  }
+}
+
