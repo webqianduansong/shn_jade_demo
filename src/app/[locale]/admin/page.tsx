@@ -4,11 +4,8 @@ import { useParams } from 'next/navigation';
 import { Spin } from 'antd';
 import DashboardClient, { type DashboardMetrics, type RecentOrderRow } from './DashboardClient';
 import { apiGet } from '@/lib/apiClient';
-import { useAdminAuth } from '@/hooks/useAdminAuth';
 
 export default function AdminDashboardPage() {
-  useAdminAuth(); // 验证管理员身份
-  
   const params = useParams<{ locale: string }>();
   const locale = (params?.locale as string) || 'zh';
   const [loading, setLoading] = useState(true);
@@ -20,7 +17,7 @@ export default function AdminDashboardPage() {
     todayRevenueCents: 0,
   });
   const [recentOrders, setRecentOrders] = useState<RecentOrderRow[]>([]);
-  const [adminEmail, setAdminEmail] = useState<string>('');
+  const [userEmail, setUserEmail] = useState('');
 
   useEffect(() => {
     loadAdminEmail();
@@ -30,7 +27,7 @@ export default function AdminDashboardPage() {
   const loadAdminEmail = async () => {
     const result = await apiGet('/api/admin/me', { showError: false });
     if (result.success && result.data?.user) {
-      setAdminEmail(result.data.user.email);
+      setUserEmail(result.data.user.email);
     }
   };
 
@@ -65,7 +62,7 @@ export default function AdminDashboardPage() {
     }
   };
 
-  // 即使加载中也最多显示 5 秒，之后强制显示页面
+  // 数据加载中
   if (loading) {
     return (
       <div style={{ 
@@ -101,12 +98,12 @@ export default function AdminDashboardPage() {
         }}>
           {locale === 'zh' ? '管理仪表盘' : 'Admin Dashboard'}
         </h1>
-        {adminEmail && <p style={{ 
+        {userEmail && <p style={{ 
           fontSize: '15px',
           color: '#666',
           margin: 0
         }}>
-          {locale === 'zh' ? '欢迎,' : 'Welcome,'} {adminEmail}
+          {locale === 'zh' ? '欢迎,' : 'Welcome,'} {userEmail}
         </p>}
       </div>
       <DashboardClient metrics={metrics} recentOrders={recentOrders} locale={locale} />

@@ -4,11 +4,8 @@ import { useParams } from 'next/navigation';
 import { Spin } from 'antd';
 import ProductsClient from './ProductsClient';
 import { apiGet } from '@/lib/apiClient';
-import { useAdminAuth } from '@/hooks/useAdminAuth';
 
 export default function AdminProductsPage() {
-  useAdminAuth(); // 验证管理员身份
-  
   const params = useParams<{ locale: string }>();
   const locale = (params?.locale as string) || 'zh';
   const [loading, setLoading] = useState(true);
@@ -59,6 +56,7 @@ export default function AdminProductsPage() {
     }
   };
 
+  // 数据加载中
   if (loading) {
     return (
       <div style={{ 
