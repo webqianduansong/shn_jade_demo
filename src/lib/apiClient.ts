@@ -42,11 +42,11 @@ export async function apiClient<T = any>(
       return { success: false, error: errorMsg };
     }
 
-    const data = await response.json();
+    const responseData = await response.json();
 
     // 检查业务逻辑错误
-    if (data.success === false) {
-      const errorMsg = data.message || data.error || errorMessage || '操作失败';
+    if (responseData.success === false) {
+      const errorMsg = responseData.message || responseData.error || errorMessage || '操作失败';
       
       if (showError) {
         message.error(errorMsg);
@@ -60,7 +60,8 @@ export async function apiClient<T = any>(
       message.success(successMessage);
     }
 
-    return { success: true, data };
+    // 返回 API 响应中的 data 字段，而不是整个响应对象
+    return { success: true, data: responseData.data || responseData };
   } catch (error) {
     const errorMsg = errorMessage || '网络请求失败，请检查网络连接';
     
