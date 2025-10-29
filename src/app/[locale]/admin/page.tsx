@@ -4,8 +4,11 @@ import { useParams } from 'next/navigation';
 import { Spin } from 'antd';
 import DashboardClient, { type DashboardMetrics, type RecentOrderRow } from './DashboardClient';
 import { apiGet } from '@/lib/apiClient';
+import { useAdminAuth } from '@/hooks/useAdminAuth';
 
 export default function AdminDashboardPage() {
+  useAdminAuth(); // 验证管理员身份
+  
   const params = useParams<{ locale: string }>();
   const locale = (params?.locale as string) || 'zh';
   const [loading, setLoading] = useState(true);
@@ -20,11 +23,11 @@ export default function AdminDashboardPage() {
   const [adminEmail, setAdminEmail] = useState<string>('');
 
   useEffect(() => {
+    loadAdminEmail();
     loadDashboardData();
-    checkAdminUser();
   }, []);
 
-  const checkAdminUser = async () => {
+  const loadAdminEmail = async () => {
     const result = await apiGet('/api/admin/me', { showError: false });
     if (result.success && result.data?.user) {
       setAdminEmail(result.data.user.email);

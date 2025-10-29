@@ -4,8 +4,11 @@ import { useParams } from 'next/navigation';
 import { Spin } from 'antd';
 import CategoriesClient from './CategoriesClient';
 import { apiGet } from '@/lib/apiClient';
+import { useAdminAuth } from '@/hooks/useAdminAuth';
 
 export default function AdminCategoriesPage() {
+  useAdminAuth(); // 验证管理员身份
+  
   const params = useParams<{ locale: string }>();
   const locale = (params?.locale as string) || 'zh';
   const [loading, setLoading] = useState(true);
