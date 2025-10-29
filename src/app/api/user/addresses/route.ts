@@ -36,8 +36,19 @@ export async function GET(request: NextRequest) {
       success: true,
       data: { list: addresses }
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('[Addresses API] Error:', error);
+    
+    // 如果是数据库表不存在的错误，返回空列表
+    if (error?.code === 'P2021' || error?.message?.includes('does not exist')) {
+      console.warn('[Addresses API] Address table does not exist yet, returning empty list');
+      return NextResponse.json({
+        success: true,
+        data: { list: [] },
+        message: '数据库表尚未创建，请先执行数据库迁移'
+      });
+    }
+    
     return NextResponse.json(
       { success: false, error: '获取地址列表失败' },
       { status: 500 }

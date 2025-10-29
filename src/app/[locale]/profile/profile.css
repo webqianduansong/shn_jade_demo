@@ -444,3 +444,215 @@
   }
 }
 
+/* ============= 收货地址样式 ============= */
+.addresses-card {
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 0;
+}
+
+.addresses-card .ant-card-body {
+  padding: 0;
+}
+
+/* 地址头部 */
+.address-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.address-count {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.add-address-btn {
+  background: linear-gradient(135deg, #2d5a3d 0%, #4a8c5f 100%);
+  border: none;
+  border-radius: 6px;
+  height: 38px;
+  padding: 0 20px;
+}
+
+.add-address-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(45, 90, 61, 0.2);
+}
+
+/* 地址列表 */
+.addresses-list {
+  display: grid;
+  gap: 12px;
+}
+
+.address-item {
+  border-radius: 8px;
+  border: 1px solid #e8f0ec;
+  background: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.address-item:hover {
+  box-shadow: 0 2px 8px rgba(45, 90, 61, 0.1);
+}
+
+.address-item.default {
+  border: 2px solid #4a8c5f;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f7f3 100%);
+}
+
+.address-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.address-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.address-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.address-title .name {
+  font-size: 14px;
+  color: #2d5a3d;
+  font-weight: 600;
+}
+
+.address-title .phone {
+  color: #666;
+  font-size: 13px;
+}
+
+.address-title .default-tag {
+  margin-left: 0;
+}
+
+.address-detail {
+  color: #666;
+  font-size: 13px;
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.address-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  border-radius: 4px;
+}
+
+/* 响应式 - 平板 */
+@media (max-width: 768px) {
+  .addresses-card {
+    padding: 1rem;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+  }
+
+  .address-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .address-count {
+    text-align: center;
+  }
+
+  .add-address-btn {
+    width: 100%;
+  }
+
+  .address-content {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .address-actions {
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .action-btn .btn-text {
+    display: inline;
+  }
+}
+
+/* 响应式 - 手机 */
+@media (max-width: 480px) {
+  .addresses-card {
+    padding: 0.75rem;
+  }
+
+  .address-header {
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .address-count {
+    font-size: 13px;
+  }
+
+  .addresses-list {
+    gap: 10px;
+  }
+
+  .address-item {
+    border-radius: 6px;
+  }
+
+  .address-title {
+    gap: 8px;
+  }
+
+  .address-title .name {
+    font-size: 13px;
+  }
+
+  .address-title .phone {
+    font-size: 12px;
+  }
+
+  .address-detail {
+    font-size: 12px;
+  }
+
+  .address-actions {
+    gap: 6px;
+  }
+
+  .action-btn {
+    flex: 1;
+    min-width: 0;
+    padding: 0 8px;
+  }
+
+  .action-btn .btn-text {
+    display: none;
+  }
+
+  .action-btn .anticon {
+    margin: 0;
+  }
+}
+

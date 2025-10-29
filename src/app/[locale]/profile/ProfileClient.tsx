@@ -278,25 +278,20 @@ export default function ProfileClient({ locale, user }: ProfileClientProps) {
             </div>
           ) : (
             <>
-              <div style={{ marginBottom: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div>
-                  <p style={{ margin: 0, color: '#666', fontSize: '14px' }}>
-                    {locale === 'zh' 
-                      ? `您有 ${addresses.length} 个收货地址，最多可保存 10 个` 
-                      : `You have ${addresses.length} addresses, max 10 addresses`}
-                  </p>
-                </div>
+              <div className="address-header">
+                <p className="address-count">
+                  {locale === 'zh' 
+                    ? `您有 ${addresses.length} 个收货地址，最多可保存 10 个` 
+                    : `You have ${addresses.length} addresses, max 10 addresses`}
+                </p>
                 <Button
                   type="primary"
                   icon={<PlusOutlined />}
                   onClick={() => router.push(`/${locale}/profile/addresses/new`)}
                   disabled={addresses.length >= 10}
-                  style={{
-                    background: 'linear-gradient(135deg, #2d5a3d 0%, #4a8c5f 100%)',
-                    border: 'none'
-                  }}
+                  className="add-address-btn"
                 >
-                  {locale === 'zh' ? '添加新地址' : 'Add New'}
+                  <span className="btn-text">{locale === 'zh' ? '添加新地址' : 'Add New'}</span>
                 </Button>
               </div>
 
@@ -314,60 +309,55 @@ export default function ProfileClient({ locale, user }: ProfileClientProps) {
                   </Button>
                 </Empty>
               ) : (
-                <div style={{ display: 'grid', gap: '12px' }}>
+                <div className="addresses-list">
                   {addresses.map((address) => (
                     <Card
                       key={address.id}
                       size="small"
-                      style={{
-                        borderRadius: '8px',
-                        border: address.isDefault ? '2px solid #4a8c5f' : '1px solid #e8f0ec',
-                        background: address.isDefault 
-                          ? 'linear-gradient(135deg, #ffffff 0%, #f0f7f3 100%)' 
-                          : '#ffffff'
-                      }}
+                      className={`address-item ${address.isDefault ? 'default' : ''}`}
                     >
-                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <div style={{ flex: 1 }}>
-                          <div style={{ marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <strong style={{ fontSize: '14px', color: '#2d5a3d' }}>
-                              {address.fullName}
-                            </strong>
-                            <span style={{ color: '#666', fontSize: '13px' }}>{address.phone}</span>
+                      <div className="address-content">
+                        <div className="address-info">
+                          <div className="address-title">
+                            <strong className="name">{address.fullName}</strong>
+                            <span className="phone">{address.phone}</span>
                             {address.isDefault && (
-                              <Tag color="green" icon={<StarFilled />} style={{ marginLeft: '4px' }}>
+                              <Tag color="green" icon={<StarFilled />} className="default-tag">
                                 {locale === 'zh' ? '默认' : 'Default'}
                               </Tag>
                             )}
                           </div>
-                          <div style={{ color: '#666', fontSize: '13px', lineHeight: 1.5 }}>
+                          <div className="address-detail">
                             {formatAddress(address)}
                           </div>
                         </div>
-                        <div style={{ display: 'flex', gap: '8px', marginLeft: '16px' }}>
+                        <div className="address-actions">
                           {!address.isDefault && (
                             <Button
                               size="small"
                               icon={<StarOutlined />}
                               onClick={() => handleSetDefault(address.id)}
+                              className="action-btn"
                             >
-                              {locale === 'zh' ? '设为默认' : 'Default'}
+                              <span className="btn-text">{locale === 'zh' ? '设为默认' : 'Default'}</span>
                             </Button>
                           )}
                           <Button
                             size="small"
                             icon={<EditOutlined />}
                             onClick={() => router.push(`/${locale}/profile/addresses/${address.id}`)}
+                            className="action-btn"
                           >
-                            {locale === 'zh' ? '编辑' : 'Edit'}
+                            <span className="btn-text">{locale === 'zh' ? '编辑' : 'Edit'}</span>
                           </Button>
                           <Button
                             size="small"
                             danger
                             icon={<DeleteOutlined />}
                             onClick={() => handleDeleteAddress(address)}
+                            className="action-btn"
                           >
-                            {locale === 'zh' ? '删除' : 'Delete'}
+                            <span className="btn-text">{locale === 'zh' ? '删除' : 'Delete'}</span>
                           </Button>
                         </div>
                       </div>
