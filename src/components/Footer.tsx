@@ -63,7 +63,7 @@ export default function Footer() {
       
       {/* 版权信息 */}
       <div className="footer-bottom">
-        <p>© Silk Road Jade {new Date().getFullYear()}. {t('copyright')}</p>
+        <p>© {locale === 'zh' ? '临熙玉石' : 'LinxiJade'} {new Date().getFullYear()}. {t('copyright')}</p>
       </div>
     </footer>
   );

@@ -46,7 +46,7 @@ export default function AdminLoginPage() {
           <div className="admin-login-logo">
             {/* <div className="admin-login-logo-icon">临熙</div> */}
             <Typography.Title level={2} className="admin-login-title">
-              {locale === 'zh' ? '玉石管理系统' : 'Jade Admin'}
+              {locale === 'zh' ? '临熙玉石管理系统' : 'LinxiJade Admin'}
             </Typography.Title>
           </div>
           <Typography.Paragraph className="admin-login-subtitle">
@@ -111,7 +111,7 @@ export default function AdminLoginPage() {
 
         <div className="admin-login-footer">
           <Typography.Text type="secondary">
-            {locale === 'zh' ? '© 2025 玉石管理系统 版权所有' : '© 2025 Jade Admin. All rights reserved.'}
+            {locale === 'zh' ? '© 2025 临熙玉石 版权所有' : '© 2025 LinxiJade. All rights reserved.'}
           </Typography.Text>
         </div>
       </Card>

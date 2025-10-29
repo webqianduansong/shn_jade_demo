@@ -8,8 +8,8 @@ import {locales} from '@/i18n/request';
 import { cookies } from 'next/headers';
 
 export const metadata: Metadata = {
-  title: 'Silk Road Jade',
-  description: 'Where the ancient Silk Road meets modern luxury',
+  title: 'LinxiJade - 临熙玉石',
+  description: 'Exquisite jade jewelry with cultural heritage and contemporary design',
 };
 
 export default async function LocaleLayout({

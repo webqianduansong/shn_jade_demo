@@ -73,7 +73,7 @@ export default function Header({ locale }: HeaderProps) {
         <div className="flex">
           <MobileNav />
           <Link href={`/${locale}`} className="logo">
-            Silk Road Jade
+            {locale === 'zh' ? '临熙玉石' : 'LinxiJade'}
           </Link>
         </div>
         

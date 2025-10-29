@@ -13,8 +13,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Silk Road Jade",
-  description: "Where the ancient Silk Road meets modern luxury",
+  title: "LinxiJade - 临熙玉石",
+  description: "Exquisite jade jewelry with cultural heritage and contemporary design",
 };
 
 export const viewport: Viewport = {

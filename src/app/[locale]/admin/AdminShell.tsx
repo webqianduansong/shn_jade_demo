@@ -126,7 +126,7 @@ export default function AdminShell({ children, locale }: { children: ReactNode; 
               className="admin-menu-btn"
             />
           )}
-          <div className="admin-header-logo">临熙珠宝玉石管理系统</div>
+          <div className="admin-header-logo">临熙玉石管理系统</div>
           <div className="admin-header-title"></div>
         </div>
         <div className="admin-header-actions">
@@ -167,7 +167,7 @@ export default function AdminShell({ children, locale }: { children: ReactNode; 
             }}
             title={
               <div style={{ color: '#ffffff', fontWeight: 600, fontSize: '16px' }}>
-                临熙珠宝玉石管理系统
+                临熙玉石管理系统
               </div>
             }
           >

@@ -1,7 +1,7 @@
 {
   "site": {
-    "title": "Silk Road Jade",
-    "subtitle": "Where the ancient Silk Road meets modern luxury. Handpicked Hetian jade pieces with cultural heritage and contemporary design.",
+    "title": "LinxiJade",
+    "subtitle": "Exquisite jade jewelry with cultural heritage and contemporary design. Handpicked Hetian jade pieces crafted for modern luxury.",
     "cta": "Add to Cart",
     "checkout": "Checkout",
     "cart": "Cart",
@@ -48,7 +48,7 @@
     },
     "slide3": {
       "title": "Cultural Heritage",
-      "subtitle": "Where ancient Silk Road meets modern luxury",
+      "subtitle": "Cultural heritage meets contemporary elegance",
       "cta": "Discover More"
     }
   },
@@ -86,7 +86,7 @@
     "shippingPolicy": "Shipping Policy",
     "refundPolicy": "Refund & Return Policy",
     "termsOfService": "Terms of Service",
-    "email": "support@silkroadjade.com",
+    "email": "support@linxijade.com",
     "phone": "+852-0000 0000",
     "location": "Hong Kong",
     "hours": "Mon-Sat 10:30-17:30",
