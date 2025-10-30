@@ -82,6 +82,12 @@ export async function POST(request: NextRequest) {
       line_items: items,
       // 启用的支付方式（需在 Stripe Dashboard 中先启用）
       payment_method_types: ['card', 'alipay', 'wechat_pay'],
+      // 配置微信支付选项（必需）
+      payment_method_options: {
+        wechat_pay: {
+          client: 'web',  // 指定为网页支付
+        },
+      },
       success_url: `${siteUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl}/cancel`,
       // 可选：添加客户邮箱
