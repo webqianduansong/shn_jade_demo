@@ -62,13 +62,9 @@ export default function HeroCarousel() {
     );
   }
 
-  // 没有轮播图数据
+  // 没有轮播图数据 - 不显示轮播图区域
   if (banners.length === 0) {
-    return (
-      <div className="hero-section" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '500px', background: '#f8f9fa' }}>
-        <p style={{ color: '#999' }}>暂无轮播图</p>
-      </div>
-    );
+    return null;
   }
 
   // 包装单个轮播图内容

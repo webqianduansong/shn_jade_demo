@@ -22,15 +22,25 @@ export async function GET() {
       success: true,
       banners,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('获取轮播图失败:', error);
-    return NextResponse.json(
-      {
-        success: false,
-        error: '获取轮播图失败',
-      },
-      { status: 500 }
-    );
+    
+    // 如果表不存在 (Prisma P2021 错误)，返回空数组
+    if (error?.code === 'P2021') {
+      console.log('Banner 表尚未创建，返回空数组');
+      return NextResponse.json({
+        success: true,
+        banners: [],
+        message: 'Banner 表尚未创建',
+      });
+    }
+    
+    // 其他错误也返回空数组，避免首页崩溃
+    return NextResponse.json({
+      success: true,
+      banners: [],
+      error: error?.message || '获取轮播图失败',
+    });
   }
 }
 
