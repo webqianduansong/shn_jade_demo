@@ -29,6 +29,7 @@ export default function CategoriesClient({ categories: initialCategories }: { ca
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
+  const [batchLoading, setBatchLoading] = useState(false); // 批量操作 loading
   const [editing, setEditing] = useState<Category | null>(null);
   const [form] = Form.useForm();
   const isMobile = useIsMobile();
@@ -263,6 +264,7 @@ export default function CategoriesClient({ categories: initialCategories }: { ca
 
   // 执行批量删除操作
   const performBulkDelete = useCallback(async (force: boolean) => {
+    setBatchLoading(true);
     try {
       const res = await fetch('/api/admin/categories/bulk', {
         method: 'POST',
@@ -293,6 +295,8 @@ export default function CategoriesClient({ categories: initialCategories }: { ca
     } catch (error) {
       message.error('批量删除失败');
       console.error(error);
+    } finally {
+      setBatchLoading(false);
     }
   }, [selectedRowKeys, refreshCategories]);
 
@@ -403,6 +407,7 @@ export default function CategoriesClient({ categories: initialCategories }: { ca
               danger 
               disabled={selectedRowKeys.length === 0}
               onClick={() => onBulkDelete()}
+              loading={batchLoading}
             >
               批量删除
             </Button>

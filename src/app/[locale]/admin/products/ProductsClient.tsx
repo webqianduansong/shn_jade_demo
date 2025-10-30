@@ -59,6 +59,7 @@ export default function ProductsClient({ products, categories, locale }: { produ
   const [total, setTotal] = useState(products.length);
   const [remoteData, setRemoteData] = useState<Product[]>(products);
   const [loadingTable, setLoadingTable] = useState(false);
+  const [batchLoading, setBatchLoading] = useState(false); // 批量操作 loading
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const isMobile = useIsMobile();
 
@@ -167,27 +168,41 @@ export default function ProductsClient({ products, categories, locale }: { produ
   // 批量删除
   const onBulkDelete = async () => {
     if (!selectedRowKeys.length) return message.info('请选择要删除的商品');
-    await fetch('/api/admin/products/bulk', { 
-      method: 'POST', 
-      headers: { 'Content-Type': 'application/json' }, 
-      body: JSON.stringify({ action: 'delete', ids: selectedRowKeys }) 
-    });
-    message.success('批量删除成功');
-    setSelectedRowKeys([]);
-    window.location.reload();
+    setBatchLoading(true);
+    try {
+      await fetch('/api/admin/products/bulk', { 
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' }, 
+        body: JSON.stringify({ action: 'delete', ids: selectedRowKeys }) 
+      });
+      message.success('批量删除成功');
+      setSelectedRowKeys([]);
+      window.location.reload();
+    } catch (error) {
+      message.error('批量删除失败');
+    } finally {
+      setBatchLoading(false);
+    }
   };
 
   // 批量调价
   const onBulkReprice = async (percent: number) => {
     if (!selectedRowKeys.length) return message.info('请选择要调整的商品');
-    await fetch('/api/admin/products/bulk', { 
-      method: 'POST', 
-      headers: { 'Content-Type': 'application/json' }, 
-      body: JSON.stringify({ action: 'repricePercent', ids: selectedRowKeys, payload: { percent } }) 
-    });
-    message.success('批量调价成功');
-    setSelectedRowKeys([]);
-    window.location.reload();
+    setBatchLoading(true);
+    try {
+      await fetch('/api/admin/products/bulk', { 
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' }, 
+        body: JSON.stringify({ action: 'repricePercent', ids: selectedRowKeys, payload: { percent } }) 
+      });
+      message.success('批量调价成功');
+      setSelectedRowKeys([]);
+      window.location.reload();
+    } catch (error) {
+      message.error('批量调价失败');
+    } finally {
+      setBatchLoading(false);
+    }
   };
 
   const onCreate = () => {
@@ -397,6 +412,7 @@ export default function ProductsClient({ products, categories, locale }: { produ
               <Button 
                 danger 
                 disabled={selectedRowKeys.length === 0}
+                loading={batchLoading}
               >
                 批量删除
               </Button>
@@ -405,6 +421,7 @@ export default function ProductsClient({ products, categories, locale }: { produ
               className="jade-btn-outline"
               onClick={() => onBulkReprice(10)}
               disabled={selectedRowKeys.length === 0}
+              loading={batchLoading}
             >
               调价 +10%
             </Button>
@@ -412,6 +429,7 @@ export default function ProductsClient({ products, categories, locale }: { produ
               className="jade-btn-outline"
               onClick={() => onBulkReprice(-10)}
               disabled={selectedRowKeys.length === 0}
+              loading={batchLoading}
             >
               调价 -10%
             </Button>

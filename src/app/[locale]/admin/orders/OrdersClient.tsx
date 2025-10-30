@@ -76,6 +76,7 @@ export default function OrdersClient({ orders: initialOrders }: { orders: Order[
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [orders, setOrders] = useState<Order[]>(initialOrders);
   const [loading, setLoading] = useState(false);
+  const [batchLoading, setBatchLoading] = useState(false); // 批量操作 loading
   const [detailVisible, setDetailVisible] = useState(false);
   const [currentOrder, setCurrentOrder] = useState<Order | null>(null);
   
@@ -271,6 +272,7 @@ export default function OrdersClient({ orders: initialOrders }: { orders: Order[
   // 批量更新状态
   const onBulkUpdateStatus = async (status: string) => {
     if (!selectedRowKeys.length) return message.info('请选择要更新的订单');
+    setBatchLoading(true);
     try {
       await Promise.all(
         selectedRowKeys.map(id => apiPatch('/api/admin/orders', { id, status }))
@@ -280,6 +282,8 @@ export default function OrdersClient({ orders: initialOrders }: { orders: Order[
       handleReset();
     } catch (error) {
       message.error('批量更新失败');
+    } finally {
+      setBatchLoading(false);
     }
   };
 
@@ -330,6 +334,7 @@ export default function OrdersClient({ orders: initialOrders }: { orders: Order[
             <Button
               icon={<ReloadOutlined />}
               onClick={handleReset}
+              loading={loading}
             >
               重置
             </Button>
@@ -346,12 +351,14 @@ export default function OrdersClient({ orders: initialOrders }: { orders: Order[
             <Button 
               onClick={() => onBulkUpdateStatus('SHIPPED')}
               disabled={selectedRowKeys.length === 0}
+              loading={batchLoading}
             >
               标记为已发货
             </Button>
             <Button 
               onClick={() => onBulkUpdateStatus('DELIVERED')}
               disabled={selectedRowKeys.length === 0}
+              loading={batchLoading}
             >
               标记为已完成
             </Button>
