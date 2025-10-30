@@ -32,9 +32,34 @@ export default function TopLoadingBar() {
     // 监听链接点击事件
     const handleAnchorClick = (event: MouseEvent) => {
       const target = event.currentTarget as HTMLAnchorElement;
+      
+      // 排除以下情况，避免和按钮 loading 冲突：
+      // 1. 带有 data-no-progress 属性的链接（手动排除）
+      // 2. 按钮触发的链接
+      // 3. 相同页面的锚点链接
+      if (target.hasAttribute('data-no-progress')) {
+        return;
+      }
+      
+      // 检查是否是按钮包裹的链接或按钮样式的链接
+      if (
+        target.tagName === 'BUTTON' ||
+        target.closest('button') ||
+        target.classList.contains('ant-btn') ||
+        target.closest('.ant-btn')
+      ) {
+        return; // 跳过按钮，使用按钮自己的 loading 状态
+      }
+
+      // 检查是否是真正的页面跳转
       if (target.href && target.href !== window.location.href) {
-        // 点击链接时开始显示进度条
-        NProgress.start();
+        const targetUrl = new URL(target.href);
+        const currentUrl = new URL(window.location.href);
+        
+        // 只对不同页面的跳转显示进度条
+        if (targetUrl.pathname !== currentUrl.pathname) {
+          NProgress.start();
+        }
       }
     };
 

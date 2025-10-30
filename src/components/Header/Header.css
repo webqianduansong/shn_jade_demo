@@ -27,15 +27,16 @@
 .logo {
   font-size: 1.375rem;
   font-weight: 700;
-  color: #1a1a1a !important;
+  color: #10b981 !important; /* 使用主题绿色 */
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
   letter-spacing: -0.025em;
   white-space: nowrap;
 }
 
 .logo:hover {
-  color: #10b981 !important;
+  color: #059669 !important; /* 悬停时使用更深的绿色 */
+  transform: scale(1.02); /* 轻微放大效果 */
 }
 
 /* 桌面端显示/隐藏类 */

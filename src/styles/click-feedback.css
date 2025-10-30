@@ -88,32 +88,20 @@ a.disabled:active {
   transform: none !important;
 }
 
-/* 加载状态 - 添加旋转动画 */
+/* 加载状态 - 使用 Ant Design 自带的 loading，移除自定义动画 */
 .ant-btn-loading {
-  position: relative;
+  cursor: not-allowed !important;
+  opacity: 0.7 !important;
 }
 
-.ant-btn-loading::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 14px;
-  height: 14px;
-  margin: -7px 0 0 -7px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top-color: #fff;
-  border-radius: 50%;
-  animation: btnLoadingSpin 0.6s linear infinite;
+/* 加载中的按钮不应该有点击反馈 */
+.ant-btn-loading:active {
+  transform: none !important;
 }
 
-@keyframes btnLoadingSpin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+/* 确保 loading 图标可见 */
+.ant-btn-loading .anticon-loading {
+  margin-right: 8px;
 }
 
 /* 点击波纹效果 */
