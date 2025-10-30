@@ -97,7 +97,8 @@ model Order {
   status        OrderStatus  @default(PENDING)
   
   // 收货地址（快照，JSON 格式）
-  shippingAddress Json
+  shippingAddress   Json
+  shippingAddressId String?   // 关联的地址 ID（可选）
   
   // 金额信息（单位：分）
   subtotalCents   Int         // 商品小计

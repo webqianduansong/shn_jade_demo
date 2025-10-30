@@ -12,9 +12,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: '未登录' }, { status: 401 });
     }
     
-    const {lineItems, shippingAddress} = (await request.json()) as { 
+    const {lineItems, shippingAddress, addressId} = (await request.json()) as { 
       lineItems: { id: string; quantity: number }[],
-      shippingAddress?: any 
+      shippingAddress?: any,
+      addressId?: string
     };
     
     const stripeKey = process.env.STRIPE_SECRET_KEY;
@@ -75,6 +76,32 @@ export async function POST(request: NextRequest) {
       ? { id: user.id }
       : await prisma.user.findUnique({ where: { email: user.email } });
     
+    // 获取收货地址信息
+    let addressData = shippingAddress || {};
+    if (addressId && userRecord?.id) {
+      const address = await prisma.address.findFirst({
+        where: {
+          id: addressId,
+          userId: userRecord.id,
+        },
+      });
+      
+      if (address) {
+        addressData = {
+          fullName: address.fullName,
+          phone: address.phone,
+          email: address.email,
+          country: address.country,
+          state: address.state,
+          city: address.city,
+          district: address.district,
+          addressLine1: address.addressLine1,
+          addressLine2: address.addressLine2,
+          postalCode: address.postalCode,
+        };
+      }
+    }
+    
     // 创建 Stripe Checkout Session
     // 支持多种支付方式：信用卡、支付宝、微信支付
     const session = await stripe.checkout.sessions.create({
@@ -109,7 +136,8 @@ export async function POST(request: NextRequest) {
           userId: userRecord.id,
           orderNo,
           status: 'PENDING',
-          shippingAddress: shippingAddress || {}, // 默认空对象
+          shippingAddress: addressData, // 使用完整的地址信息
+          shippingAddressId: addressId || undefined, // 保存地址 ID 引用
           subtotalCents,
           shippingCents,
           discountCents: 0,
@@ -126,7 +154,7 @@ export async function POST(request: NextRequest) {
               })),
           },
         },
-      });
+      } as any);
     }
     
     return NextResponse.json({id: session.id, url: session.url});
