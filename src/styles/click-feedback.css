@@ -1,0 +1,142 @@
+/* 全局点击反馈样式 - 提升用户体验 */
+
+/* 链接点击反馈 */
+a {
+  transition: opacity 0.15s ease, transform 0.1s ease;
+}
+
+a:active {
+  opacity: 0.7;
+  transform: scale(0.98);
+}
+
+/* 按钮点击反馈 */
+button, 
+.ant-btn {
+  transition: all 0.2s ease !important;
+}
+
+button:active:not(:disabled),
+.ant-btn:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+/* 卡片点击反馈 */
+.ant-card.clickable {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ant-card.clickable:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.ant-card.clickable:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* 表格行点击反馈 */
+.ant-table-row.clickable {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.ant-table-row.clickable:hover {
+  background-color: rgba(16, 185, 129, 0.05);
+}
+
+.ant-table-row.clickable:active {
+  background-color: rgba(16, 185, 129, 0.1);
+}
+
+/* 图标按钮点击反馈 */
+.icon-link,
+.icon-button {
+  transition: all 0.2s ease;
+}
+
+.icon-link:active,
+.icon-button:active {
+  transform: scale(0.9);
+}
+
+/* 移动端优化 - 加大点击反馈 */
+@media (max-width: 768px) {
+  a:active {
+    opacity: 0.6;
+    transform: scale(0.95);
+  }
+
+  button:active:not(:disabled),
+  .ant-btn:active:not(:disabled) {
+    transform: scale(0.94);
+  }
+}
+
+/* 禁用状态 - 无点击反馈 */
+button:disabled,
+.ant-btn:disabled,
+a.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+button:disabled:active,
+.ant-btn:disabled:active,
+a.disabled:active {
+  transform: none !important;
+}
+
+/* 加载状态 - 添加旋转动画 */
+.ant-btn-loading {
+  position: relative;
+}
+
+.ant-btn-loading::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: btnLoadingSpin 0.6s linear infinite;
+}
+
+@keyframes btnLoadingSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 点击波纹效果 */
+.ripple-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-effect::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.ripple-effect:active::after {
+  width: 200px;
+  height: 200px;
+}
+

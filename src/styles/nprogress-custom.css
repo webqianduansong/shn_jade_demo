@@ -1,0 +1,58 @@
+/* 自定义 NProgress 进度条样式 - 匹配玉石网站主题色 */
+
+/* 进度条容器 */
+#nprogress {
+  pointer-events: none;
+}
+
+/* 进度条本身 */
+#nprogress .bar {
+  background: linear-gradient(to right, #10b981, #059669) !important;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5), 0 0 5px rgba(16, 185, 129, 0.5);
+}
+
+/* 进度条光晕效果 */
+#nprogress .peg {
+  display: block;
+  position: absolute;
+  right: 0px;
+  width: 100px;
+  height: 100%;
+  box-shadow: 0 0 10px #10b981, 0 0 5px #10b981;
+  opacity: 1;
+  transform: rotate(3deg) translate(0px, -4px);
+}
+
+/* 移除默认的旋转图标 */
+#nprogress .spinner {
+  display: none !important;
+}
+
+/* 进度条动画 */
+@keyframes nprogress-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 确保进度条在最顶层 */
+#nprogress {
+  z-index: 99999999;
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+  #nprogress .bar {
+    height: 2px;
+  }
+}
+

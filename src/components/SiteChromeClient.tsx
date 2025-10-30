@@ -2,6 +2,7 @@
 import { usePathname } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import TopLoadingBar from '@/components/TopLoadingBar';
 import type { ReactNode } from 'react';
 
 interface Category {
@@ -22,6 +23,7 @@ export default function SiteChromeClient({ locale, categories, children }: SiteC
   
   return (
     <div className="min-h-screen bg-white">
+      <TopLoadingBar />
       {!isAdmin && <Header locale={locale} categories={categories} />}
       <main>{children}</main>
       {!isAdmin && <Footer />}

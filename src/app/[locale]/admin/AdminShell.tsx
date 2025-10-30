@@ -13,6 +13,7 @@ import {
 } from '@ant-design/icons';
 import { useRouter, usePathname } from 'next/navigation';
 import { apiPost } from '@/lib/apiClient';
+import TopLoadingBar from '@/components/TopLoadingBar';
 import './admin.css';
 
 const { Header, Sider, Content } = Layout;
@@ -116,6 +117,7 @@ export default function AdminShell({ children, locale }: { children: ReactNode; 
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
+      <TopLoadingBar />
       <Header className="admin-header">
         <div className="admin-header-left">
           {isMobile && (
