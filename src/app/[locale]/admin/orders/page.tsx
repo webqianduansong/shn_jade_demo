@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import { Spin } from 'antd';
 import OrdersClient from './OrdersClient';
@@ -10,17 +10,28 @@ export default function AdminOrdersPage() {
   const locale = (params?.locale as string) || 'zh';
   const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState([]);
+  const loadingRef = useRef(false); // 防止重复请求
 
   useEffect(() => {
+    // 如果已经在加载中，跳过
+    if (loadingRef.current) {
+      console.log('[Orders] 已有请求在进行中，跳过');
+      return;
+    }
     loadOrders();
   }, []);
 
   const loadOrders = async () => {
+    // 标记为加载中，防止重复请求
+    loadingRef.current = true;
     setLoading(true);
+    
+    console.log('[Orders] 开始加载订单...');
     
     // 设置超时：最多加载 5 秒
     const timeoutId = setTimeout(() => {
       console.log('[Orders] 加载超时，显示空列表');
+      loadingRef.current = false;
       setLoading(false);
     }, 5000);
 
@@ -41,6 +52,7 @@ export default function AdminOrdersPage() {
       setOrders([]);
     } finally {
       clearTimeout(timeoutId);
+      loadingRef.current = false; // 请求完成，解除锁定
       setLoading(false);
     }
   };
