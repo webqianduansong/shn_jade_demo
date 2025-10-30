@@ -1,10 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getUploadAdapter } from '@/lib/uploadAdapter';
+import { getAdminUser } from '@/lib/adminAuth';
 
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: NextRequest) {
   try {
+    // 管理员权限检查
+    const admin = await getAdminUser();
+    if (!admin) {
+      return NextResponse.json(
+        { success: false, message: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
     const form = await request.formData();
     const file = form.get('file');
     

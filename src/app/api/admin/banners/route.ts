@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
-import { cookies } from 'next/headers';
+import { getAdminUser } from '@/lib/adminAuth';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,10 +11,9 @@ export const dynamic = 'force-dynamic';
 export async function GET(request: NextRequest) {
   try {
     // 管理员权限检查
-    const cookieStore = await cookies();
-    const adminSession = cookieStore.get('adminSession');
-    if (!adminSession) {
-      return NextResponse.json({ error: '未授权' }, { status: 401 });
+    const admin = await getAdminUser();
+    if (!admin) {
+      return NextResponse.json({ success: false, error: '未授权' }, { status: 401 });
     }
 
     const banners = await prisma.banner.findMany({
@@ -46,10 +45,9 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     // 管理员权限检查
-    const cookieStore = await cookies();
-    const adminSession = cookieStore.get('adminSession');
-    if (!adminSession) {
-      return NextResponse.json({ error: '未授权' }, { status: 401 });
+    const admin = await getAdminUser();
+    if (!admin) {
+      return NextResponse.json({ success: false, error: '未授权' }, { status: 401 });
     }
 
     const body = await request.json();
@@ -101,10 +99,9 @@ export async function POST(request: NextRequest) {
 export async function PATCH(request: NextRequest) {
   try {
     // 管理员权限检查
-    const cookieStore = await cookies();
-    const adminSession = cookieStore.get('adminSession');
-    if (!adminSession) {
-      return NextResponse.json({ error: '未授权' }, { status: 401 });
+    const admin = await getAdminUser();
+    if (!admin) {
+      return NextResponse.json({ success: false, error: '未授权' }, { status: 401 });
     }
 
     const body = await request.json();
@@ -156,10 +153,9 @@ export async function PATCH(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   try {
     // 管理员权限检查
-    const cookieStore = await cookies();
-    const adminSession = cookieStore.get('adminSession');
-    if (!adminSession) {
-      return NextResponse.json({ error: '未授权' }, { status: 401 });
+    const admin = await getAdminUser();
+    if (!admin) {
+      return NextResponse.json({ success: false, error: '未授权' }, { status: 401 });
     }
 
     const { searchParams } = new URL(request.url);
