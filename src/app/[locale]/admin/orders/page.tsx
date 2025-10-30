@@ -30,12 +30,15 @@ export default function AdminOrdersPage() {
       
       if (result.success && result.data) {
         setOrders(result.data);
+        console.log('[Orders] 加载成功:', result.data.length, '条订单');
       } else {
         console.warn('[Orders] API 返回失败，显示空列表');
+        setOrders([]);
       }
     } catch (error) {
       clearTimeout(timeoutId);
       console.error('[Orders] 加载失败:', error);
+      setOrders([]);
     } finally {
       clearTimeout(timeoutId);
       setLoading(false);
