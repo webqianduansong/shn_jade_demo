@@ -15,11 +15,17 @@ interface User {
 
 interface Order {
   id: string;
-  totalAmount: number;
+  orderNo: string;
   status: string;
+  totalCents: number;
+  subtotalCents: number;
+  shippingCents: number;
   createdAt: string;
   items: Array<{
+    id: string;
+    productId: string;
     productName: string;
+    productImage?: string;
     quantity: number;
     price: number;
   }>;
@@ -81,14 +87,21 @@ export default function ProfileClient({ locale, user }: ProfileClientProps) {
   }, [searchParams, activeTab]);
 
   const fetchOrders = async () => {
+    setLoading(true);
     try {
-      const res = await fetch('/api/orders');
-      if (res.ok) {
-        const data = await res.json();
-        setOrders(data.orders || []);
+      const result = await apiGet('/api/orders');
+      if (result.success && result.data) {
+        // API 返回格式: { success: true, data: { orders: [...] } }
+        const ordersData = result.data.orders || [];
+        setOrders(ordersData);
+        console.log('[Profile] 获取订单成功:', ordersData.length, '个订单');
+      } else {
+        console.warn('[Profile] 获取订单失败:', result);
+        setOrders([]);
       }
     } catch (error) {
-      console.error('Failed to fetch orders:', error);
+      console.error('[Profile] Failed to fetch orders:', error);
+      setOrders([]);
     } finally {
       setLoading(false);
     }
@@ -165,12 +178,18 @@ export default function ProfileClient({ locale, user }: ProfileClientProps) {
 
   const columns: ColumnsType<Order> = [
     {
-      title: locale === 'zh' ? '订单号' : 'Order ID',
-      dataIndex: 'id',
-      key: 'id',
-      width: 200,
-      render: (id: string) => (
-        <span className="order-id">#{id.slice(0, 8).toUpperCase()}</span>
+      title: locale === 'zh' ? '订单号' : 'Order No.',
+      dataIndex: 'orderNo',
+      key: 'orderNo',
+      width: 180,
+      render: (orderNo: string, record: Order) => (
+        <span 
+          className="order-id" 
+          style={{ cursor: 'pointer', color: '#1890ff' }}
+          onClick={() => router.push(`/${locale}/orders/${record.id}`)}
+        >
+          {orderNo || `#${record.id.slice(0, 8).toUpperCase()}`}
+        </span>
       ),
     },
     {
@@ -179,22 +198,28 @@ export default function ProfileClient({ locale, user }: ProfileClientProps) {
       key: 'items',
       render: (items: Order['items']) => (
         <div className="order-items">
-          {items.map((item, index) => (
-            <div key={index} className="order-item">
-              <span className="item-name">{item.productName}</span>
-              <span className="item-quantity">×{item.quantity}</span>
-            </div>
-          ))}
+          {items && items.length > 0 ? (
+            items.map((item, index) => (
+              <div key={item.id || index} className="order-item">
+                <span className="item-name">{item.productName}</span>
+                <span className="item-quantity">×{item.quantity}</span>
+              </div>
+            ))
+          ) : (
+            <span style={{ color: '#999' }}>暂无商品</span>
+          )}
         </div>
       ),
     },
     {
       title: locale === 'zh' ? '金额' : 'Amount',
-      dataIndex: 'totalAmount',
-      key: 'totalAmount',
+      dataIndex: 'totalCents',
+      key: 'totalCents',
       width: 120,
-      render: (amount: number) => (
-        <span className="order-amount">${(amount / 100).toFixed(2)}</span>
+      render: (totalCents: number) => (
+        <span className="order-amount">
+          ${((totalCents || 0) / 100).toFixed(2)}
+        </span>
       ),
     },
     {
