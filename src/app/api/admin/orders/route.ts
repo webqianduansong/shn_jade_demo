@@ -23,10 +23,9 @@ export async function GET(request: NextRequest) {
     const where: any = {};
     
     // 订单号查询（模糊匹配）
-    if (orderNo) {
+    if (orderNo && orderNo.trim()) {
       where.orderNo = {
-        contains: orderNo,
-        mode: 'insensitive'
+        contains: orderNo.trim()
       };
     }
     
@@ -48,6 +47,9 @@ export async function GET(request: NextRequest) {
         where.createdAt.lte = end;
       }
     }
+
+    console.log('[Admin Orders] Query params:', { orderNo, status, startDate, endDate });
+    console.log('[Admin Orders] Where clause:', JSON.stringify(where, null, 2));
 
     const orders = await prisma.order.findMany({
       where,
