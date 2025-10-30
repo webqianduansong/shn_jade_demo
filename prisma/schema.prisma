@@ -173,4 +173,15 @@ model ShippingTracking {
   updatedAt       DateTime @updatedAt
 }
 
+model Banner {
+  id          String   @id @default(cuid())
+  title       String   // 标题
+  description String?  // 描述（可选）
+  imageUrl    String   // 图片URL
+  linkUrl     String?  // 跳转地址（可选）
+  sortOrder   Int      @default(0) // 排序顺序（数字越小越靠前）
+  isActive    Boolean  @default(true) // 是否启用
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
 

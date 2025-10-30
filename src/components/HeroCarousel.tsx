@@ -1,115 +1,139 @@
 "use client";
-import {useState, useEffect} from 'react';
-import {useTranslations} from 'next-intl';
-import DynamicText from './DynamicText';
+import { useState, useEffect } from 'react';
+import { Spin } from 'antd';
 import Image from 'next/image';
-import lb1 from  '@/images/lb1.png';
-import lb2 from  '@/images/lb2.png';
-import lb3 from  '@/images/lb3.png';
+import Link from 'next/link';
 import '@/styles/hero-carousel.css';
+
+interface Banner {
+  id: string;
+  title: string;
+  description?: string | null;
+  imageUrl: string;
+  linkUrl?: string | null;
+  sortOrder: number;
+}
 
 /**
  * 首页轮播图组件
- * 展示网站的主要宣传图片和内容
+ * 从 API 动态获取轮播图数据
  */
 export default function HeroCarousel() {
-  const [currentSlide, setCurrentSlide] = useState(0); // 当前显示的轮播图索引
-  const t = useTranslations('hero'); // 轮播图相关翻译
+  const [banners, setBanners] = useState<Banner[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-  // 轮播图数据配置
-  const slides = [
-    {
-      id: 1,
-      title: t('slide1.title'),
-      subtitle: t('slide1.subtitle'),
-      image: lb1,
-      cta: t('slide1.cta')
-    },
-    {
-      id: 2,
-      title: t('slide2.title'),
-      subtitle: t('slide2.subtitle'),
-      image: lb2,
-      cta: t('slide2.cta')
-    },
-    {
-      id: 3,
-      title: t('slide3.title'),
-      subtitle: t('slide3.subtitle'),
-      image: lb3,
-      cta: t('slide3.cta')
-    }
-  ];
+  // 获取轮播图数据
+  useEffect(() => {
+    const fetchBanners = async () => {
+      try {
+        const response = await fetch('/api/banners');
+        const data = await response.json();
+        if (data.success && data.banners) {
+          setBanners(data.banners);
+        }
+      } catch (error) {
+        console.error('获取轮播图失败:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBanners();
+  }, []);
 
   // 自动轮播效果
   useEffect(() => {
+    if (banners.length === 0) return;
+
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
+      setCurrentSlide((prev) => (prev + 1) % banners.length);
     }, 5000);
+
     return () => clearInterval(timer);
-  }, [slides.length]);
+  }, [banners.length]);
+
+  // 加载中状态
+  if (loading) {
+    return (
+      <div className="hero-section" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '500px' }}>
+        <Spin size="large" />
+      </div>
+    );
+  }
+
+  // 没有轮播图数据
+  if (banners.length === 0) {
+    return (
+      <div className="hero-section" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '500px', background: '#f8f9fa' }}>
+        <p style={{ color: '#999' }}>暂无轮播图</p>
+      </div>
+    );
+  }
+
+  // 包装单个轮播图内容
+  const renderSlideContent = (banner: Banner, index: number) => (
+    <div
+      key={banner.id}
+      className={`hero-slide ${index === currentSlide ? 'active' : ''}`}
+    >
+      {/* 背景图片容器 */}
+      <div className="absolute inset-0" style={{ background: '#f8f9fa' }}>
+        <Image
+          src={banner.imageUrl}
+          alt={banner.title}
+          fill
+          className="hero-image"
+          priority={index === 0}
+          sizes="100vw"
+          style={{
+            objectFit: 'cover',
+            objectPosition: 'center'
+          }}
+        />
+        {/* 遮罩层 */}
+        <div className="hero-overlay"></div>
+      </div>
+
+      {/* 内容区域 */}
+      <div className="hero-content">
+        <h1 className="hero-title">{banner.title}</h1>
+        {banner.description && (
+          <p className="hero-subtitle">{banner.description}</p>
+        )}
+      </div>
+    </div>
+  );
 
   return (
     <div className="hero-section">
-      {slides.map((slide, index) => (
-        <div
-          key={slide.id}
-          className={`hero-slide ${
-            index === currentSlide ? 'active' : ''
-          }`}
-        >
-          {/* 背景图片容器 */}
-          <div className="absolute inset-0" style={{ background: '#f8f9fa' }}>
-            <Image
-              src={slide.image}
-              alt={slide.title}
-              fill
-              className="hero-image"
-              priority={index === 0}
-              sizes="100vw"
-              style={{
-                objectFit: 'cover',
-                objectPosition: 'center'
-              }}
-            />
-            {/* 遮罩层 */}
-            <div className="hero-overlay"></div>
-          </div>
-          
-          {/* 内容区域 */}
-          <div className="hero-content">
-            <h1 className="hero-title">
-              <DynamicText fallback={slide.title}>
-                {slide.title}
-              </DynamicText>
-            </h1>
-            <p className="hero-subtitle">
-              <DynamicText fallback={slide.subtitle}>
-                {slide.subtitle}
-              </DynamicText>
-            </p>
-            <button className="hero-cta">
-              <DynamicText fallback={slide.cta}>
-                {slide.cta}
-              </DynamicText>
-            </button>
-          </div>
-        </div>
-      ))}
-      
+      {/* 渲染所有轮播图 */}
+      {banners.map((banner, index) => {
+        // 如果有跳转链接，包裹在 Link 中
+        if (banner.linkUrl) {
+          return (
+            <Link href={banner.linkUrl} key={banner.id}>
+              {renderSlideContent(banner, index)}
+            </Link>
+          );
+        }
+        // 没有跳转链接，直接渲染
+        return renderSlideContent(banner, index);
+      })}
+
       {/* 轮播指示器 */}
-      <div className="hero-dots">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentSlide(index)}
-            className={`hero-dot ${
-              index === currentSlide ? 'active' : ''
-            }`}
-            aria-label={`跳转到第 ${index + 1} 张轮播图`}
-          />
-        ))}
-      </div>
+      {banners.length > 1 && (
+        <div className="hero-dots">
+          {banners.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`hero-dot ${index === currentSlide ? 'active' : ''}`}
+              aria-label={`跳转到第 ${index + 1} 张轮播图`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
