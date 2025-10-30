@@ -11,15 +11,21 @@ export default async function CategoryPage({
   const {locale, categoryId} = await params;
   const t = await getTranslations();
   
-  // 从数据库读取分类
-  const category = await prisma.category.findUnique({ where: { id: categoryId } });
+  // 从数据库读取分类（支持通过 id 或 slug 查询）
+  let category = await prisma.category.findUnique({ where: { id: categoryId } });
+  
+  // 如果通过 id 找不到，尝试通过 slug 查询
+  if (!category) {
+    category = await prisma.category.findUnique({ where: { slug: categoryId } });
+  }
+  
   if (!category) {
     notFound();
   }
 
   // 从数据库读取该分类下的产品
   const dbProducts = await prisma.product.findMany({
-    where: { categoryId: categoryId },
+    where: { categoryId: category.id },
     include: { images: true },
     orderBy: { createdAt: 'desc' },
   });

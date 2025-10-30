@@ -17,12 +17,20 @@ interface HeaderProps {
   locale: string; // 当前语言环境
 }
 
+interface Category {
+  id: string;
+  name: string;
+  slug: string;
+}
+
 export default function Header({ locale }: HeaderProps) {
   const router = useRouter();
   const navT = useTranslations('nav'); // 导航相关翻译
   const siteT = useTranslations('site'); // 网站相关翻译
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [categories, setCategories] = useState<Category[]>([]);
 
+  // 获取用户信息
   useEffect(() => {
     let mounted = true;
     fetch('/api/auth/me')
@@ -37,28 +45,32 @@ export default function Header({ locale }: HeaderProps) {
     };
   }, []);
 
-  // 导航菜单项配置
+  // 获取分类列表
+  useEffect(() => {
+    let mounted = true;
+    fetch('/api/categories')
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((data) => {
+        if (!mounted) return;
+        if (data?.success && data?.categories) {
+          setCategories(data.categories);
+        }
+      })
+      .catch((error) => {
+        console.error('获取分类失败:', error);
+      });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  // 动态生成导航菜单项
   const menuItems = [
-    {
-      key: 'rings',
-      label: navT('rings'),
-      href: `/${locale}/category/rings`
-    },
-    {
-      key: 'earrings', 
-      label: navT('earrings'),
-      href: `/${locale}/category/earrings`
-    },
-    {
-      key: 'necklaces',
-      label: navT('necklaces'),
-      href: `/${locale}/category/necklaces`
-    },
-    {
-      key: 'bracelets',
-      label: navT('bracelets'),
-      href: `/${locale}/category/bracelets`
-    },
+    ...categories.map((cat) => ({
+      key: cat.slug,
+      label: cat.name,
+      href: `/${locale}/category/${cat.slug}`
+    })),
     {
       key: 'collections',
       label: navT('collections'),
