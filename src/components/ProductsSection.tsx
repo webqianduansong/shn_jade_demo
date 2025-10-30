@@ -1,16 +1,11 @@
 "use client";
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
 
 /**
  * 产品展示区域组件
  * 包含热门产品和新品推荐两个部分
  */
-interface ProductsSectionProps {
-  locale: string; // 当前语言环境
-}
-
 type Product = {
   id: string;
   name: string;
@@ -19,47 +14,15 @@ type Product = {
   category?: { name: string; slug: string };
 };
 
-export default function ProductsSection({ locale }: ProductsSectionProps) {
+interface ProductsSectionProps {
+  locale: string; // 当前语言环境
+  hotProducts: Product[]; // 从服务端传入的热门商品
+  newProducts: Product[]; // 从服务端传入的新品
+}
+
+export default function ProductsSection({ locale, hotProducts, newProducts }: ProductsSectionProps) {
   const t = useTranslations('sections'); // 区域相关翻译
   const actionsT = useTranslations('actions'); // 操作相关翻译
-  
-  const [hotProducts, setHotProducts] = useState<Product[]>([]);
-  const [newProducts, setNewProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // 获取热门商品
-    fetch('/api/products/featured?type=hot&limit=8')
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          setHotProducts(data.products || []);
-        }
-      })
-      .catch(err => console.error('获取热门商品失败:', err));
-
-    // 获取新品
-    fetch('/api/products/featured?type=new&limit=4')
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          setNewProducts(data.products || []);
-        }
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error('获取新品失败:', err);
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) {
-    return (
-      <div style={{ padding: '4rem 0', textAlign: 'center' }}>
-        <div className="spinner" />
-      </div>
-    );
-  }
 
   return (
     <>
