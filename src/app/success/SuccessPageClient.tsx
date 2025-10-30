@@ -139,7 +139,7 @@ export default function SuccessPageClient() {
           <Button 
             key="orders"
             icon={<UnorderedListOutlined />}
-            onClick={() => router.push('/zh/orders')}
+            onClick={() => router.push('/zh/profile?tab=orders')}
             size="large"
           >
             查看我的订单

@@ -58,6 +58,7 @@ export default function ProfileClient({ locale, user }: ProfileClientProps) {
   const [loading, setLoading] = useState(true);
   const [addressLoading, setAddressLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('info');
+  const [orderStatusTab, setOrderStatusTab] = useState('all');
 
   // 初始化时检查 URL 参数
   useEffect(() => {
@@ -84,6 +85,11 @@ export default function ProfileClient({ locale, user }: ProfileClientProps) {
       fetchAddresses();
     }
   }, [searchParams, activeTab]);
+
+  // 根据订单状态过滤订单
+  const filteredOrders = orderStatusTab === 'all' 
+    ? orders 
+    : orders.filter(order => order.status === orderStatusTab);
 
   const fetchOrders = async () => {
     setLoading(true);
@@ -221,13 +227,43 @@ export default function ProfileClient({ locale, user }: ProfileClientProps) {
       ),
       children: (
         <div className="orders-tab-container">
+          {/* 订单状态标签页 */}
+          <Tabs
+            activeKey={orderStatusTab}
+            onChange={setOrderStatusTab}
+            items={[
+              {
+                key: 'all',
+                label: locale === 'zh' ? '全部订单' : 'All Orders'
+              },
+              {
+                key: 'PENDING',
+                label: locale === 'zh' ? '待支付' : 'Pending'
+              },
+              {
+                key: 'PAID',
+                label: locale === 'zh' ? '待发货' : 'To Ship'
+              },
+              {
+                key: 'SHIPPED',
+                label: locale === 'zh' ? '待收货' : 'To Receive'
+              },
+              {
+                key: 'DELIVERED',
+                label: locale === 'zh' ? '已完成' : 'Completed'
+              },
+            ]}
+            size="large"
+            className="order-status-tabs"
+          />
+
           {loading ? (
             <div className="loading-container">
               <Spin size="large" />
             </div>
-          ) : orders.length > 0 ? (
+          ) : filteredOrders.length > 0 ? (
             <div className="orders-list">
-              {orders.map((order) => {
+              {filteredOrders.map((order) => {
                 const statusInfo = getStatusTag(order.status);
                 return (
                   <Card

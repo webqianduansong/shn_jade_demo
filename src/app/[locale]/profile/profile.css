@@ -829,3 +829,25 @@
     padding: 12px;
   }
 }
+
+/* ==================== 订单状态标签页样式 ==================== */
+
+.order-status-tabs {
+  margin-bottom: 24px;
+}
+
+.order-status-tabs .ant-tabs-nav {
+  margin-bottom: 0;
+}
+
+.order-status-tabs .ant-tabs-tab {
+  font-size: 15px;
+  padding: 12px 20px;
+}
+
+@media (max-width: 768px) {
+  .order-status-tabs .ant-tabs-tab {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+}

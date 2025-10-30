@@ -54,7 +54,7 @@ export default function OrderDetailPage() {
       setOrder(result.data.order);
     } else {
       message.error(locale === 'zh' ? '订单不存在' : 'Order not found');
-      router.push(`/${locale}/orders`);
+      router.push(`/${locale}/profile?tab=orders`);
     }
     setLoading(false);
   };
