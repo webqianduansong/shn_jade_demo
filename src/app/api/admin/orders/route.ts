@@ -7,9 +7,14 @@ export const dynamic = 'force-dynamic';
 // 获取订单列表（支持查询）
 export async function GET(request: NextRequest) {
   try {
+    console.log('[Admin Orders API] Request received');
+    
     const admin = await getAdminUser();
+    console.log('[Admin Orders API] Admin user:', admin ? 'Authenticated' : 'Not authenticated');
+    
     if (!admin) {
-      return NextResponse.json({ error: '未授权' }, { status: 401 });
+      console.log('[Admin Orders API] Unauthorized - no admin user');
+      return NextResponse.json({ success: false, error: '未授权' }, { status: 401 });
     }
 
     // 获取查询参数
@@ -51,6 +56,7 @@ export async function GET(request: NextRequest) {
     console.log('[Admin Orders] Query params:', { orderNo, status, startDate, endDate });
     console.log('[Admin Orders] Where clause:', JSON.stringify(where, null, 2));
 
+    console.log('[Admin Orders] Querying database...');
     const orders = await prisma.order.findMany({
       where,
       include: {
@@ -77,11 +83,21 @@ export async function GET(request: NextRequest) {
       orderBy: { createdAt: 'desc' }
     });
 
+    console.log('[Admin Orders] Query successful, found', orders.length, 'orders');
     return NextResponse.json({ success: true, data: orders });
   } catch (error) {
-    console.error('Get orders error:', error);
+    console.error('[Admin Orders API] ERROR:', error);
+    console.error('[Admin Orders API] Error details:', {
+      name: error instanceof Error ? error.name : 'Unknown',
+      message: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined
+    });
     return NextResponse.json(
-      { error: '获取订单列表失败' },
+      { 
+        success: false,
+        error: '获取订单列表失败',
+        details: error instanceof Error ? error.message : String(error)
+      },
       { status: 500 }
     );
   }
