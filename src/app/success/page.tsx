@@ -1,29 +1,23 @@
-import { prisma } from '@/lib/db';
-import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
+import SuccessPageClient from './SuccessPageClient';
+import { Spin } from 'antd';
 
-export default async function SuccessPage({ searchParams }: { searchParams: Promise<{ session_id?: string }> }) {
-  const { session_id } = await searchParams;
-  let order = null as null | { id: string; status: string; totalAmount: number };
-  if (session_id) {
-    const o = await prisma.order.findFirst({ where: { paymentRef: session_id } });
-    if (o) {
-      order = { id: o.id, status: o.status, totalAmount: o.totalAmount };
-    }
-  }
+/**
+ * 支付成功页面（Server Component）
+ */
+export default function SuccessPage() {
   return (
-    <div className="max-w-xl mx-auto py-16 px-6 text-center">
-      <h1 className="text-2xl font-bold mb-4">Payment successful</h1>
-      {order ? (
-        <div>
-          <p className="mb-2">订单号：{order.id}</p>
-          <p className="mb-2">订单状态：{order.status}</p>
-          <p>支付金额：${(order.totalAmount / 100).toFixed(2)}</p>
-        </div>
-      ) : (
-        <p>Thank you for your purchase.</p>
-      )}
-    </div>
+    <Suspense fallback={
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        minHeight: '400px' 
+      }}>
+        <Spin size="large" tip="加载中..." />
+      </div>
+    }>
+      <SuccessPageClient />
+    </Suspense>
   );
 }
-
-
