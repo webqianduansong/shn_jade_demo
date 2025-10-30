@@ -13,22 +13,22 @@ import { useEffect, useState } from 'react';
  * 网站头部组件
  * 包含导航菜单、语言切换器和购物车图标
  */
-interface HeaderProps {
-  locale: string; // 当前语言环境
-}
-
 interface Category {
   id: string;
   name: string;
   slug: string;
 }
 
-export default function Header({ locale }: HeaderProps) {
+interface HeaderProps {
+  locale: string; // 当前语言环境
+  categories: Category[]; // 从服务端获取的分类列表
+}
+
+export default function Header({ locale, categories }: HeaderProps) {
   const router = useRouter();
   const navT = useTranslations('nav'); // 导航相关翻译
   const siteT = useTranslations('site'); // 网站相关翻译
   const [userEmail, setUserEmail] = useState<string | null>(null);
-  const [categories, setCategories] = useState<Category[]>([]);
 
   // 获取用户信息
   useEffect(() => {
@@ -40,25 +40,6 @@ export default function Header({ locale }: HeaderProps) {
         if (data?.user?.email) setUserEmail(data.user.email);
       })
       .catch(() => setUserEmail(null));
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
-  // 获取分类列表
-  useEffect(() => {
-    let mounted = true;
-    fetch('/api/categories')
-      .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((data) => {
-        if (!mounted) return;
-        if (data?.success && data?.categories) {
-          setCategories(data.categories);
-        }
-      })
-      .catch((error) => {
-        console.error('获取分类失败:', error);
-      });
     return () => {
       mounted = false;
     };
@@ -83,7 +64,7 @@ export default function Header({ locale }: HeaderProps) {
       <div className="header-container">
         {/* 左侧：移动端菜单和Logo */}
         <div className="flex">
-          <MobileNav />
+          <MobileNav locale={locale} categories={categories} />
           <Link href={`/${locale}`} className="logo">
             {locale === 'zh' ? '临熙玉石' : 'LinxiJade'}
           </Link>
