@@ -131,30 +131,34 @@ export async function POST(request: NextRequest) {
       const orderNo = `ORD${Date.now()}${Math.random().toString(36).substring(2, 9).toUpperCase()}`;
       
       // 创建订单草稿并保存会话ID作为 paymentRef
-      await prisma.order.create({
-        data: {
-          userId: userRecord.id,
-          orderNo,
-          status: 'PENDING',
-          shippingAddress: addressData, // 使用完整的地址信息
-          shippingAddressId: addressId || undefined, // 保存地址 ID 引用
-          subtotalCents,
-          shippingCents,
-          discountCents: 0,
-          totalCents,
-          paymentMethod: 'stripe',
-          paymentRef: session.id,
-          items: {
-            create: lineItems
-              .filter((li) => productMap.has(li.id))
-              .map((li) => ({
-                productId: li.id,
-                price: productMap.get(li.id)!.price,
-                quantity: li.quantity,
-              })),
-          },
+      const orderData: any = {
+        userId: userRecord.id,
+        orderNo,
+        status: 'PENDING',
+        shippingAddress: addressData, // 使用完整的地址信息
+        subtotalCents,
+        shippingCents,
+        discountCents: 0,
+        totalCents,
+        paymentMethod: 'stripe',
+        paymentRef: session.id,
+        items: {
+          create: lineItems
+            .filter((li) => productMap.has(li.id))
+            .map((li) => ({
+              productId: li.id,
+              price: productMap.get(li.id)!.price,
+              quantity: li.quantity,
+            })),
         },
-      } as any);
+      };
+      
+      // 添加地址 ID（如果存在）
+      if (addressId) {
+        orderData.shippingAddressId = addressId;
+      }
+      
+      await prisma.order.create({ data: orderData });
     }
     
     return NextResponse.json({id: session.id, url: session.url});
