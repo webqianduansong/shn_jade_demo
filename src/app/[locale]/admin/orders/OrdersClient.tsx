@@ -36,7 +36,7 @@ type OrderItem = {
     id: string;
     name: string;
     price: number;
-    image?: string;
+    images?: { id: string; url: string; sortOrder: number }[];
   };
 };
 
@@ -415,32 +415,39 @@ export default function OrdersClient({ orders: initialOrders }: { orders: Order[
             <h4 style={{ marginTop: 24, marginBottom: 12 }}>商品清单</h4>
             {currentOrder.items && currentOrder.items.length > 0 ? (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                {currentOrder.items.map((item, index) => (
-                  <Card key={index} size="small">
-                    <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-                      {item.product?.image && (
-                        <Image
-                          src={item.product.image}
-                          alt={item.product?.name || item.productName}
-                          width={80}
-                          height={80}
-                          style={{ objectFit: 'cover', borderRadius: 4 }}
-                        />
-                      )}
-                      <div style={{ flex: 1 }}>
-                        <div style={{ fontWeight: 600, marginBottom: 4 }}>
-                          {item.product?.name || item.productName || '未知商品'}
+                {currentOrder.items.map((item, index) => {
+                  // 获取第一张图片
+                  const firstImage = item.product?.images && item.product.images.length > 0 
+                    ? item.product.images[0].url 
+                    : null;
+                  
+                  return (
+                    <Card key={index} size="small">
+                      <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+                        {firstImage && (
+                          <Image
+                            src={firstImage}
+                            alt={item.product?.name || item.productName || '商品'}
+                            width={80}
+                            height={80}
+                            style={{ objectFit: 'cover', borderRadius: 4 }}
+                          />
+                        )}
+                        <div style={{ flex: 1 }}>
+                          <div style={{ fontWeight: 600, marginBottom: 4 }}>
+                            {item.product?.name || item.productName || '未知商品'}
+                          </div>
+                          <div style={{ color: '#666', fontSize: '13px' }}>
+                            单价：${(item.price / 100).toFixed(2)} × {item.quantity}
+                          </div>
                         </div>
-                        <div style={{ color: '#666', fontSize: '13px' }}>
-                          单价：${(item.price / 100).toFixed(2)} × {item.quantity}
+                        <div style={{ fontWeight: 600, color: '#3f8f4d' }}>
+                          ${((item.price * item.quantity) / 100).toFixed(2)}
                         </div>
                       </div>
-                      <div style={{ fontWeight: 600, color: '#3f8f4d' }}>
-                        ${((item.price * item.quantity) / 100).toFixed(2)}
-                      </div>
-                    </div>
-                  </Card>
-                ))}
+                    </Card>
+                  );
+                })}
               </div>
             ) : (
               <div style={{ textAlign: 'center', padding: '20px', color: '#999' }}>
