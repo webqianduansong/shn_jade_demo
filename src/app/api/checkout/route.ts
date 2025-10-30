@@ -19,8 +19,22 @@ export async function POST(request: NextRequest) {
     
     const stripeKey = process.env.STRIPE_SECRET_KEY;
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+    
+    // 友好的错误提示
     if (!stripeKey || !siteUrl) {
-      return NextResponse.json({error: 'Missing STRIPE_SECRET_KEY or NEXT_PUBLIC_SITE_URL'}, {status: 500});
+      console.error('[Checkout API] 缺少必要的环境变量:');
+      console.error('- STRIPE_SECRET_KEY:', stripeKey ? '已配置' : '❌ 未配置');
+      console.error('- NEXT_PUBLIC_SITE_URL:', siteUrl ? '已配置' : '❌ 未配置');
+      console.error('请参考文档: docs/Stripe支付配置指南.md');
+      
+      return NextResponse.json({
+        error: '支付服务未配置',
+        message: '请联系管理员配置 Stripe 支付服务。开发者请查看: docs/Stripe支付配置指南.md',
+        details: {
+          stripeConfigured: !!stripeKey,
+          siteUrlConfigured: !!siteUrl
+        }
+      }, {status: 500});
     }
     
     const stripe = new Stripe(stripeKey);
@@ -61,11 +75,22 @@ export async function POST(request: NextRequest) {
       ? { id: user.id }
       : await prisma.user.findUnique({ where: { email: user.email } });
     
+    // 创建 Stripe Checkout Session
+    // 支持多种支付方式：信用卡、支付宝、微信支付
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items: items,
+      // 启用的支付方式（需在 Stripe Dashboard 中先启用）
+      payment_method_types: ['card', 'alipay', 'wechat_pay'],
       success_url: `${siteUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl}/cancel`,
+      // 可选：添加客户邮箱
+      customer_email: user.email,
+      // 可选：添加元数据
+      metadata: {
+        userId: userRecord?.id || '',
+        userEmail: user.email,
+      },
     });
     
     if (userRecord?.id) {
