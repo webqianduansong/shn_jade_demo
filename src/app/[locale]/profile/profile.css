@@ -656,3 +656,176 @@
   }
 }
 
+
+/* ==================== 统一订单卡片样式 ==================== */
+
+.orders-tab-container {
+  padding: 0;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.order-item-card {
+  border-radius: 8px;
+  border: 1px solid #e8e8e8;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.order-item-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #2d5a3d;
+}
+
+/* 订单头部 */
+.order-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 16px;
+}
+
+.order-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.order-card-no {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.order-card-date {
+  font-size: 13px;
+  color: #999;
+}
+
+/* 订单商品列表 */
+.order-card-products {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.order-card-product {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.product-card-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #e8e8e8;
+  flex-shrink: 0;
+}
+
+.product-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.product-card-name {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.product-card-quantity {
+  font-size: 13px;
+  color: #999;
+}
+
+.product-card-price {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2d5a3d;
+  flex-shrink: 0;
+}
+
+/* 订单底部 */
+.order-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.order-card-total {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.total-card-label {
+  font-size: 14px;
+  color: #666;
+}
+
+.total-card-amount {
+  font-size: 18px;
+  font-weight: 700;
+  color: #d4380d;
+}
+
+/* 订单状态标签 */
+.order-card-header .ant-tag {
+  font-size: 13px;
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .order-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .order-card-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .order-card-total {
+    justify-content: space-between;
+  }
+
+  .product-card-image {
+    width: 50px;
+    height: 50px;
+  }
+
+  .product-card-name {
+    font-size: 13px;
+  }
+
+  .product-card-price {
+    font-size: 13px;
+  }
+
+  .total-card-amount {
+    font-size: 16px;
+  }
+
+  .order-item-card {
+    padding: 12px;
+  }
+}

@@ -1,9 +1,8 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Card, Tabs, Descriptions, Table, Tag, Empty, Spin, Avatar, Space, Button, Modal, message } from 'antd';
+import { Card, Tabs, Descriptions, Tag, Empty, Spin, Avatar, Space, Button, Modal, message } from 'antd';
 import { UserOutlined, ShoppingOutlined, SettingOutlined, HeartOutlined, EnvironmentOutlined, PlusOutlined, EditOutlined, DeleteOutlined, StarOutlined, StarFilled } from '@ant-design/icons';
-import type { ColumnsType } from 'antd/es/table';
 import { apiGet, apiPut, apiDelete } from '@/lib/apiClient';
 import './profile.css';
 
@@ -176,67 +175,6 @@ export default function ProfileClient({ locale, user }: ProfileClientProps) {
     return <Tag color={config.color}>{config.text}</Tag>;
   };
 
-  const columns: ColumnsType<Order> = [
-    {
-      title: locale === 'zh' ? '订单号' : 'Order No.',
-      dataIndex: 'orderNo',
-      key: 'orderNo',
-      width: 180,
-      render: (orderNo: string, record: Order) => (
-        <span 
-          className="order-id" 
-          style={{ cursor: 'pointer', color: '#1890ff' }}
-          onClick={() => router.push(`/${locale}/orders/${record.id}`)}
-        >
-          {orderNo || `#${record.id.slice(0, 8).toUpperCase()}`}
-        </span>
-      ),
-    },
-    {
-      title: locale === 'zh' ? '商品信息' : 'Items',
-      dataIndex: 'items',
-      key: 'items',
-      render: (items: Order['items']) => (
-        <div className="order-items">
-          {items && items.length > 0 ? (
-            items.map((item, index) => (
-              <div key={item.id || index} className="order-item">
-                <span className="item-name">{item.productName}</span>
-                <span className="item-quantity">×{item.quantity}</span>
-              </div>
-            ))
-          ) : (
-            <span style={{ color: '#999' }}>暂无商品</span>
-          )}
-        </div>
-      ),
-    },
-    {
-      title: locale === 'zh' ? '金额' : 'Amount',
-      dataIndex: 'totalCents',
-      key: 'totalCents',
-      width: 120,
-      render: (totalCents: number) => (
-        <span className="order-amount">
-          ${((totalCents || 0) / 100).toFixed(2)}
-        </span>
-      ),
-    },
-    {
-      title: locale === 'zh' ? '状态' : 'Status',
-      dataIndex: 'status',
-      key: 'status',
-      width: 120,
-      render: (status: string) => getStatusTag(status),
-    },
-    {
-      title: locale === 'zh' ? '下单时间' : 'Date',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-      width: 180,
-      render: (date: string) => new Date(date).toLocaleDateString(locale === 'zh' ? 'zh-CN' : 'en-US'),
-    },
-  ];
 
   const tabItems = [
     {
@@ -282,34 +220,91 @@ export default function ProfileClient({ locale, user }: ProfileClientProps) {
         </span>
       ),
       children: (
-        <Card className="orders-card" bordered={false}>
+        <div className="orders-tab-container">
           {loading ? (
             <div className="loading-container">
               <Spin size="large" />
             </div>
           ) : orders.length > 0 ? (
-            <Table
-              columns={columns}
-              dataSource={orders}
-              rowKey="id"
-              pagination={{
-                pageSize: 10,
-                showSizeChanger: false,
-                showTotal: (total) => locale === 'zh' ? `共 ${total} 条` : `Total ${total} items`,
-              }}
-              className="orders-table"
-            />
+            <div className="orders-list">
+              {orders.map((order) => {
+                const statusInfo = getStatusTag(order.status);
+                return (
+                  <Card
+                    key={order.id}
+                    className="order-item-card"
+                    onClick={() => router.push(`/${locale}/orders/${order.id}`)}
+                    hoverable
+                  >
+                    {/* 订单头部 */}
+                    <div className="order-card-header">
+                      <div className="order-card-info">
+                        <span className="order-card-no">
+                          {locale === 'zh' ? '订单号：' : 'Order No: '}
+                          {order.orderNo || `#${order.id.slice(0, 8).toUpperCase()}`}
+                        </span>
+                        <span className="order-card-date">
+                          {new Date(order.createdAt).toLocaleDateString(locale === 'zh' ? 'zh-CN' : 'en-US')}
+                        </span>
+                      </div>
+                      {statusInfo}
+                    </div>
+
+                    {/* 订单商品 */}
+                    <div className="order-card-products">
+                      {order.items && order.items.length > 0 ? (
+                        order.items.map((item, index) => (
+                          <div key={item.id || index} className="order-card-product">
+                            {item.productImage && (
+                              <img 
+                                src={item.productImage} 
+                                alt={item.productName}
+                                className="product-card-image"
+                              />
+                            )}
+                            <div className="product-card-info">
+                              <div className="product-card-name">{item.productName}</div>
+                              <div className="product-card-quantity">x{item.quantity}</div>
+                            </div>
+                            <div className="product-card-price">
+                              ${((item.price * item.quantity) / 100).toFixed(2)}
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <span style={{ color: '#999' }}>暂无商品</span>
+                      )}
+                    </div>
+
+                    {/* 订单底部 */}
+                    <div className="order-card-footer">
+                      <div className="order-card-total">
+                        <span className="total-card-label">
+                          {locale === 'zh' ? '实付款：' : 'Total: '}
+                        </span>
+                        <span className="total-card-amount">
+                          ${((order.totalCents || 0) / 100).toFixed(2)}
+                        </span>
+                      </div>
+                      <Button type="primary" size="small">
+                        {locale === 'zh' ? '查看详情' : 'View Details'}
+                      </Button>
+                    </div>
+                  </Card>
+                );
+              })}
+            </div>
           ) : (
             <Empty
               description={locale === 'zh' ? '暂无订单' : 'No orders yet'}
               image={Empty.PRESENTED_IMAGE_SIMPLE}
             >
-              <Button type="primary" href={`/${locale}/products`}>
+              <Button type="primary" onClick={() => router.push(`/${locale}`)}>
                 {locale === 'zh' ? '去购物' : 'Start Shopping'}
               </Button>
             </Empty>
           )}
-        </Card>
+        </div>
       ),
     },
     {
