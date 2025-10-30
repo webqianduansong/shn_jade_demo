@@ -86,6 +86,17 @@ export default function OrdersClient({ orders: initialOrders }: { orders: Order[
   
   const isMobile = useIsMobile();
 
+  // 同步父组件传入的订单数据
+  useEffect(() => {
+    if (initialOrders && initialOrders.length > 0) {
+      console.log('[OrdersClient] 接收到订单数据:', initialOrders.length, '条');
+      setOrders(initialOrders);
+    } else if (initialOrders) {
+      console.log('[OrdersClient] 接收到空订单列表');
+      setOrders([]);
+    }
+  }, [initialOrders]);
+
   // 移动端简化列配置
   const mobileColumns: ColumnsType<Order> = useMemo(() => [
     {
