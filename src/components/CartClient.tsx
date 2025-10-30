@@ -46,19 +46,25 @@ export default function CartClient({ items, totalAmount, locale, onCheckout: ext
         await externalCheckout();
       } else {
         // 默认的结账逻辑
+        // 转换数据格式：将 CartItemWithProduct 转换为 Stripe 需要的 lineItems 格式
+        const lineItems = items.map(item => ({
+          id: item.productId,
+          quantity: item.quantity
+        }));
+        
         const response = await fetch('/api/checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items }),
+          body: JSON.stringify({ lineItems }),
         });
         
         const data = await response.json();
         
         if (response.ok && data.url) {
-          // 重定向到支付页面
+          // 跳转到 Stripe Checkout 页面
           window.location.href = data.url;
         } else {
-          throw new Error(data.message || 'Checkout failed');
+          throw new Error(data.error || data.message || 'Checkout failed');
         }
       }
     } catch (error) {
