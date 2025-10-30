@@ -88,6 +88,7 @@ export async function POST(request: NextRequest) {
       
       if (address) {
         addressData = {
+          addressId: address.id,  // 将地址 ID 也保存在 JSON 中
           fullName: address.fullName,
           phone: address.phone,
           email: address.email,
@@ -131,34 +132,30 @@ export async function POST(request: NextRequest) {
       const orderNo = `ORD${Date.now()}${Math.random().toString(36).substring(2, 9).toUpperCase()}`;
       
       // 创建订单草稿并保存会话ID作为 paymentRef
-      const orderData: any = {
-        userId: userRecord.id,
-        orderNo,
-        status: 'PENDING',
-        shippingAddress: addressData, // 使用完整的地址信息
-        subtotalCents,
-        shippingCents,
-        discountCents: 0,
-        totalCents,
-        paymentMethod: 'stripe',
-        paymentRef: session.id,
-        items: {
-          create: lineItems
-            .filter((li) => productMap.has(li.id))
-            .map((li) => ({
-              productId: li.id,
-              price: productMap.get(li.id)!.price,
-              quantity: li.quantity,
-            })),
+      // 地址信息已经包含在 addressData.addressId 中
+      await prisma.order.create({
+        data: {
+          userId: userRecord.id,
+          orderNo,
+          status: 'PENDING',
+          shippingAddress: addressData, // 使用完整的地址信息（包含 addressId）
+          subtotalCents,
+          shippingCents,
+          discountCents: 0,
+          totalCents,
+          paymentMethod: 'stripe',
+          paymentRef: session.id,
+          items: {
+            create: lineItems
+              .filter((li) => productMap.has(li.id))
+              .map((li) => ({
+                productId: li.id,
+                price: productMap.get(li.id)!.price,
+                quantity: li.quantity,
+              })),
+          },
         },
-      };
-      
-      // 添加地址 ID（如果存在）
-      if (addressId) {
-        orderData.shippingAddressId = addressId;
-      }
-      
-      await prisma.order.create({ data: orderData });
+      });
     }
     
     return NextResponse.json({id: session.id, url: session.url});
