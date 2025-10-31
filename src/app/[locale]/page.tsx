@@ -6,7 +6,7 @@ export default async function HomePage({params}: {params: Promise<{locale: strin
   const {locale} = await params;
   
   // 并行获取所有数据 - 显著提升性能
-  const [categories, hotProducts, newProducts] = await Promise.all([
+  const [categories, hotProducts, newProducts, banners] = await Promise.all([
     // 获取分类列表（包含第一个商品的图片）
     prisma.category.findMany({
       include: {
@@ -58,6 +58,16 @@ export default async function HomePage({params}: {params: Promise<{locale: strin
       orderBy: { createdAt: 'desc' },
       take: 4,
     }),
+    
+    // 获取轮播图 - 只获取启用的，按排序升序
+    prisma.banner.findMany({
+      where: { isActive: true },
+      orderBy: { sortOrder: 'asc' },
+    }).catch((error) => {
+      // 如果 Banner 表不存在或查询失败，返回空数组
+      console.log('获取轮播图失败（可能表不存在）:', error?.code);
+      return [];
+    }),
   ]);
 
   // 只返回有商品的分类
@@ -80,6 +90,7 @@ export default async function HomePage({params}: {params: Promise<{locale: strin
       categories={categoriesWithProducts}
       hotProducts={formattedHotProducts}
       newProducts={formattedNewProducts}
+      banners={banners}
     />
   );
 }

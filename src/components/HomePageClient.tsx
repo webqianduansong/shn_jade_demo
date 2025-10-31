@@ -26,25 +26,36 @@ interface Product {
   category?: { name: string; slug: string };
 }
 
+interface Banner {
+  id: string;
+  title: string;
+  description?: string | null;
+  imageUrl: string;
+  linkUrl?: string | null;
+  sortOrder: number;
+}
+
 interface HomePageClientProps {
   locale: string;
   categories: Category[];
   hotProducts: Product[];
   newProducts: Product[];
+  banners: Banner[];
 }
 
 export default function HomePageClient({ 
   locale, 
   categories, 
   hotProducts, 
-  newProducts 
+  newProducts,
+  banners
 }: HomePageClientProps) {
   const t = useTranslations();
 
   return (
     <>
       {/* Hero Carousel */}
-      <HeroCarousel />
+      <HeroCarousel banners={banners} />
 
       {/* Selling points */}
       <FeaturesSection />

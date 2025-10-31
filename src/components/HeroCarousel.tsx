@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from 'react';
-import { Spin } from 'antd';
 import Image from 'next/image';
 import Link from 'next/link';
 import '@/styles/hero-carousel.css';
@@ -14,33 +13,16 @@ interface Banner {
   sortOrder: number;
 }
 
+interface HeroCarouselProps {
+  banners: Banner[];
+}
+
 /**
  * 首页轮播图组件
- * 从 API 动态获取轮播图数据
+ * 从服务端接收轮播图数据
  */
-export default function HeroCarousel() {
-  const [banners, setBanners] = useState<Banner[]>([]);
-  const [loading, setLoading] = useState(true);
+export default function HeroCarousel({ banners }: HeroCarouselProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
-
-  // 获取轮播图数据
-  useEffect(() => {
-    const fetchBanners = async () => {
-      try {
-        const response = await fetch('/api/banners');
-        const data = await response.json();
-        if (data.success && data.banners) {
-          setBanners(data.banners);
-        }
-      } catch (error) {
-        console.error('获取轮播图失败:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBanners();
-  }, []);
 
   // 自动轮播效果
   useEffect(() => {
@@ -52,15 +34,6 @@ export default function HeroCarousel() {
 
     return () => clearInterval(timer);
   }, [banners.length]);
-
-  // 加载中状态
-  if (loading) {
-    return (
-      <div className="hero-section" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '500px' }}>
-        <Spin size="large" />
-      </div>
-    );
-  }
 
   // 没有轮播图数据 - 不显示轮播图区域
   if (banners.length === 0) {
