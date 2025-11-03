@@ -10,7 +10,8 @@ import {
   ShoppingOutlined,
   AppstoreOutlined,
   ShoppingCartOutlined,
-  PictureOutlined
+  PictureOutlined,
+  TeamOutlined
 } from '@ant-design/icons';
 import { useRouter, usePathname } from 'next/navigation';
 import { apiPost } from '@/lib/apiClient';
@@ -48,6 +49,8 @@ export default function AdminShell({ children, locale }: { children: ReactNode; 
         setSelectedKey('orders');
       } else if (pathname.includes('/admin/banners')) {
         setSelectedKey('banners');
+      } else if (pathname.includes('/admin/users')) {
+        setSelectedKey('users');
       } else {
         setSelectedKey('admin');
       }
@@ -79,6 +82,7 @@ export default function AdminShell({ children, locale }: { children: ReactNode; 
       'categories': `/${locale}/admin/categories`,
       'orders': `/${locale}/admin/orders`,
       'banners': `/${locale}/admin/banners`,
+      'users': `/${locale}/admin/users`,
     };
     
     if (routes[key]) {
@@ -111,6 +115,11 @@ export default function AdminShell({ children, locale }: { children: ReactNode; 
       key: 'orders', 
       icon: <ShoppingCartOutlined />,
       label: locale === 'zh' ? '订单管理' : 'Orders'
+    },
+    { 
+      key: 'users', 
+      icon: <TeamOutlined />,
+      label: locale === 'zh' ? '用户管理' : 'Users'
     },
   ];
 

@@ -79,7 +79,7 @@ export default function LoginPage() {
 
           {/* Social Sign-in */}
           <Space direction="vertical" size="middle" style={{ width: '100%' }}>
-            <Button
+            {/* <Button
               size="large"
               block
               icon={<GoogleOutlined />}
@@ -94,7 +94,7 @@ export default function LoginPage() {
               onClick={() => socialLogin('apple')}
             >
               {locale === 'zh' ? '使用 Apple 登录' : 'Continue with Apple'}
-            </Button>
+            </Button> */}
           </Space>
 
           <Form layout="vertical" onFinish={onFinish} validateTrigger={["onBlur", "onSubmit"]}>
@@ -139,12 +139,9 @@ export default function LoginPage() {
           </Divider>
 
           <div className="text-center" style={{ fontSize: 14 }}>
-            <div style={{ marginBottom: 8, color: '#888' }}>
-              演示账号：song@demo.com / song1234
-            </div>
             {locale === 'zh' ? '还没有账户？' : "Don't have an account?"}{' '}
-            <Link href="#" className="nav-link" style={{ display: 'inline', padding: 0 }}>
-              {locale === 'zh' ? '创建账户' : 'Create one'}
+            <Link href={`/${locale}/register`} className="nav-link" style={{ display: 'inline', padding: 0 }}>
+              {locale === 'zh' ? '立即注册' : 'Register now'}
             </Link>
           </div>
         </Space>

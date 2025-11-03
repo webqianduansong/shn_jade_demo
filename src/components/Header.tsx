@@ -109,12 +109,20 @@ export default function Header({ locale, categories }: HeaderProps) {
               </Tooltip>
             </>
           ) : (
-            <Tooltip title={locale === 'zh' ? '登录' : 'Login'}>
-              <Link href={`/${locale}/login`} className="icon-link">
-                <UserOutlined className="icon-button-icon" />
-                <span className="desktop-only-text">{locale === 'zh' ? '登录' : 'Login'}</span>
-              </Link>
-            </Tooltip>
+            <>
+              <Tooltip title={locale === 'zh' ? '注册' : 'Register'}>
+                <Link href={`/${locale}/register`} className="icon-link">
+                  <UserAddOutlined className="icon-button-icon" />
+                  <span className="desktop-only-text">{locale === 'zh' ? '注册' : 'Register'}</span>
+                </Link>
+              </Tooltip>
+              <Tooltip title={locale === 'zh' ? '登录' : 'Login'}>
+                <Link href={`/${locale}/login`} className="icon-link">
+                  <UserOutlined className="icon-button-icon" />
+                  <span className="desktop-only-text">{locale === 'zh' ? '登录' : 'Login'}</span>
+                </Link>
+              </Tooltip>
+            </>
           )}
           <Tooltip title={siteT('cart')}>
             <Link 
